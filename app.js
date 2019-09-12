@@ -30,13 +30,26 @@ app.use((req, res, next) => {
     next();
   });
 
-const pub_dir = `${__dirname}/frontend`;
+const pub_dir = `${__dirname}/dist`;
 // const pub_img = `${__dirname}/uploads`;
 
-app.set('views', __dirname + '/frontend');
+app.set('views', __dirname + '/dist');
 hbs.registerPartials(__dirname + '/frontend/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(pub_dir));
+
+app.get('/', (req, res) => {
+  res.render('index')
+})
+
+// app.get('/prueba', (req, res) => {
+//   res.render('prueba')
+// })
+
+app.get('/prueba',function(req,res){
+  res.sendFile(path.join(__dirname+'/dist/prueba.html'));
+});
+
 // app.use('/uploads', express.static(pub_img));
 // app.use(usersRoute);
 // app.use(adminRoute);

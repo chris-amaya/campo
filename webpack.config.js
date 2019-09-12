@@ -2,18 +2,15 @@ const webpack = require('webpack');
 const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const HandlebarsPlugin = require("handlebars-webpack-plugin");
- // asdfoasidfjoasidoiasdjfoasd
 
- // comentario de prueba
 module.exports = {
     entry: {
-        // index: ['./frontend/index.html', ],
         index: './frontend/js/index.js',
         app: './frontend/js/app.js'
     },
     output: {
-        filename: '[name].bundle.js',
-        path: path.resolve(__dirname, 'dist/js')
+        filename: 'js/[name].bundle.js',
+        path: path.resolve(__dirname, 'dist/')
     },    
     devServer: {
         port: 6000
@@ -23,24 +20,30 @@ module.exports = {
       new HtmlWebpackPlugin({
         title: 'index',
         template: './frontend/index2.hbs',
-        filename: '../index.hbs',
-        // inject: 'body',
-        // chunks: ['app']
+        filename: 'index.hbs',
+
+      }),
+      new HtmlWebpackPlugin({
+        title: 'prueba',
+        template: './frontend/prueba.html',
+        filename: 'prueba.html',
 
       }),
     ],
 
     module: {
         rules: [
-            { test: /\.(html)$/,
-                use: {
-                  loader: 'html-loader',
-                    options: {
-                      attrs: [':data-src']
+            { 
+              test: /\.(html|handlebars)$/i,
+              use: {
+                loader: 'html-loader',
+                options: {
+                    attrs: ['img:src']
                   }
                 }},
-            { test: /\.css$/, use: ['style-loader', 'css-loader'], },
-            // { test: /\.hbs$/, loader: "handlebars-loader" },
+            { 
+              test: /\.css$/, use: ['style-loader', 'css-loader'], 
+            },
             {
               test: /\.handlebars$/,
               loader: 'handlebars-loader',
@@ -50,7 +53,8 @@ module.exports = {
               //     // partialDirs: [path.join(__dirname, './src/views/email/partials')],
               // },
             },
-            { test: /\.scss$/,
+            { 
+              test: /\.scss$/,
               use: [
                 {
                   loader: 'file-loader',
@@ -79,7 +83,20 @@ module.exports = {
               query: {
                 presets: ['@babel/preset-env'],
               },
+            },
+            {
+              test: /\.(png|jpe?g|gif|jpg)$/i,
+              use: [
+                {
+                  loader: 'file-loader',
+                  options: {
+                    name: '[name].[ext]',
+                    outputPath: '/img',
+                  }
+                },
+              ]
             }
+            // { test: /\.jpg$/, use: [ "file-loader" ] }
         ]
     },
     devtool: 'eval-source-map',
