@@ -6,7 +6,7 @@ const HandlebarsPlugin = require("handlebars-webpack-plugin");
 module.exports = {
     entry: {
         index: './frontend/js/index.js',
-        app: './frontend/js/app.js'
+        // app: './frontend/js/app.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -19,14 +19,8 @@ module.exports = {
     plugins: [
       new HtmlWebpackPlugin({
         title: 'index',
-        template: './frontend/index2.hbs',
+        template: './frontend/index.hbs',
         filename: 'index.hbs',
-
-      }),
-      new HtmlWebpackPlugin({
-        title: 'prueba',
-        template: './frontend/prueba.html',
-        filename: 'prueba.html',
 
       }),
     ],
@@ -34,7 +28,7 @@ module.exports = {
     module: {
         rules: [
             { 
-              test: /\.(html|handlebars)$/i,
+              test: /\.(html|handlebars|hbs)$/i,
               use: {
                 loader: 'html-loader',
                 options: {

@@ -13,10 +13,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // CARGANDO RUTAS
-// const usersRoute   = require('./backend/routes/users.route');
-// const adminRoute   = require('./backend/routes/admin.route');
-// const imgRoute     = require('./backend/routes/img.route');
-// const recetasRoute = require('./backend/routes/recetas.route');
+const frontRoutes   = require('./backend/routes/front.routes')
 
 /*=============================================
 CABECERAS HTTP
@@ -38,23 +35,8 @@ hbs.registerPartials(__dirname + '/frontend/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(pub_dir));
 
-app.get('/', (req, res) => {
-  res.render('index')
-})
-
-// app.get('/prueba', (req, res) => {
-//   res.render('prueba')
-// })
-
-app.get('/prueba',function(req,res){
-  res.sendFile(path.join(__dirname+'/dist/prueba.html'));
-});
-
 // app.use('/uploads', express.static(pub_img));
-// app.use(usersRoute);
-// app.use(adminRoute);
-// app.use(imgRoute);
-// app.use(recetasRoute);
+app.use(frontRoutes);
 
 
 module.exports = app;

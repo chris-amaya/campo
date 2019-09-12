@@ -1,1 +1,1 @@
-console.log('sadf');
+import '../css/index.css';
