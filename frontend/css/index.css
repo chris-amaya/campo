@@ -39,13 +39,17 @@ header .logo img {
 .buttons {
     width: 15%;
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
 }
 
-.buttons .search-icon img,
-.buttons .bars-icon img {
-    width: 60%;
+.search-icon img,
+.bars-icon img {
+    width: 100%;
+}
+
+.search-icon, .bars-icon {
+    width: 25px;
 }
 
 .text-hero {
@@ -73,6 +77,10 @@ header .logo img {
 .text-hero div {
     width: 40%;
     border-bottom: 2px solid #fff;
+}
+
+.text-hero div p {
+    font-weight: 100;
 }
 
 section .title {
@@ -116,11 +124,14 @@ section .title h3 {
     box-sizing: border-box;
     padding: 10px 20px;
     width: 80%;
+    display: flex;
+    flex-wrap: wrap;
 }
 
 .detail-product {
     display: flex;
-    justify-content: space-between
+    justify-content: space-between;
+    width: 100%;
 }
 
 .desc-product {
@@ -183,3 +194,96 @@ footer .container {
     border: 2px solid #fff;
 }
 
+
+/* //======================================================================================== */
+/*                                                                                      *
+ *                                     MEDIA QUERYS                                     *
+ *                                                                                      */
+/* //======================================================================================== */
+
+@media screen and (max-width: 700px) {
+    .hide-phones {
+        display: none;
+    }
+    .only-phones div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 45%;
+    }
+
+    header {
+        padding-top: 10px;
+    }
+
+    
+
+    
+}
+
+@media screen and (max-width: 720px) {
+
+    .text-hero h3 {
+        font-size: 32px;
+    }
+
+    .text-hero h1 {
+        font-size: 54px;
+    }
+
+    .text-hero div {
+        width: 100%;
+    }
+
+    section .container {
+        width: 100%;
+
+    }
+
+    .list-product figure {
+        width: 40%;
+    }
+
+    .info-product {
+        width: 60%;
+        padding: 5px 10px;
+    }
+
+    .desc-product {
+        font-size: 12px;
+        margin: 0px;
+    }
+
+    .detail-product {
+        font-size: 12px;
+    }
+
+    .detail-product p {
+        margin: 4px 0px;
+    }
+}
+
+@media screen and (max-width: 420px) { 
+    .prize {
+        padding: 5px 15px;
+        font-size: 14px;
+    }
+
+    .enlaces a {
+        font-size: 12px;
+    }
+
+    .enlaces {
+        padding: 20px 0px;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .only-phones {
+        display: none;
+    }
+}
