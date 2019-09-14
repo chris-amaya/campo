@@ -6,7 +6,8 @@ const HandlebarsPlugin = require("handlebars-webpack-plugin");
 module.exports = {
     entry: {
         index: './frontend/js/index.js',
-        // app: './frontend/js/app.js'
+        modal: './frontend/js/classes/modal.js',
+        animations: './frontend/js/animations.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
