@@ -7,7 +7,9 @@ module.exports = {
     entry: {
         index: './frontend/js/index.js',
         modal: './frontend/js/classes/modal.js',
-        animations: './frontend/js/animations.js'
+        animations: './frontend/js/animations.js',
+        categories: './frontend/js/categories.js',
+        products: './frontend/js/products.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -22,31 +24,46 @@ module.exports = {
         title: 'index',
         template: './frontend/index.hbs',
         filename: 'index.hbs',
+        chunks: ['index']
 
+      }),
+      new HtmlWebpackPlugin({
+        title: 'categories',
+        template: './frontend/categories.hbs',
+        filename: 'categories.hbs',
+        chunks: ['categories']
+      }),
+      new HtmlWebpackPlugin({
+        title: 'products',
+        template: './frontend/products.hbs',
+        filename: 'products.hbs',
+        chunks: ['products']
       }),
     ],
 
     module: {
         rules: [
             { 
-              test: /\.(html|handlebars|hbs)$/i,
+              test: /\.(html)$/,
               use: {
                 loader: 'html-loader',
                 options: {
-                    attrs: ['img:src']
+                    attrs: ['img:src', 'link:href']
                   }
-                }},
+                }
+            },
             { 
               test: /\.css$/, use: ['style-loader', 'css-loader'], 
             },
             {
-              test: /\.handlebars$/,
+              test: /\.(handlebars|hbs)$/,
               loader: 'handlebars-loader',
-              // options: {
-              //     knownHelpersOnly: false,
-              //     // inlineRequires: /\/assets\/(:?images|audio|video)\//ig,
-              //     // partialDirs: [path.join(__dirname, './src/views/email/partials')],
-              // },
+              options: {
+                  // knownHelpersOnly: false,
+                  // inlineRequires: /\(:?images|audio|video)/i,
+                  inlineRequires: /\.(png|jpg|jpeg)/i,
+                  partialDirs: __dirname + '/frontend/partials'
+              },
             },
             { 
               test: /\.scss$/,
@@ -80,13 +97,14 @@ module.exports = {
               },
             },
             {
-              test: /\.(png|jpe?g|gif|jpg)$/i,
+              test: /\.(png|jpe?g|gif|jpg)$/,
               use: [
                 {
                   loader: 'file-loader',
                   options: {
                     name: '[name].[ext]',
                     outputPath: '/img',
+                    publicPath: '/img'
                   }
                 },
               ]

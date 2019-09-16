@@ -1,0 +1,31 @@
+.categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+
+}
+
+.category {
+    position: relative;
+}
+
+.category figure {
+    margin: 0;
+}
+
+.category figure img {
+    width: 100%;
+    display: block;
+    filter: brightness(0.5);
+}
+
+.category span {
+    position: absolute;
+    bottom: 15px;
+    left: 0px;
+    z-index: 50;
+    color: #fff;
+    padding-left: 15px;
+    box-sizing: border-box;
+    font-size: 1.5em;
+}

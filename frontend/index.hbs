@@ -1,67 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,700|Roboto:100,400&display=swap" rel="stylesheet"> 
-    <script src="https://kit.fontawesome.com/72da764e73.js"></script>
-    <title>Inicio</title>
-</head>
+{{> head}}
 <body>
 
-    <div class="searchModal modal" id="searchModal" >
-        <div class="buttonCloseModal" id="buttonCloseModal">
-            <i class="fas fa-times"></i>
-        </div>
-
-        <input type="text" placeholder="Buscar Producto" id="searchProduct">
-
-        <div class="results">
-
-        </div>
-    </div>
-
-    <div class="hambModal modal" id="hambModal">
-        <div class="buttonCloseModal" id="buttonCloseModal">
-            <i class="fas fa-times"></i>
-        </div>
-
-        <a href="/">INICIO</a>
-        <a href="/categorias">CATEGORIAS</a>
-        <a href="/registro">REGISTRO</a>
-        <a href="/login">LOGIN</a>
-    </div>
+    {{> modals}}
     <div class="hero-img">
         <div class="container">
             <div class="hero-container">
-                <header class="hide-phones" >
-                    <div class="logo">
-                        <img src="img/ASDFASDAS-Standard.png" alt="">
-                    </div>
-                    <div class="buttons">
-                        <div class="search-icon" id="buttonSearch" >
-                            <img src="img/Search.png" alt="">
-                        </div>
-                        <div class="bars-icon" id="buttonBars">
-                            <img src="img/Menu.png" alt="">
-                        </div>
-                    </div>
-                </header>
-
-                <header class="only-phones">
-                        <div class="bars-icon">
-                            <img src="img/Menu.png" alt="">
-                        </div>
-
-                        <div class="logo">
-                            <img src="img/ASDFASDAS-Standard.png" alt="">
-                        </div>
-
-                        <div class="search-icon">
-                            <img src="img/Search.png" alt="">
-                        </div>
-                </header>
+                
+                {{> header}}
 
                 <div class="text-hero">
                     <h3>Bienvido a</h3>
@@ -83,7 +28,7 @@
             <div class="list-products">
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">
@@ -97,7 +42,7 @@
                 </div>
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">
@@ -109,9 +54,10 @@
                         </div>
                     </div>
                 </div>
+                
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">
@@ -134,7 +80,7 @@
             <div class="list-products">
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">
@@ -149,7 +95,7 @@
 
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">
@@ -164,7 +110,7 @@
 
                 <div class="list-product">
                     <figure>
-                        <img src="img/product-01.jpg" alt="">
+                        <img src="./img/product-01.jpg" alt="">
                         <p class="prize">$20</p>
                     </figure>
                     <div class="info-product">

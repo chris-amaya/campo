@@ -1,0 +1,219 @@
+body, html, h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+body, html {
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    font-family: 'Open Sans';
+}
+
+:root {
+    --grey-color: #f2f2f2;
+    --grey-2nd: #B7B7B7;
+    --grey-3rd: #515151;
+    --yellow-color: #FE921F;
+}
+
+
+.container {
+    width: 90%;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.hero-container {
+    height: 100vh;
+}
+
+
+header {
+    display: flex;
+    justify-content: space-between;
+    padding-top: 30px;
+}
+
+header .logo img {
+    width: 60%;
+}
+
+.buttons {
+    width: 15%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.search-icon img,
+.bars-icon img {
+    width: 100%;
+}
+
+.search-icon:hover,
+.bars-icon:hover {
+    cursor: pointer;
+}
+
+.search-icon, .bars-icon {
+    width: 25px;
+}
+
+
+.buttonUp {
+    display: flex;
+    align-items: center;
+}
+
+.buttonUp i {
+    color: #fff;
+    padding: 10px;
+    border: 2px solid #fff;
+}
+
+.buttonUp i:hover {
+    cursor: pointer;
+}
+
+.modal {
+    background: #fff;
+    height: 100vh;
+    /* display: none; */
+    position: fixed;
+    width: 100%;
+    z-index: 100;
+    animation-duration: .4s;
+
+}
+
+.searchModal {
+    left: 100%;
+    display: block;
+}
+
+.hambModal {
+    left: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    text-align: center;
+    align-content: center;
+}
+
+.buttonCloseModal {
+    position: absolute;
+    right: 50px;
+    top: 40px;
+}
+
+.buttonCloseModal:hover {
+    cursor: pointer;
+}   
+
+.buttonCloseModal i {
+    font-size: 52px;
+}
+
+#searchProduct {
+    width: 70%;
+    margin: 0 auto;
+    margin-top: 0px;
+    display: block;
+    margin-top: 150px;
+    border: none;
+    border-bottom: 2px solid #000;
+    padding: 10px 0px;
+    font-size: 32px;
+    font-family: 'Open Sans';
+    font-style: italic;
+    font-weight: 100;
+    color: var(--grey-2nd);
+}
+
+.hambModal.modal a {
+    text-decoration: none;
+    width: 100%;
+    color: #000;
+    font-size: 52px;
+    text-decoration: underline;
+    text-decoration-color:#fff;
+}
+
+.hambModal.modal a:hover {
+    text-decoration: underline;
+}
+
+.breadcrumb {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.breadcrumb h3 {
+    font-weight: 400;
+}
+
+.breadcrumb .breadcrumb-navigation a {
+    text-decoration: none;
+    color: #000;
+}
+
+
+/* //======================================================================================== */
+/*                                                                                      *
+ *                                     TRANSICIONES                                     *
+ *                                                                                      */
+/* //======================================================================================== */
+
+@keyframes bringFromRight {
+    from {
+        left: 100%;
+    } 
+    to {
+        left: 0%;
+    }
+}
+
+@keyframes hideToRight {
+    from {
+        left: 0%;
+    }
+    to {
+        right: 100%;
+    }
+}
+
+@media screen and (max-width: 700px) {
+    .hide-phones {
+        display: none;
+    }
+    .only-phones div {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+    }
+
+    .logo img {
+        width: 45%;
+    }
+
+    header {
+        padding-top: 10px;
+    }
+}
+
+@media screen and (min-width: 720px) {
+    section .container {
+        width: 100%;
+    }
+}
+
+@media screen and (min-width: 700px) {
+    .only-phones {
+        display: none;
+    }
+}
+
+
