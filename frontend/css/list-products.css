@@ -61,18 +61,6 @@
     font-size: 18px;
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
 @media screen and (max-width: 720px) { 
     .list-product figure {
         width: 40%;
@@ -96,8 +84,6 @@
         margin: 4px 0px;
     }
 }
-
-
 
 @media screen and (max-width: 420px) {    
     .prize {

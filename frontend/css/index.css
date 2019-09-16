@@ -58,26 +58,6 @@ section .title h3 {
 
 }
 
-footer {
-    background: #000;
-}
-
-footer .container {
-    display: flex;
-    justify-content: space-between;
-}
-
-.enlaces {
-    padding: 20px 5px;
-}
-
-.enlaces a {
-    color: #fff;
-    text-decoration: none;
-    font-family: 'Open Sans';
-    margin-right: 15px;
-}
-
 /* //======================================================================================== */
 /*                                                                                      *
  *                                     MEDIA QUERYS                                     *
@@ -97,15 +77,3 @@ footer .container {
         width: 100%;
     }    
 }
-
-@media screen and (max-width: 420px) { 
-
-    .enlaces a {
-        font-size: 12px;
-    }
-
-    .enlaces {
-        padding: 20px 0px;
-    }
-}
-
