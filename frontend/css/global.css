@@ -128,6 +128,7 @@ header .logo img {
     font-style: italic;
     font-weight: 100;
     color: var(--grey-2nd);
+    outline: none;
 }
 
 .hambModal.modal a {
@@ -224,14 +225,34 @@ footer .container {
     }
 }
 
+@keyframes bringFromLeft {
+    from {
+        left: -100%;
+    } 
+    to {
+        left: 0%;
+    }
+}
+
 @keyframes hideToRight {
     from {
         left: 0%;
     }
     to {
-        right: 100%;
+        left: 100%;
     }
 }
+
+@keyframes hideToLeft {
+    from {
+        left: 0%;
+    }
+    to {
+        left: -100%;
+    }
+}
+
+
 
 @media screen and (max-width: 700px) {
     .hide-phones {

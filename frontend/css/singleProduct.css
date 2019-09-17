@@ -1,0 +1,178 @@
+.product {
+    background: var(--grey-color);
+    margin-bottom: 50px;
+}
+
+.product figure {
+    /* min-height: 250px; */
+    height: 250px;
+    width: 100%;
+    box-sizing: border-box;
+    margin: 0;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    align-content: center;
+}
+
+.info-product {
+    padding: 20px;
+    width: 100%;
+}
+
+.info-product > div:first-child {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+}
+
+.info-user i {
+    color: var(--yellow-color);
+    margin-right: 10px;
+}
+
+.shop-button {
+    background: var(--grey-3rd);
+    box-sizing: border-box;
+    width: 100px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.shop-button i {
+    color: #fff;
+}
+
+.product-desc {
+    margin-top: 50px;
+}
+
+.product-title {
+    width: 100%;
+    color: var(--yellow-color);
+    font-weight: 400;
+
+}
+
+.product-detail {
+    font-style: italic;
+    font-weight: 100;
+}
+
+.messenger {
+    position: fixed;
+    bottom: 30px;
+    right: 38px;
+    background: #0084ff;
+    border-radius: 50%;
+}
+
+.messenger i {
+    color: #fff;
+    padding: 15px;
+    box-sizing: border-box;
+    font-size: 1.5em;
+}
+
+.product figure > img {
+    position: absolute;
+    left: 0;
+    object-fit: contain;
+    max-width: 100%;
+    animation-duration: .4s;
+
+}
+
+/* .product figure > img.active {
+    z-index: 50;
+} */
+
+.product figure > img:hover {
+    cursor: pointer;
+}
+
+.product figure > img.active {
+    z-index: 50;
+}
+
+.counter {
+    z-index: 100;
+    color: #fff;
+    position: absolute;
+    bottom: 12px;
+    left: 50%;
+}
+
+.counter.active {
+    opacity: 1  ;
+}
+
+.counter i {
+    opacity: .5;
+}
+
+.counter i:hover {
+    opacity: 1;
+    cursor: pointer;
+}
+
+.next,
+.back {
+    position: absolute;
+    top: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    padding: 0px 10px;
+    z-index: 100;
+    color: #fff;
+}
+
+.next:hover,
+.back:hover {
+    background: rgba(0,0,0,.5);
+}
+
+.next {
+    right: 0;
+}
+
+.back {
+    left: 0;
+}
+/* 
+@media screen and (max-width: 720px) { 
+    .next,
+    .back {
+        width: 10%;
+    }
+} */
+
+
+@media screen and (max-width: 420px) {
+    .info-product > div:first-child {
+        flex-wrap: wrap;
+    }
+
+    .info-user, .shop-button {
+        width: 100%;
+    }
+
+    .info-user {
+        margin-bottom: 20px;
+    }
+
+    .messenger {
+        right: 19px;
+    }
+
+    .product.container {
+        width: 100%;
+    }
+}

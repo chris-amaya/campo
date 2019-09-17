@@ -5,25 +5,25 @@ export class Modal {
         this.modal = modal;
     }
 
-    bringModalFromLeft() {
-        animations.bringFromLeft(this.modal);
-    }
+    // bringModalFromLeft() {
+    //     animations.bringFromLeft(this.modal);
+    // }
 
-    hideModalToRight() {
-        animations.hideModalToRight(this.modal);
-    }
+    // hideModalToRight() {
+    //     animations.hideModalToRight(this.modal);
+    // }
 
-    hideModalToRight(modal) {
-        animations.hideModalToRight(modal);
-    }
+    // hideModalToRight(modal) {
+    //     animations.hideModalToRight(modal);
+    // }
 
     searchModalActive(){
         return document.querySelector('.modal.active');
     }
 
-    removeActiveModal() {
-        this.searchModalActive().classList.remove('active');
-    }
+    // removeActiveModal() {
+    //     this.searchModalActive().classList.remove('active');
+    // }
 }
 
 

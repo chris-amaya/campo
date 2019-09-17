@@ -13,5 +13,9 @@ app.get('/productos', (req, res) => {
     res.render('products');
 })
 
+app.get('/producto', (req, res) => {
+    res.render('singleProduct');
+})
+
 
 module.exports = app;

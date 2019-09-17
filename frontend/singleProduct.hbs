@@ -1,0 +1,60 @@
+{{> head}}
+<body>
+    {{> modals}}
+    <div class="container">
+        {{> header2}}
+
+    
+
+    {{!-- <div class="container"> --}}
+        <div class="breadcrumb">
+            <h3>Producto</h3>
+
+            <div class="breadcrumb-navigation">
+                <a href="/">Inicio / <a href="/producto" class="active-breadcrumb">Producto</a></a>
+            </div>
+        </div>
+    </div>
+
+        <section class="product container">
+            <figure>
+                <i class="fas fa-chevron-right next" id="next"></i>
+                <i class="fas fa-chevron-left back" id="back"></i>
+                <img src="./img/frijol.jpg" alt="">
+                <img src="./img/nuez.jpg" class="active" alt="">
+                <img src="./img/maiz.jpg" alt="">
+                <div class="counter">
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                    <i class="fas fa-circle"></i>
+                </div>
+            </figure>
+
+            <div class="info-product">
+                <div>
+                    <div class="info-user">
+                        <div class="name"><i class="far fa-user"></i> <span class="user-name">Chris Amaya</span></div>
+                        <div class="location"><i class="fas fa-location-arrow"></i> <span class="user-location">Torreon, Coah.</span></div>
+                    </div>
+
+                    <div class="shop-button">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                </div>
+
+                <div class="product-desc">
+                    <h2 class="product-title">Titulo</h2>
+                    <p class="product-detail">Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi, magni ratione temporibus laboriosam modi laborum iure similique, est consequuntur veritatis deserunt minima error corrupti quidem necessitatibus alias sint dicta. Enim ducimus corporis quisquam, ab, ex id eveniet minima delectus architecto voluptatum necessitatibus? Corrupti ea asperiores quam, officia laborum fuga laudantium quis architecto veniam consequuntur quia vitae exercitationem recusandae sint dignissimos excepturi eius. Error magni cumque dolorum architecto sapiente ullam molestias vel tempora facere, dolorem, et voluptas numquam quam unde aperiam. Illo similique reprehenderit deserunt ex. Eveniet est quas quasi earum. Dolore itaque voluptate est aspernatur quidem nemo, velit dolorem, molestias ex minus ullam alias veniam, incidunt praesentium sed quis debitis! Excepturi ipsam ipsa quas ex facilis? Quis eligendi sunt iusto?</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="messenger">
+            <i class="fab fa-facebook-messenger"></i>
+        </div>
+    {{!-- </div> --}}
+
+    {{> footer}}
+
+</body>
+</html>

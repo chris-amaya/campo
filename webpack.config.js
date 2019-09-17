@@ -9,7 +9,8 @@ module.exports = {
         modal: './frontend/js/classes/modal.js',
         animations: './frontend/js/animations.js',
         categories: './frontend/js/categories.js',
-        products: './frontend/js/products.js'
+        products: './frontend/js/products.js',
+        singleProduct: './frontend/js/singleProduct.js',
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -38,6 +39,12 @@ module.exports = {
         template: './frontend/products.hbs',
         filename: 'products.hbs',
         chunks: ['products']
+      }),
+      new HtmlWebpackPlugin({
+        title: 'singleProduct',
+        template: './frontend/singleProduct.hbs',
+        filename: 'singleProduct.hbs',
+        chunks: ['singleProduct']
       }),
     ],
 
