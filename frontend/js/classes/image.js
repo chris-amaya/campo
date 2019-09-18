@@ -49,4 +49,14 @@ export class ImageProduct {
             figure.style.height = `${imgActive.offsetHeight}px`;
         }
     }
+    
+    selectImage(id) {
+        // this.getImageSelected(id).style.left = '0';
+        this.getImageSelectedId(id).style.left = '0';
+    }
+
+    getImageSelectedId(id) {
+        return document.querySelectorAll('figure img')[id - 1]; 
+    }
+
 }
