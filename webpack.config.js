@@ -11,6 +11,7 @@ module.exports = {
         categories: './frontend/js/categories.js',
         products: './frontend/js/products.js',
         singleProduct: './frontend/js/singleProduct.js',
+        login: './frontend/js/login',
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -45,6 +46,12 @@ module.exports = {
         template: './frontend/singleProduct.hbs',
         filename: 'singleProduct.hbs',
         chunks: ['singleProduct']
+      }),
+      new HtmlWebpackPlugin({
+        title: 'login',
+        template: './frontend/login.hbs',
+        filename: 'login.hbs',
+        chunks: ['login']
       }),
     ],
 

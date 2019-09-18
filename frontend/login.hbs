@@ -1,0 +1,50 @@
+{{> head}}
+<body>
+    {{> modals}}
+    <div class="container">
+        {{> header2}}
+
+        <div class="welcome">
+            <h3>Some Title Goes Here</h3>
+            <p>Lorem, ipsum dolor sit amet consectetur adipisicing elit. Ea tempore assumenda incidunt quaerat dolor temporibus.</p>
+        </div>
+
+        <div class="login-container">
+            <div >
+                <div class="form-active">
+                    <a href="/login" class="active">LOGIN</a>
+                    <a href="/registro">REGISTRO</a>
+                </div>
+                <form class="container" >
+                    <div class="email">
+                        <input type="email" placeholder="example@gmail.com">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="password">
+                        <input type="password" placeholder="*******">
+                        <i class="fas fa-lock"></i>
+                    </div>
+
+                    <div class="conditions">
+                        <label><input type="checkbox"><span><p>Recordar</p></span></label>
+                        <a class="lost-password">Perdí mi contraseña</a>
+                    </div>
+
+                    <input type="submit" value="Login" class="login-button">
+                </form>
+                <hr>
+                <div class="login-altern">
+                    <div class="facebook">
+                        <i class="fab fa-facebook-f"></i>
+                    </div>
+
+                    <div class="google">
+                        <i class="fab fa-google"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

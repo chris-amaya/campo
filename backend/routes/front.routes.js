@@ -17,5 +17,11 @@ app.get('/producto', (req, res) => {
     res.render('singleProduct');
 })
 
+app.get('/login', (req, res) => {
+    res.render('login');
+})
+
+
+
 
 module.exports = app;
