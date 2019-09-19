@@ -17,7 +17,7 @@ app.get('/producto', (req, res) => {
     res.render('singleProduct');
 })
 
-app.get('/login', (req, res) => {
+app.get('/acceso', (req, res) => {
     res.render('login');
 })
 

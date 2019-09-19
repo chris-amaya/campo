@@ -76,7 +76,9 @@
 }
 
 .email,
-.password {
+.password,
+.name,
+.last-name {
     position: relative;
     /* margin-bottom: 20px; */
 }
@@ -86,7 +88,9 @@
 }
 
 .email input, 
-.password input {
+.password input,
+.name input, 
+.last-name input {
     width: 100%;
     box-sizing: border-box;
     background: transparent;
@@ -101,12 +105,16 @@
 }
 
 .email input::placeholder,
-.password input::placeholder {
+.password input::placeholder,
+.last-name input::placeholder,
+.name input::placeholder {
     color: #fff;
 }
 
 .email i,
-.password i {
+.password i,
+.name i,
+.last-name i {
     position: absolute;
     left: 0;
     top: 3px;
@@ -207,6 +215,24 @@ input[type="checkbox"]:checked+span:before {
 .login-altern i.fa-google {
     
     color: #fff;
+}
+
+.register .email{
+    margin-bottom: 0;
+}
+
+form.login {
+    display: none;
+}
+
+form.register .conditions{
+    flex-wrap: wrap;
+    margin: 10px 0px;
+}
+
+form.register .conditions p {
+    margin: 0;
+    margin: 5px 0;
 }
 
 @media screen and (max-width: 768px) {
