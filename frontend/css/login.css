@@ -225,10 +225,12 @@ input[type="checkbox"]:checked+span:before {
 
 form.login {
     display: block;
+    position: relative;
 }
 
 form.register {
     display: none;
+    position: relative;
 }
 
 
@@ -323,7 +325,7 @@ form.register .conditions p {
 
 }
 
-@media screen and (min-width: 768px) and (max-width: 1000px) {
+@media screen and (min-width: 769px) and (max-width: 1000px) {
     .login-container {
         width: 40%;
     }
