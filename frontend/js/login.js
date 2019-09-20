@@ -1,10 +1,14 @@
 import '../css/global.css'
 import './global';
 import '../css/login.css'
-
+import { animations } from './animations';
 const loginContainer = document.getElementById('loginContainer')
 const welcome        = document.getElementById('welcome');
-console.log('asdf');
+const buttonLogin    = document.getElementById('buttonLogin');
+const buttonRegister = document.getElementById('buttonRegister');
+
+
+
 window.addEventListener('load', () => {
     if(window.screen.width < 720) {
         resizeElements();
@@ -21,9 +25,15 @@ window.addEventListener('resize', () => {
     }
 })
 
+
+//========================================================================================
+/*                                                                                      *
+ *                                       FUNCIONES                                      *
+ *                                                                                      */
+//========================================================================================
+
+
 function resizeElements() {
-    // loginContainer.style.top = `${window.innerHeight - welcome.offsetHeight}px`;
-    // loginContainer.style.height = `${loginContainer.firstElementChild.offsetHeight}px`;
     loginContainer.style = `
         top: ${window.innerHeight - welcome.offsetHeight}px;
         height: ${loginContainer.firstElementChild.offsetHeight}px;
@@ -31,11 +41,8 @@ function resizeElements() {
 }
 
 function undoResizeElements() {
-    // loginContainer.style.top = '01';
-    // loginContainer.style.height = '100%;';
     loginContainer.style = `
         top: 0;
         height: 100%;
     `
-
 }

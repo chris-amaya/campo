@@ -8,6 +8,7 @@
     display: flex;
     flex-wrap: wrap;
     align-content: center;
+    overflow: hidden;
 }
 
 .login-container a {
@@ -62,15 +63,16 @@
     display: flex;
 }
 
-.form-active a {
+.form-active button {
     padding: 10px 20px;
     box-sizing: border-box;
     background: #fff;
     color: #000;
     width: 50%;
+    border: none;
 }
 
-.form-active a.active {
+.form-active button.active {
     background: var(--yellow-color);
     color: #fff;
 }
@@ -222,8 +224,14 @@ input[type="checkbox"]:checked+span:before {
 }
 
 form.login {
+    display: block;
+}
+
+form.register {
     display: none;
 }
+
+
 
 form.register .conditions{
     flex-wrap: wrap;
