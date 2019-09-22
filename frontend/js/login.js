@@ -12,7 +12,7 @@ const buttonRegister = document.getElementById('buttonRegister');
 buttonRegister.addEventListener('click', () => {
     buttonRegister.classList.add('active');
     buttonLogin.classList.remove('active');
-    // askForResize();
+    loginContainer.style.overflow = 'hidden';
 
     anime({
         targets: 'form.login',
@@ -21,24 +21,22 @@ buttonRegister.addEventListener('click', () => {
         display: false,
         easing: 'easeInExpo',
         complete: function(anim) {
-            // askForResize();
             document.querySelector('form.login').style.display = 'none';
             document.querySelector('form.register').style = `
                 opacity: 0;
                 display: block;
                 left: 100%;
             `
-            askForResize();
             anime({
                 targets: 'form.register',
                 opacity: 1,
-                // position: 'relative',
                 left: '0%',
                 duration: 200,
                 display: false,
                 easing: 'linear',
                 complete: function(anim) {
-                    // askForResize();
+                    loginContainer.style.overflow = 'unset';
+                    askForResize();
                 }
               });
           }
@@ -48,6 +46,11 @@ buttonRegister.addEventListener('click', () => {
 buttonLogin.addEventListener('click', () => {
     buttonLogin.classList.add('active');
     buttonRegister.classList.remove('active');
+
+    // para que las animaciones se muestren correctamente fue necesario que al inicio el contenedor
+    // tenga como propiedad overflow:hidden ya que al no hacerlo de esta manera los botones no se muestran en la pantall
+    loginContainer.style.overflow = 'hidden';
+
     anime({
         targets: 'form.register',
         opacity: 0,
@@ -61,7 +64,6 @@ buttonLogin.addEventListener('click', () => {
                 display: block;
                 left: 100%;
             `
-            askForResize();
             anime({
                 targets: 'form.login',
                 opacity: 1,
@@ -70,12 +72,12 @@ buttonLogin.addEventListener('click', () => {
                 display: false,
                 easing: 'linear',
                 complete: function(anim) {
+                    loginContainer.style.overflow = 'unset';
                     askForResize();
                 }
-              });
+            });
           }
       });
-      
 })
 
 
@@ -94,20 +96,31 @@ window.addEventListener('resize', () => {
  *                                                                                      */
 //========================================================================================
 function askForResize() {
-    console.log('event called');
-    
-    if(window.screen.width <= 768) {
+    if(window.innerWidth <= 768) {
         resizeElements();
-    } else {
+    } else if(window.innerWidth > 768) {
         undoResizeElements();
     }
 }
 
 function resizeElements() {
-    loginContainer.style = `
-        top: ${window.innerHeight - welcome.offsetHeight}px;
-        height: ${loginContainer.firstElementChild.offsetHeight}px;
-    `
+    // cuando el height del documento sea mayor al tamaño de la pantalla
+    // se tiene que hacer la siguiente configuración para que el contenedor pueda 
+    // mostar todos los botones e inputs correctamente, además de las animaciones
+    if(document.documentElement.scrollHeight > window.screen.height){
+        loginContainer.style = `
+            top: ${window.innerHeight - welcome.offsetHeight}px;
+            height: inherit;
+        `
+        loginContainer.firstElementChild.style.height = '100%';
+    } else {
+        // y cuando sea menor el contenedor tiene que también tener el tamaño correcto para poder mostrar los elementos que contiene
+        loginContainer.style = `
+            top: ${window.innerHeight - welcome.offsetHeight}px;
+            height: ${document.documentElement.scrollHeight - welcome.offsetHeight}px;
+        `
+        loginContainer.firstElementChild.style.height = '100%';
+    }
 }
 
 function undoResizeElements() {
@@ -115,4 +128,5 @@ function undoResizeElements() {
         top: 0;
         height: 100%;
     `
+    loginContainer.firstElementChild.style.height = 'unset';
 }
