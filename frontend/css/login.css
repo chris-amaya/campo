@@ -2,13 +2,11 @@
     position: absolute;
     background: #000;
     width: 35%;
-    /* height: 100%; */
     right: 0;
     top: 0;
     display: flex;
     flex-wrap: wrap;
     align-content: center;
-    /* overflow: hidden; */
 }
 
 .login-container a {
@@ -21,7 +19,6 @@
 
 .login-container div {
     width: 100%;
-    /* overflow: hidden; */
 }
 
 .login-container form {
@@ -74,7 +71,8 @@
 }
 
 .form-active button.active,
-.account-options .options .active-button {
+.account-options .options .active-button,
+account-options-2 .options .active-button {
     background: var(--yellow-color);
     color: #fff;
 }
@@ -84,7 +82,6 @@
 .name,
 .last-name {
     position: relative;
-    /* margin-bottom: 20px; */
 }
 
 .email {
@@ -200,7 +197,6 @@ input[type="checkbox"]:checked+span:before {
 .login-altern i {
     padding: 10px 50px;
     box-sizing: border-box;
-    /* width: } */
 }
 
 .facebook {
@@ -225,27 +221,27 @@ input[type="checkbox"]:checked+span:before {
     margin-bottom: 0;
 }
 
-form.login {
-    display: block;
+form.login,
+form.register,
+form.account-options,
+form.account-options-2 {
     position: relative;
 }
 
-form.register {
-    display: none;
-    position: relative;
-}
-
-form.account-options {
-    position: relative;
+form.register,
+form.account-options,
+form.account-options-2 {
     display: none;
 }
 
-form.account-options .options {
+form.account-options .options,
+form.account-options-2 .options {
     display: flex;
     flex-wrap: wrap;
 }
 
-form.account-options .options div {
+form.account-options .options div,
+form.account-options-2 .options div {
     width: 50%;
     display: flex;
     justify-content: center;
@@ -258,7 +254,8 @@ form.account-options .options div {
     color: #000;
 }
 
-form.account-options .options div p
+form.account-options .options div p,
+form.account-options-2 .options div p
 {
     width: 100%;
     text-align: center;
@@ -266,6 +263,16 @@ form.account-options .options div p
     margin-bottom: 10px;
 }
 
+form.account-options .options i,
+form.account-options-2 .options i {
+    font-size: 34px;
+}
+
+form.account-options .options div:hover,
+form.account-options-2 .options div:hover {
+    background: var(--yellow-color);
+    color: #fff;
+}
 
 
 
@@ -279,6 +286,11 @@ form.register .conditions p {
     margin: 5px 0;
 }
 
+.button-submit-options:hover {
+    box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
+    /* propiedad para iluminar el botón cuando se este en estado :hover */
+}
+
 @media screen and (max-width: 768px) {
     .welcome {
         width: 100%;
@@ -290,9 +302,6 @@ form.register .conditions p {
 
     .login-container {
         width: 100%;
-        /* height: 50%; */
-        /* bottom: 0;
-        top: unset; */
     }
 
 
@@ -306,8 +315,6 @@ form.register .conditions p {
     .facebook, .google {
         width: 100%;
     }
-
-    /* .login-altern */
 
     .welcome {
         padding: 0 20px;
@@ -329,8 +336,6 @@ form.register .conditions p {
     .facebook, .google {
         width: 100%;
     }
-
-    /* .login-altern */
 
     .welcome {
         padding: 0 20px;
