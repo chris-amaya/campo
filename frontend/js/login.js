@@ -4,6 +4,8 @@ import '../css/login.css'
 import { animations } from './animations';
 import anime from 'animejs/lib/anime.es.js';
 
+import { User } from './classes/user';
+
 const loginContainer = document.getElementById('loginContainer')
 const welcome        = document.getElementById('welcome');
 const buttonLogin    = document.getElementById('buttonLogin');
@@ -11,74 +13,163 @@ const buttonRegister = document.getElementById('buttonRegister');
 
 buttonRegister.addEventListener('click', () => {
     buttonRegister.classList.add('active');
-    buttonLogin.classList.remove('active');
-    loginContainer.style.overflow = 'hidden';
-
-    anime({
-        targets: 'form.login',
-        opacity: 0,
-        duration: 500,
-        display: false,
-        easing: 'easeInExpo',
-        complete: function(anim) {
-            document.querySelector('form.login').style.display = 'none';
-            document.querySelector('form.register').style = `
-                opacity: 0;
-                display: block;
-                left: 100%;
-            `
-            anime({
-                targets: 'form.register',
-                opacity: 1,
-                left: '0%',
-                duration: 200,
-                display: false,
-                easing: 'linear',
-                complete: function(anim) {
-                    loginContainer.style.overflow = 'unset';
-                    askForResize();
-                }
-              });
-          }
-      });
+    buttonLogin.classList.remove('active')
+    changeForm('register', 'login');
 })
 
 buttonLogin.addEventListener('click', () => {
     buttonLogin.classList.add('active');
     buttonRegister.classList.remove('active');
-
-    // para que las animaciones se muestren correctamente fue necesario que al inicio el contenedor
-    // tenga como propiedad overflow:hidden ya que al no hacerlo de esta manera los botones no se muestran en la pantall
-    loginContainer.style.overflow = 'hidden';
-
-    anime({
-        targets: 'form.register',
-        opacity: 0,
-        duration: 500,
-        display: false,
-        easing: 'easeInExpo',
-        complete: function(anim) {
-            document.querySelector('form.register').style.display = 'none';
-            document.querySelector('form.login').style = `
-                opacity: 0;
-                display: block;
-                left: 100%;
-            `
-            anime({
-                targets: 'form.login',
-                opacity: 1,
-                left: '0%',
-                duration: 200,
-                display: false,
-                easing: 'linear',
-                complete: function(anim) {
-                    loginContainer.style.overflow = 'unset';
-                    askForResize();
-                }
-            });
-          }
-      });
+    changeForm('login', 'register');
 })
+
+// ============================================================================================== //
+// ==================================== REGISTRO DE USUARIOS ==================================== //
+// ============================================================================================== //
+
+const firstName        = document.getElementById('signUpFullName');
+const lastName        = document.getElementById('signUpLastName');
+const email           = document.getElementById('signUpEmail');
+const password        = document.getElementById('signUpPassword');
+const password2       = document.getElementById('signUpPassword2');
+const buttonSignUp    = document.getElementById('buttonSignUp');
+const messageErrorBox = document.getElementById('messageErrorBox');
+const privacy         = document.getElementById('checkPrivacy');  
+const conditions      = document.getElementById('checkConditions');
+var role;
+
+let user = new User();
+
+// Tuve que hacer uso de una función handler para poder usar async/await
+buttonSignUp.addEventListener('click', (event) => handlerSignUp(event), false);
+
+async function handlerSignUp(event) {
+    event.preventDefault();
+    const result = user.init(email.value, password.value, password2.value, firstName.value, lastName.value, conditions.checked, privacy.checked); 
+
+    
+    if(result === true) {
+       // TODO: hacer fetch hacía el servidor y pasar a la siguiente animación 
+        let emailReq = await fetch(`http://localhost:5000/api/user/email/${email.value}`)
+        let emailExists = await emailReq.json(); 
+        if(emailExists.status === true) {
+            // cambiar a la siguiente animación
+            messageErrorBox.style.display = 'none';
+            changeForm('account-options', 'register');
+        } else {
+            messageErrorBox.style.display = 'flex';
+            messageErrorBox.innerHTML = '';
+            messageErrorBox.innerHTML += `<li>${emailExists.msg}</li>`
+        }
+
+    } else {
+        // mostrar mensajes de error en la pantalla del usuario
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = '';
+        for(let i = 0; i < result.length; i++) {
+            messageErrorBox.innerHTML += `
+                <li>${result[i]}</li>
+            `
+        }
+    }
+}
+
+// botones en los que se muestra la información complementaria para el usuario
+const buttonAccountOption1 = document.getElementById('account-options1');
+const buttonAccountOption2 = document.getElementById('account-options2')
+
+buttonAccountOption1.addEventListener('click', (e) => handlerButtonAccountOption1(e), false);
+buttonAccountOption2.addEventListener('click', (e) => handlerButtonAccountOption2(e), false);
+
+
+
+// formulario donde se muestra en que sí el usuario usara la cuenta como vendedor o comprado
+async function handlerButtonAccountOption1(e) {
+    e.preventDefault();
+    if(!role || role.length == 0 || role == '' || role == null, role === undefined) {
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>favor de seleccionar una opción</li>`
+    } else if(role == 'sell') {
+        messageErrorBox.style.display = 'none';
+        changeForm('account-options-2', 'account-options');
+    } else {
+        // hacer fetch registrando al usuario como comprador
+        messageErrorBox.style.display = 'none';
+        fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+    }
+}
+
+// formulario donde se muestra que si el usuario usará la cuenta de vendedor como usuario único o pertenece a un ejido o grupo
+async function handlerButtonAccountOption2(e) {
+    e.preventDefault();
+    if(!role || role.length == 0 || role == '' || role == null, role === undefined) {
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>favor de seleccionar una opción</li>`
+    } else if(role == 'SELLER_TEAM_ROLE' || role == 'SELLER_ALONE_ROLE') {
+        messageErrorBox.style.display = 'none';
+
+        // hacer fetch de registro usuario como vendedor y redireccionar hacía el dashboard
+        fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role);
+    }
+
+}
+
+// ============================================================================================== //
+// ====================================== LOGIN DE USUARIOS ===================================== //
+// ============================================================================================== //
+
+const loginButton   = document.getElementById('submitLogin');
+const emailLogin    = document.getElementById('emailLogin');
+const passwordLogin = document.getElementById('passwordLogin');
+
+console.log(loginButton);
+
+loginButton.addEventListener('click', (event) => handlerLogin(event), false);
+
+async function handlerLogin(event) {
+    event.preventDefault();
+
+    console.log({
+        email: emailLogin.value,
+        password: passwordLogin.value
+    });
+    
+
+    if(!emailLogin.value || emailLogin.value == '') {
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>Favor de ingresar su email</li>`
+    } else if (!passwordLogin.value || passwordLogin.value == '') {
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>Favor de ingresar su contraseña</li>`
+    } else {
+        let loginReq = await fetch('/api/login', {
+            method: 'POST',
+            body: JSON.stringify({
+                email: emailLogin.value,
+                password: passwordLogin.value
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        });
+
+        let response = await loginReq.json();
+        if(response.status == 'ok') {
+            // TODO: redirigir a /dashboard
+            // TODO: guardar data en localstorage
+
+            console.log('logeo exitoso')
+        } else {
+            messageErrorBox.style.display = 'flex';
+            messageErrorBox.innerHTML = `<li>${response.msg}</li>`
+        }
+    }
+
+}
+
+document.addEventListener('click', (e) => {
+    handlerOptionAccount(e.target);
+});
 
 
 window.addEventListener('load', () => {
@@ -130,3 +221,104 @@ function undoResizeElements() {
     `
     loginContainer.firstElementChild.style.height = 'unset';
 }
+
+// función usada para veríficar que las opciones son escogidas y establecidas correctamente
+function handlerOptionAccount(option) {
+    if(option.classList.contains('optionBuy') || option.parentElement.classList.contains('optionBuy')) {
+        role = 'BUYER_ROLE';
+        handlerOptionSelected('form.account-options .options div', 0);
+    } else if( option.classList.contains('optionSell') || option.parentElement.classList.contains('optionSell')) {
+        role = 'sell';
+        handlerOptionSelected('form.account-options .options div', 1);
+    }
+
+    if(option.classList.contains('optionTeam') || option.parentElement.classList.contains('optionTeam')) {
+        role = 'SELLER_TEAM_ROLE';
+        handlerOptionSelected('form.account-options-2 .options div', 1)
+    } else if(option.classList.contains('optionUser') || option.parentElement.classList.contains('optionUser')) {
+        role = 'SELLER_ALONE_ROLE'
+        handlerOptionSelected('form.account-options-2 .options div', 0)
+    }
+}
+
+// functión que cambia en pantalla la opción que ha sido escogida
+function handlerOptionSelected(selector, numberOption) {
+    const options = document.querySelectorAll(selector);
+    if(numberOption === 0) {
+        options[0].classList.add('option-selected');
+        options[1].classList.remove('option-selected');
+    } else if(numberOption === 1) {
+        options[1].classList.add('option-selected');
+        options[0].classList.remove('option-selected');
+    }
+}
+
+async function fetchRegisterUser(firstName, lastName, password, email, role) {
+    const params = {
+        firstName,
+        lastName,
+        password,
+        email,
+        role
+    }
+    const registerUser = await fetch('api/user/signUp/', {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+        
+    });
+    const response = await registerUser.json();
+    console.log(response)
+    if(response.status == 'ok') {
+        // TODO: inicializar parametros localstorage y redirigir al dashboard
+        localStorage.setItem('token',     response.token);
+        localStorage.setItem('firstName', response.user.firstName);
+        localStorage.setItem('lastName',  response.user.lastName);
+        localStorage.setItem('email',     response.user.email);
+        localStorage.setItem('_id',       response.user._id);
+        localStorage.setItem('role',      response.user.role)
+
+    } else if(response.status == false) {
+        // TODO: mostrar errores en pantalla
+        // @param response.message - mensaje que contiene el error que ha ocurrido
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>${response.message}</li>`
+    }
+}
+
+
+function changeForm(bringForm, hideForm) {
+    // para que las animaciones se muestren correctamente fue necesario que al inicio el contenedor
+    // tenga como propiedad overflow:hidden ya que al no hacerlo de esta manera los botones no se muestran en la pantalla
+    loginContainer.style.overflow = 'hidden';
+    anime({
+        targets: `form.${hideForm}`,
+        opacity: 0,
+        duration: 500,
+        display: false,
+        easing: 'easeInExpo',
+        complete: function(anim) {
+            document.querySelector(`form.${hideForm}`).style.display = 'none';
+            document.querySelector(`form.${bringForm}`).style = `
+                opacity: 0;
+                display: block;
+                left: 100%;
+            `
+            anime({
+                targets: `form.${bringForm}`,
+                opacity: 1,
+                left: '0%',
+                duration: 200,
+                display: false,
+                easing: 'linear',
+                complete: function(anim) {
+                    loginContainer.style.overflow = 'unset';
+                    askForResize();
+                }
+              });
+          }
+      });
+}
+

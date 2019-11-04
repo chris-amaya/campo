@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // CARGANDO RUTAS
-const frontRoutes   = require('./backend/routes/front.routes')
+const frontRoutes   = require('./backend/routes/front.routes');
+const userRoutes    = require('./backend/routes/user.routes');
 
 /*=============================================
 CABECERAS HTTP
@@ -37,6 +38,9 @@ app.use(express.static(pub_dir));
 
 // app.use('/uploads', express.static(pub_img));
 app.use(frontRoutes);
+app.use(userRoutes)
 
+// Configuración global de rutas
+// app.use(require('./backend/routes/index.routes'));
 
 module.exports = app;

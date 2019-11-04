@@ -274,6 +274,12 @@ form.account-options-2 .options div:hover {
     color: #fff;
 }
 
+.option-selected {
+    background: var(--yellow-color) !important;
+    color: #fff !important;
+}
+
+
 
 
 form.register .conditions{
@@ -289,6 +295,25 @@ form.register .conditions p {
 .button-submit-options:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
     /* propiedad para iluminar el botón cuando se este en estado :hover */
+}
+
+.formErrors {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background: rebeccapurple;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    display: none;
+}
+
+.formErrors > li {
+    width: 100%;
+    margin-bottom: 3px;
 }
 
 @media screen and (max-width: 768px) {
