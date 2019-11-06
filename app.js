@@ -15,6 +15,7 @@ app.use(bodyParser.json());
 // CARGANDO RUTAS
 const frontRoutes   = require('./backend/routes/front.routes');
 const userRoutes    = require('./backend/routes/user.routes');
+const backendRoutes = require('./backend/routes/backend.routes');
 
 /*=============================================
 CABECERAS HTTP
@@ -32,13 +33,14 @@ const pub_dir = `${__dirname}/dist`;
 // const pub_img = `${__dirname}/uploads`;
 
 app.set('views', __dirname + '/dist');
-hbs.registerPartials(__dirname + '/frontend/partials');
+hbs.registerPartials(__dirname + '5000/5000/5000/5000//frontend/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(pub_dir));
 
 // app.use('/uploads', express.static(pub_img));
 app.use(frontRoutes);
-app.use(userRoutes)
+app.use(userRoutes);
+app.use(backendRoutes);
 
 // Configuración global de rutas
 // app.use(require('./backend/routes/index.routes'));

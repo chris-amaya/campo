@@ -1,0 +1,120 @@
+body, html, h1, h2, h3, h4, h5, h6 {
+    padding: 0;
+    margin: 0;
+}
+
+body, html {
+    box-sizing: border-box;
+    /* overflow: hidden; */
+    font-family: 'Open Sans';
+}
+
+:root {
+    --grey-color: #f2f2f2;
+    --grey-2nd: #B7B7B7;
+    --grey-3rd: #515151;
+    --yellow-color: #FE921F;
+}
+
+.container {
+    width: 100%;
+    max-width: 1200px;
+}
+
+.left-panel {
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 15%;
+    background: var(--grey-color);
+}
+
+.logo img {
+    width: 100%;
+}
+
+.sections {
+    padding: 0;
+}
+
+.section {
+    padding: 25px 10px;
+    list-style: none;
+    border-left: 5px solid transparent;
+}
+
+.section:hover {
+    background: var(--grey-3rd);
+    color: var(--yellow-color);
+    border-left: 5px solid var(--yellow-color);
+}
+
+.section i {
+    margin-right: 10px;
+}
+
+.top-panel {
+    position: absolute;
+    top: 20px;
+    right: 4%;
+    width: 75%;
+    background: var(--grey-color);
+    display: flex;
+    align-items: center;
+}
+
+
+
+.user {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 30%;
+    border-left: 3px solid #fff;
+}
+
+.user-notification {
+    width: 70%;
+    text-align: right;
+    padding-right: 30px;
+    box-sizing: border-box;
+}
+
+#dashSection {
+    position: absolute;
+    right: 4%;
+    width: 75%;
+}
+
+#dashSection p.breadCrumbs {
+    /* width: 30%; */
+    text-align: right;
+}
+
+.breadCrumbs.active {
+    color: var(--yellow-color);
+    text-decoration: none;
+}
+
+.updateButtonContainer {
+    width: 60%;
+
+}
+
+.login-button {
+    border: none;
+    background: var(--yellow-color);
+    padding: 10px 0;
+    width: 100%;
+    display: block;
+    color: #fff;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+form.user-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}

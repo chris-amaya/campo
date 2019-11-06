@@ -1,0 +1,22 @@
+form.user-form {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+form div{
+    width: 40%;
+}
+
+form div input{
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--yellow-color);
+    outline: none;
+    padding: 5px 0px;
+    font-family: 'Open Sans';
+}
+
+form div input::placeholder {
+    color: #E2E2E2;
+}

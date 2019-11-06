@@ -121,6 +121,7 @@ async function handlerButtonAccountOption2(e) {
 const loginButton   = document.getElementById('submitLogin');
 const emailLogin    = document.getElementById('emailLogin');
 const passwordLogin = document.getElementById('passwordLogin');
+const remember      = document.getElementById('checkboxRemember')
 
 console.log(loginButton);
 
@@ -273,12 +274,21 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
     console.log(response)
     if(response.status == 'ok') {
         // TODO: inicializar parametros localstorage y redirigir al dashboard
-        localStorage.setItem('token',     response.token);
-        localStorage.setItem('firstName', response.user.firstName);
-        localStorage.setItem('lastName',  response.user.lastName);
-        localStorage.setItem('email',     response.user.email);
-        localStorage.setItem('_id',       response.user._id);
-        localStorage.setItem('role',      response.user.role)
+        if(remember.value === true) {
+            localStorage.setItem('token',     response.token);
+            localStorage.setItem('firstName', response.user.firstName);
+            localStorage.setItem('lastName',  response.user.lastName);
+            localStorage.setItem('email',     response.user.email);
+            localStorage.setItem('_id',       response.user._id);
+            localStorage.setItem('role',      response.user.role)
+        } else {
+            sessionStorage.setItem('token', response.token)
+            sessionStorage.setItem('firstName', response.user.firstName)
+            sessionStorage.setItem('lastName', response.user.lastName)
+            sessionStorage.setItem('email', response.user.email)
+            sessionStorage.setItem('_id', response.user._id)
+            sessionStorage.setItem('role', response.user.role)
+        }
 
     } else if(response.status == false) {
         // TODO: mostrar errores en pantalla
