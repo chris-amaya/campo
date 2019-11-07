@@ -97,24 +97,3 @@ body, html {
     text-decoration: none;
 }
 
-.updateButtonContainer {
-    width: 60%;
-
-}
-
-.login-button {
-    border: none;
-    background: var(--yellow-color);
-    padding: 10px 0;
-    width: 100%;
-    display: block;
-    color: #fff;
-    outline: none;
-    margin-bottom: 20px;
-}
-
-form.user-form {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-}

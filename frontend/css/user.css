@@ -20,3 +20,77 @@ form div input{
 form div input::placeholder {
     color: #E2E2E2;
 }
+
+.updateButtonContainer {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+}
+
+.updateButtonContainer input {
+    width: 25%;
+}
+
+.login-button {
+    border: none;
+    background: var(--yellow-color);
+    padding: 10px 0;
+    width: 100%;
+    display: block;
+    color: #fff;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+.box-select {
+    position: relative;
+    width: 100%;
+}
+
+.box-select select{
+    background-color: transparent;
+    color: white;
+    /* padding: 12px; */
+    width: 100%;
+    border: none;
+    border-bottom: 2px solid var(--yellow-color);
+    font-size: 20px;
+    /* box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2); */
+    -webkit-appearance: button;
+    appearance: button;
+      outline: none;
+}
+
+.box-select::before {
+    content: "\f078";
+    font-family: FontAwesome;
+    position: absolute;
+    top: -50%;
+    right: 0;
+    /* width: 20%; */
+    height: 100%;
+    text-align: center;
+    font-size: 18px;
+    line-height: 45px;
+    color: var(--yellow-color);
+    /* color: rgba(255, 255, 255, 0.5); */
+    /* background-color: rgba(255, 255, 255, 0.1); */
+    pointer-events: none;
+}
+
+.box-select select option {
+    padding: 10px 15px;
+    /* color: rgb(177, 19, 19); */
+    color: #000;
+}
+
+.box-select select option:hover {
+    
+    background-color: var(--yellow-color);
+}
+
+.box-select select option::selection {
+    background-color: var(--yellow-color);
+
+}
