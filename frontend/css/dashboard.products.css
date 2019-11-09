@@ -1,0 +1,51 @@
+.products-table {
+    background: #F2F2F2;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 20px;
+}
+
+.title {
+    margin-bottom: 30px;
+}
+
+.title, .title-product {
+    width: 20%;
+}
+
+.Desc, .desc-product {
+    width: 65%;
+}
+
+#dashSection .buttons {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#dashSection .buttons div i {
+    background: #F2F2F2;
+    color: #B8B8B8;
+    padding: 10px 20px;
+}
+
+.highlight {
+    color: var(--yellow-color) !important;
+}
+
+
+.product {
+    width: 100%;
+    display: flex;
+    border-top: 2px solid #E9E7E7;
+}
+
+
+.product .controls {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 15%;
+    padding: 0px 20px;
+    box-sizing: border-box;
+}

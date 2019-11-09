@@ -23,6 +23,10 @@ app.get('/usuario/:usuario/', (req, res) => {
     })
 })
 
+app.get('/dashboard/productos/', (req, res) => {
+    res.render('dashboard.products.hbs')
+})
+
 
 
 
