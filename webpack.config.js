@@ -14,7 +14,8 @@ module.exports = {
         login: './frontend/js/login',
         dashboard: './frontend/js/dashboard.js',
         userDashboard: './frontend/js/userDashboard.js',
-        security: './frontend/js/security'
+        security: './frontend/js/security',
+        profile: './frontend/js/profile.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -73,6 +74,12 @@ module.exports = {
         template: './frontend/dashboard/security.hbs',
         filename: 'security.hbs',
         chunks: ['security']
+      }),
+      new HtmlWebpackPlugin({
+        title: 'profile',
+        template: './frontend/dashboard/profile.hbs',
+        filename: 'profile.hbs',
+        chunks: ['profile']
       }),
 
     ],

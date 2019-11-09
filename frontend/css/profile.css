@@ -1,0 +1,286 @@
+.highlight {
+    color: var(--yellow-color);
+}
+
+.encabezado {
+    text-align: center;
+    font-family: 'Open Sans';
+    font-size: 32px;
+    margin-bottom: 30px;
+    width: 100%;
+}
+
+.user-pic {
+    text-align: center;
+    margin: 0;
+    margin-bottom: 15px;
+}
+
+.user-pic img {
+    height: 150px;
+    width: 150px;
+    border-radius: 50%;
+}
+
+.user-importantData h2 {
+    text-align: center;
+    font-weight: 100;
+}
+
+
+.user-importantData {
+    margin-bottom: 30px;
+}
+
+.user-bar {
+    margin-top: 15px;
+}
+
+.user-bar > p {
+    text-align: center;
+    margin-top: 5px;
+    font-weight: 100;
+}
+
+.bar-verification {
+    border-radius: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+}
+
+.user-verification {
+    width: 30%;
+    position: relative;
+    /* margin-right: 30px; */
+}
+
+.user-steps-verificated {
+    position: absolute;
+    right: -20px;
+    top: 0;
+    height: 100%;
+
+}
+
+.user-percentage-verification {
+    background: var(--yellow-color);
+    width: 75%;
+    border-radius: 25px;
+    height: inherit;    
+}
+
+.user-background-verification p {
+    margin: 0;
+    position: absolute;
+    width: 100%;
+    right: 0;
+    top: 0;
+    color: #fff;
+}
+
+.user-background-verification {
+    background: #F2F2F2;
+    border-radius: 25px;
+    position: relative;
+    height: 25px;
+}
+
+.user-summary-data div h3 {
+    font-size: 38px;
+    color: var(--yellow-color);
+}
+
+.user-summary-data {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    text-align: center;
+}
+
+.user-summary-data div {
+    width: 30%;
+}
+
+.about {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.about p {
+    text-align: center;
+    color: #BEBEBE;
+    width: 80%;
+    font-size: 20px;
+    margin: 0;
+}
+
+.container-products {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    row-gap: 1em;
+    column-gap: 6em;
+    margin-bottom: 50px;
+}
+
+.user-products figure {
+    margin: 0;
+    position: relative;
+}
+
+.user-products figure img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.prize {
+    position: absolute;
+    top: 0;
+    right: 0;
+    margin: 0;
+    color: #fff;
+    padding: 10px 30px;
+    background: #000;
+    font-family: 'Open Sans';
+    font-size: 18px;
+}
+
+.user-otherData {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.user-otherData div {
+    width: 40%;
+}
+
+.user-otherData div:nth-child(2n) {
+    text-align: right;
+}
+
+.stars {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.counter-opinions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+}
+
+div p {
+    margin-right: 5px;
+    font-weight: 100;
+}
+
+.comment {
+    display: flex;
+    background: #F2F2F2;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+}
+
+.comment .user-pic {
+    margin-right: 30px;
+    margin-bottom: 0;
+    padding: 20px;
+}
+
+.comment .comment-info {
+    display: flex;
+    flex-wrap: wrap;
+    width: 70%;
+}
+
+.comment .user-name {
+    padding-top: 20px;
+    font-size: 18px;
+    color: var(--yellow-color);
+}
+.comment .controls {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.comment .controls > :first-child {
+    width: 50%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.comment .controls .button-share {
+    width: 10%;
+    text-align: center;
+}
+
+.see-more {
+    width: 100%;
+    text-align: center;
+}
+
+.comment-box {
+    background: #F2F2F2;
+    margin-bottom: 30px;
+    padding: 20px 40px 20px 40px;
+}
+
+.comment-box form {
+
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.comment-box .user-pic {
+    margin-bottom: 0;
+}
+
+.comment-box .user-pic img {
+    height: 50px;
+    width: 50px;
+}
+
+.comment-box textarea {
+    width: 100%;
+    border: none;
+    min-width: 80%;
+    height: 100px;
+    outline: none;
+    font-family: 'Open Sans';
+}
+
+.comment-box .comment-buttons {
+    margin-top: 20px;
+    width: 40%;
+    display: flex;
+    /* justify-content: space-between; */
+    align-items: center;
+}
+
+.comment-box .comment-buttons input{
+    border: none;
+    color: #fff;
+    background: #F2F2F2;
+    height: 80%;
+    padding: 0px 25px;
+}
+
+.comment-box .comment-buttons #send-comment {
+    background: var(--yellow-color);
+    margin-left: 30px;
+}
+
+.comment-box .comment-buttons #cancel-comment {
+    /* display: none; */
+    width: 0;
+    padding: 0;
+}
+
+/* http://codepen.io/FredGenkin/pen/eaXYGV */
+/* buscar despues como hacer el rating de estrellas con ese metodo   */
