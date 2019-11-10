@@ -8,7 +8,6 @@ function saveIMGToDisk(file) {
     let currentDate = Date.now();
     let relativePath = '/uploads/';
     let extensionFile =  `.${file.split(';')[0].split('/')[1]}`;
-    // fs.writeFile()
     let pathFile = path.resolve(process.env.PWD + relativePath + currentDate + extensionFile);
     // let pathFile = path.resolve(process.env.PWD + '/uploads/' + Date.now() + getExtensionFile(req.body.pics[i]));
     fs.writeFile(pathFile, base64Data, 'base64', (err) => {
@@ -22,7 +21,6 @@ function saveIMGToDisk(file) {
 }
 
 function createProduct(req, res) {
-    // console.log(req.body.mainImg)
     let newPicsPath = [];
     if(req.body.pics.length > 0) {
         for(let i = 0; i < req.body.pics.length; i++) {
@@ -30,9 +28,6 @@ function createProduct(req, res) {
         }
     }
 
-    
-
-    console.log(newPicsPath);
     let body = req.body;
     body.pics = newPicsPath;
     body.mainImg = body.pics[body.mainImg];
@@ -47,12 +42,27 @@ function createProduct(req, res) {
             })
         } else if(productDB) {
             res.json({
+                status: 'ok',
                 msg: 'Producto registrado correctamente'
             })
         }
     })
 }
 
+function getProductByUser(req, res) {
+    Product.find({"userInfo.email": req.user.email}, (err, productsDB) => {
+        if(err) {
+            return res.status(501).json({
+                msg: "Error al buscar los productos",
+                err
+            })
+        } else if(productsDB) {
+            res.json(productsDB)
+        }
+    });
+}
+
 module.exports = {
-    createProduct
+    createProduct,
+    getProductByUser
 } 

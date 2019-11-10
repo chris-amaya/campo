@@ -12,8 +12,21 @@ function checkToken(req, res, next) {
         } 
 
         req.user = decoded.user;
+        console.log(decoded);
         next();
     })
+}
+
+function validateUser(req, res, next) {
+    if(req.body.userLocalStorate.email != req.user.email) {
+        return res.status(401).json({
+            status: false,
+            err: {
+                message: 'Login incorrecto, favor de volver a ingresar'
+            }
+        })
+    }
+    next();
 }
 
 function validateADMIN(req, res) {
@@ -74,6 +87,7 @@ function refreshToken(req, res) {
 module.exports = {
     checkToken,
     validateADMIN,
-    refreshToken
+    refreshToken,
+    validateUser
 }
 
