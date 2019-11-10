@@ -1,0 +1,105 @@
+textarea#desc-product {
+    width: -webkit-fill-available;
+    width: 100%;
+    border: none;
+    outline: none;
+    min-height: 30px;
+    height: 30px;
+    border-bottom: 2px solid var(--yellow-color);
+    font-family: 'Open Sans';
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.photos {
+    margin-top: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+}
+
+#take-pic {
+    margin-top: 30px;
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1em;
+    color: #fff;
+}
+#take-pic label {
+    text-align: center;
+    align-items: center;
+    background: var(--yellow-color);
+    justify-content: center;
+    padding: 50px;
+}
+.photos div {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #000;
+}
+
+.pic {
+    position: relative;
+}
+
+.pic figure {
+    width: 100%;
+    margin: 0;
+}
+
+.pic figure img {
+    width: 100%;
+}
+
+.pic i#delete-img {
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 10px;
+    color: #fff;
+    font-size: 30px;
+}
+
+.pic i#main-img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 10px;
+    color:transparent;
+    font-size: 30px;
+}
+
+.img-selected {
+    color: var(--yellow-color) !important;
+}
+
+.pic:hover i#main-img {
+    color: var(--yellow-color);
+
+}
+
+.formErrors {
+    list-style: none;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background: rebeccapurple;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    display: none;
+}
+
+.formErrors > li {
+    width: 100%;
+    margin-bottom: 3px;
+}

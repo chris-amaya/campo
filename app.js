@@ -9,13 +9,14 @@ app.use((req, res, next) => {
     next();
 });
 
-app.use(bodyParser.urlencoded({extended:false}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended:true, limit: '10mb'}));
+app.use(bodyParser.json({limit: '10mb'}));
 
 // CARGANDO RUTAS
 const frontRoutes   = require('./backend/routes/front.routes');
 const userRoutes    = require('./backend/routes/user.routes');
 const backendRoutes = require('./backend/routes/backend.routes');
+const productRoutes = require('./backend/routes/product.routes');
 
 /*=============================================
 CABECERAS HTTP
@@ -41,6 +42,7 @@ app.use(express.static(pub_dir));
 app.use(frontRoutes);
 app.use(userRoutes);
 app.use(backendRoutes);
+app.use(productRoutes);
 
 // Configuración global de rutas
 // app.use(require('./backend/routes/index.routes'));

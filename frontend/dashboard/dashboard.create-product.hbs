@@ -1,0 +1,60 @@
+{{> dashboardPanels}}
+        
+    <p class="breadCrumbs">Dashboard / <a class="breadCrumbs active" href="/">Perfil</a></p>
+
+        <form class="user-form" >
+            <div id="messageErrorBox" class="formErrors container"></div>
+            <div class="name">
+                <p>Titulo</p>
+                <input type="text" placeholder="Pedacería de nuez" id="title-product">
+            </div>
+
+            <div class="desc">
+                <p>Descripción</p>
+                <textarea id="desc-product" maxlength="1000"></textarea>
+            </div>
+
+             <div class="prize">
+                <p>Precio (MXN)</p>
+                <input type="number" placeholder="Pedacería de nuez" id="prize-product">
+            </div>
+
+            <div class="category">
+                <p>Categoría</p>
+                <div class="box-select">
+                    <select id="category">
+                        <option value=""></option>
+                        <option value="dgo">Durango</option>
+                        <option value="mty">Monterrey</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="take-pic" id="take-pic">
+                <label for="photos-product">
+                    <i class="fas fa-camera"></i>
+                </label>
+                <input type="file" id="photos-product" multiple>
+            </div>
+            <div class="photos" id="photos"></div>
+
+            <div class="updateButtonContainer">
+                <input type="submit" value="Crear" class="login-button" id="button-uploadProduct">
+            </div>
+
+            
+
+        </form>
+
+
+
+
+
+
+    </section>
+
+</div>
+
+
+</body>
+</html>
