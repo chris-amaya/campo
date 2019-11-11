@@ -8,6 +8,9 @@ const leftPanel   = document.getElementById('left-panel');
 dashSection.style = `
     top: ${topPanel.offsetHeight + topPanel.offsetTop + 30}px;
 `;
+
+const userPic = document.getElementById('user-pic');
+userPic.src = sessionStorage.getItem('pic') || localStorage.getItem('pic');
 // position: absolute;
     // margin-left: ${leftPanel.offsetWidth + 50}px;
     // width: ${window.innerWidth - leftPanel.offsetWidth - 50}px

@@ -33,6 +33,10 @@ let usuarioSchema = new Schema({
     estado: {
         type: Boolean,
         default: true
+    },
+    pic: {
+        type: String,
+        default: '/uploads/default-user.png'
     }
 });
 

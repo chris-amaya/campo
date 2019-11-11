@@ -71,10 +71,15 @@ body, html {
 
 .user {
     display: flex;
-    justify-content: center;
+    justify-content: space-evenly;
     align-items: center;
     width: 30%;
     border-left: 3px solid #fff;
+}
+
+.user a {
+    color: #000;
+    text-decoration: none;
 }
 
 .user-notification {
@@ -100,3 +105,11 @@ body, html {
     text-decoration: none;
 }
 
+#user-pic {
+    width: 100%;
+}
+
+.user-img {
+    width: 50px;
+    margin: 0;
+}

@@ -130,12 +130,6 @@ loginButton.addEventListener('click', (event) => handlerLogin(event), false);
 async function handlerLogin(event) {
     event.preventDefault();
 
-    console.log({
-        email: emailLogin.value,
-        password: passwordLogin.value
-    });
-    
-
     if(!emailLogin.value || emailLogin.value == '') {
         messageErrorBox.style.display = 'flex';
         messageErrorBox.innerHTML = `<li>Favor de ingresar su email</li>`
@@ -159,13 +153,14 @@ async function handlerLogin(event) {
         if(response.status == 'ok') {
             // TODO: redirigir a /dashboard
             // TODO: guardar data en localstorage
-            if(remember.value === true) {
+            if(remember.checked === true) {
                 localStorage.setItem('token',     response.token);
                 localStorage.setItem('firstName', response.userDB.firstName);
                 localStorage.setItem('lastName',  response.userDB.lastName);
                 localStorage.setItem('email',     response.userDB.email);
                 localStorage.setItem('_id',       response.userDB._id);
-                localStorage.setItem('role',      response.userDB.role)
+                localStorage.setItem('role',      response.userDB.role);
+                localStorage.setItem('pic',       response.userDB.pic)
             } else {
                 sessionStorage.setItem('token', response.token)
                 sessionStorage.setItem('firstName', response.userDB.firstName)
@@ -173,6 +168,7 @@ async function handlerLogin(event) {
                 sessionStorage.setItem('email', response.userDB.email)
                 sessionStorage.setItem('_id', response.userDB._id)
                 sessionStorage.setItem('role', response.userDB.role)
+                sessionStorage.setItem('pic', response.userDB.pic)
             }
             window.location.href = '/dashboard';
         } else {
