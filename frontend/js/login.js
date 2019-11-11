@@ -155,11 +155,26 @@ async function handlerLogin(event) {
         });
 
         let response = await loginReq.json();
+        console.log(response);
         if(response.status == 'ok') {
             // TODO: redirigir a /dashboard
             // TODO: guardar data en localstorage
-
-            console.log('logeo exitoso')
+            if(remember.value === true) {
+                localStorage.setItem('token',     response.token);
+                localStorage.setItem('firstName', response.userDB.firstName);
+                localStorage.setItem('lastName',  response.userDB.lastName);
+                localStorage.setItem('email',     response.userDB.email);
+                localStorage.setItem('_id',       response.userDB._id);
+                localStorage.setItem('role',      response.userDB.role)
+            } else {
+                sessionStorage.setItem('token', response.token)
+                sessionStorage.setItem('firstName', response.userDB.firstName)
+                sessionStorage.setItem('lastName', response.userDB.lastName)
+                sessionStorage.setItem('email', response.userDB.email)
+                sessionStorage.setItem('_id', response.userDB._id)
+                sessionStorage.setItem('role', response.userDB.role)
+            }
+            window.location.href = '/dashboard';
         } else {
             messageErrorBox.style.display = 'flex';
             messageErrorBox.innerHTML = `<li>${response.msg}</li>`
@@ -289,6 +304,8 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
             sessionStorage.setItem('_id', response.user._id)
             sessionStorage.setItem('role', response.user.role)
         }
+
+        window.location.href = '/dashboard'
 
     } else if(response.status == false) {
         // TODO: mostrar errores en pantalla

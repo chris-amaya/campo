@@ -10,15 +10,14 @@ function checkToken(req, res, next) {
                 }
             });
         } 
-
-        req.user = decoded.user;
-        console.log(decoded);
+        // console.log(decoded);
+        req.user = decoded.user || decoded.userDB;
         next();
     })
 }
 
 function validateUser(req, res, next) {
-    if(req.body.userLocalStorate.email != req.user.email) {
+    if(req.body.userStored.email != req.user.email) {
         return res.status(401).json({
             status: false,
             err: {

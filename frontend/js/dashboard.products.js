@@ -5,23 +5,25 @@ import '../css/dashboard.products.css'
 const productsTable = document.getElementById('products-table')
 
 document.addEventListener('DOMContentLoaded', (e) => getProductsUser(e), false);
-console.log('asda');
+
 async function getProductsUser(e) {
     let productsReq = await fetch('/api/products', {
         method: 'POST',
         body: JSON.stringify({
-            userLocalStorate: {
-                email: localStorage.getItem('email')
+            userStored: {
+                email: localStorage.getItem('email') || sessionStorage.getItem('email')
             }
+            // userLocalStorate: {
+            //     email: localStorage.getItem('email') || sessionStorage.getItem('email')
+            // }
         }),
         headers: {
             'Content-Type': 'application/json',
-            'token': localStorage.getItem('token')
+            'token': localStorage.getItem('token') || sessionStorage.getItem('token')
         }
     });
     let productsRes = await productsReq.json();
     console.log(productsRes);
-
     if(productsRes.length > 0) {
         productsTable.innerHTML = `
         <div class="title">
@@ -37,9 +39,9 @@ async function getProductsUser(e) {
                 <p class="title-product">${productsRes[i].title}</p>
                 <p class="desc-product">${productsRes[i].description}</p>
                 <div class="controls">
-                        <div class="edit">
+                        <a class="edit" href='/dashboard/producto/editar/${productsRes[i]._id}'>
                             <i class="fas fa-pen"></i>
-                        </div>
+                        </a>
                         <div class="see-more">
                             <i class="fas fa-eye"></i>
                         </div>

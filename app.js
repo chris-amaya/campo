@@ -31,14 +31,14 @@ app.use((req, res, next) => {
   });
 
 const pub_dir = `${__dirname}/dist`;
-// const pub_img = `${__dirname}/uploads`;
+const pub_img = `${__dirname}/uploads`;
 
 app.set('views', __dirname + '/dist');
 hbs.registerPartials(__dirname + '5000/5000/5000/5000//frontend/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(pub_dir));
 
-// app.use('/uploads', express.static(pub_img));
+app.use('/uploads', express.static(pub_img));
 app.use(frontRoutes);
 app.use(userRoutes);
 app.use(backendRoutes);

@@ -17,7 +17,8 @@ module.exports = {
         security: './frontend/js/security',
         profile: './frontend/js/profile.js',
         dashboardProducts: './frontend/js/dashboard.products.js',
-        createProduct: './frontend/js/dashboard.create-product.js'
+        createProduct: './frontend/js/dashboard.create-product.js',
+        editProduct: './frontend/js/dashboard.edit-product.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -94,6 +95,12 @@ module.exports = {
         template: './frontend/dashboard/dashboard.create-product.hbs',
         filename: 'dashboard.create-product.hbs',
         chunks: ['createProduct']
+      }),
+      new HtmlWebpackPlugin({
+        title: 'edit-product',
+        template: './frontend/dashboard/dashboard.edit-product.hbs',
+        filename: 'dashboard.edit-product.hbs',
+        chunks: ['editProduct']
       }),
 
     ],
