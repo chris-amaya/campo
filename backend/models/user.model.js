@@ -37,6 +37,18 @@ let usuarioSchema = new Schema({
     pic: {
         type: String,
         default: '/uploads/default-user.png'
+    },
+    phone: {
+        type: String,
+        required: false
+    },
+    Opinions: {
+        type: Number,
+        required: false
+    },
+    url: {
+        type: String,
+        required: [true, 'la url del usuario es obligatoria']
     }
 });
 

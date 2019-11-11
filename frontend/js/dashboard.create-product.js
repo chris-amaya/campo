@@ -34,6 +34,8 @@ async function uploadProduct(e) {
                 firstName: localStorage.getItem('firstName') || sessionStorage.getItem('firstName'),
                 lastName: localStorage.getItem('lastName') || sessionStorage.getItem('lastName'),
                 email: localStorage.getItem('email') || sessionStorage.getItem('email'),
+                _id: localStorage.getItem('_id') || sessionStorage.getItem('_id'),
+                phone: localStorage.getItem('phone', sessionStorage.getItem('phone'))
             },
             pics: [],
             // userStored: {
@@ -139,21 +141,21 @@ function renderImage(file) {
 }
 
 function validateForm() {
-    // if(titleProduct.value == '' || titleProduct.value === undefined || titleProduct.value.length < 0) {
-    //     errors.push('favor de insertar un titulo')
-    // }
+    if(titleProduct.value == '' || titleProduct.value === undefined || titleProduct.value.length < 0) {
+        errors.push('favor de insertar un titulo')
+    }
 
-    // if(descProduct.value == '' || descProduct.value === undefined || descProduct.value.length < 0 || descProduct.value.length >= 1000) {
-    //     errors.push('favor de insertar una descripción, no mayor a 1000 caracteres');
-    // }
+    if(descProduct.value == '' || descProduct.value === undefined || descProduct.value.length < 0 || descProduct.value.length >= 1000) {
+        errors.push('favor de insertar una descripción, no mayor a 1000 caracteres');
+    }
 
-    // if(prizeProduct.value == '' || prizeProduct.value === undefined || prizeProduct.value.length < 0) {
-    //     errors.push('favor de insertar un precio')
-    // }
+    if(prizeProduct.value == '' || prizeProduct.value === undefined || prizeProduct.value.length < 0) {
+        errors.push('favor de insertar un precio')
+    }
 
-    // if(category.value == '' || category.value === undefined || category.value.length < 0) {
-    //     errors.push('favor de seleccionar una categoria')
-    // }
+    if(category.value == '' || category.value === undefined || category.value.length < 0) {
+        errors.push('favor de seleccionar una categoria')
+    }
 
     if(document.querySelectorAll('[data-img]').length == 1 ) {
         imgMainSelec = document.querySelector('[data-img]').src;

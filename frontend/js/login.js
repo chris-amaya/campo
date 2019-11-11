@@ -292,7 +292,8 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
             localStorage.setItem('email',     response.user.email);
             localStorage.setItem('_id',       response.user._id);
             localStorage.setItem('role',      response.user.role)
-            localStorage.setItem('pic',       response.user.pic)
+            localStorage.setItem('pic',       response.user.pic);
+            localStorage.setItem('url',       response.user.url);
         } else {
             sessionStorage.setItem('token',     response.token)
             sessionStorage.setItem('firstName', response.user.firstName)
@@ -301,9 +302,14 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
             sessionStorage.setItem('_id',       response.user._id)
             sessionStorage.setItem('role',      response.user.role)
             sessionStorage.setItem('pic',       response.user.pic)
+            sessionStorage.setItem('url',       response.user.url)
+        }
+        if(response.user.role == 'BUYER_ROLE') {
+            window.location.href = '/'
+        } else {
+            window.location.href = '/dashboard'
         }
 
-        window.location.href = '/dashboard'
 
     } else if(response.status == false) {
         // TODO: mostrar errores en pantalla

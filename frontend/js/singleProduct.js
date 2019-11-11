@@ -6,7 +6,20 @@ import { ImageProduct } from './classes/image';
 import { animations } from './animations';
 
 const urlProduct = window.location.href.split('/').slice(-1)[0];
+const buyButton = document.getElementById('buy');
 
+buyButton.addEventListener('click', (e) => getContactDataUser(e), false);
+
+async function getContactDataUser(e) {
+    let userReq = await fetch(`api/user/product/${urlProduct}`, {
+        headers: {
+            'Content-Type': 'application/json',
+            'token': localStorage.getItem('token') || sessionStorage.getItem('token')
+        }
+    });
+    let userRes = await userReq.json();
+    console.log(userRes);
+}
 
 document.addEventListener('click', (e) => {
     e.stopImmediatePropagation();

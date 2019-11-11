@@ -10,7 +10,10 @@ dashSection.style = `
 `;
 
 const userPic = document.getElementById('user-pic');
+const firstName = document.getElementById('firstName');
 userPic.src = sessionStorage.getItem('pic') || localStorage.getItem('pic');
+firstName.href = `/perfil/${sessionStorage.getItem('url') || localStorage.getItem('url')}` 
+
 // position: absolute;
     // margin-left: ${leftPanel.offsetWidth + 50}px;
     // width: ${window.innerWidth - leftPanel.offsetWidth - 50}px

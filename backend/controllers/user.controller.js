@@ -2,6 +2,23 @@ const User = require('../models/user.model');
 const JWT  = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const errors = [];
+
+function slugify(string) {
+    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
+  
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+      .replace(/&/g, '-and-') // Replace & with 'and'
+      .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+      .replace(/\-\-+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '') // Trim - from end of text
+}
+
+
 function userSignUp(req, res) {
     const body = req.body;
     // console.log(body);
@@ -16,13 +33,15 @@ function userSignUp(req, res) {
             errors: this.errors
         })
     } else {
+        let randNumber = Date.now().toString();
 
         let user = new User({
             firstName: body.firstName,
             lastName: body.lastName,
             password: bcrypt.hashSync(body.password, 10),
             email: body.email,
-            role: body.role
+            role: body.role,
+            url: slugify(`${body.firstName} ${body.lastName}`) + `-${randNumber.substring(randNumber.length - 4)}`
         })
 
         user.save((err, user) => {

@@ -1,4 +1,5 @@
 const Product = require('../models/product.model');
+const User = require('../models/user.model');
 const JWT  = require('jsonwebtoken');
 const fs = require('fs');
 const path = require('path');
@@ -34,7 +35,7 @@ function slugify(string) {
       .replace(/\-\-+/g, '-') // Replace multiple - with single -
       .replace(/^-+/, '') // Trim - from start of text
       .replace(/-+$/, '') // Trim - from end of text
-  }
+}
 
 function createProduct(req, res) {
     let newPicsPath = [];
@@ -193,11 +194,30 @@ function getProductByURL(req, res) {
     })
 }
 
+function getUserByProductURL(req, res) {
+    Product.findOne({url: req.params.url}, (err, productDB) => {
+        User.findOne({email: productDB.userInfo.email}, (err, userDB) => {
+            if(err) {
+                return res.status(501).json({
+                    status: false,
+                    msg: 'Error al recuperar información de contacto del usuairo'
+                })
+            } else if(userDB) {
+                res.json({
+                    status: 'ok',
+                    userDB
+                })
+            }
+        })
+    })
+}
+
 module.exports = {
     createProduct,
     getProductByUser,
     getProductByID,
     deleteImgByID,
     editProduct,
-    getProductByURL
+    getProductByURL,
+    getUserByProductURL
 } 
