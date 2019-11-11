@@ -17,6 +17,7 @@ const frontRoutes   = require('./backend/routes/front.routes');
 const userRoutes    = require('./backend/routes/user.routes');
 const backendRoutes = require('./backend/routes/backend.routes');
 const productRoutes = require('./backend/routes/product.routes');
+const categoryRoutes = require('./backend/routes/category.routes');
 
 /*=============================================
 CABECERAS HTTP
@@ -43,6 +44,7 @@ app.use(frontRoutes);
 app.use(userRoutes);
 app.use(backendRoutes);
 app.use(productRoutes);
+app.use(categoryRoutes);
 
 // Configuración global de rutas
 // app.use(require('./backend/routes/index.routes'));

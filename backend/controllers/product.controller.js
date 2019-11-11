@@ -212,6 +212,23 @@ function getUserByProductURL(req, res) {
     })
 }
 
+function getLastProducts(req,res) {
+    console.log('asdfasdfsadf');
+    Product.find().sort({ _id: -1 }).limit(3).exec((err, lastProductsDB) => {
+        if(err) {
+            return res.status(501).json({
+                status: false,
+                message: 'error al buscar los productos'
+            })
+        } else if(lastProductsDB) {
+            return res.json({
+                status: 'ok',
+                lastProductsDB
+            })
+        }
+    })
+}
+
 module.exports = {
     createProduct,
     getProductByUser,
@@ -219,5 +236,6 @@ module.exports = {
     deleteImgByID,
     editProduct,
     getProductByURL,
-    getUserByProductURL
+    getUserByProductURL,
+    getLastProducts
 } 

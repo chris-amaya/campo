@@ -1,6 +1,8 @@
 .list-product {
     display: flex;
     margin-bottom: 20px;
+    text-decoration: none;
+    color: #000;
 }
 
 .list-product figure {

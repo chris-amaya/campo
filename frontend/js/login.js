@@ -307,7 +307,7 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
         if(response.user.role == 'BUYER_ROLE') {
             window.location.href = '/'
         } else {
-            window.location.href = '/dashboard'
+            window.location.href = '/dashboard/user'
         }
 
 
