@@ -25,6 +25,9 @@ app.get('/acceso', (req, res) => {
     res.render('login');
 })
 
+app.get('/perfil/:url', (req, res) => {
+    res.render('profile')
+})
 
 
 

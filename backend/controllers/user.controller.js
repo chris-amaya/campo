@@ -1,4 +1,5 @@
 const User = require('../models/user.model');
+const Product = require('../models/product.model');
 const JWT  = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const errors = [];
@@ -155,9 +156,45 @@ function example(req, res) {
     
 }
 
+function profile(req, res) {
+    User.findOne({url: req.params.url}, (err, userDB) => {
+        if(err) {
+            return res.json({
+                status: false,
+                msg: 'Error al buscar el usuario'
+            })
+        } else if(userDB) {
+
+            Product.find({"userInfo.email": userDB.email}, (err, productsDB) => {
+
+                if(err) {
+                    return res.json({
+                        status: false,
+                        msg: 'Error al buscar los productos'
+                    })
+                } else if(productsDB) {
+                    res.json({
+                        status: 'ok',
+                        userDB,
+                        productsDB
+                    })
+                } else {
+                    res.json({
+                        status: 'ok',
+                        userDB
+                    })
+                }
+
+            })
+            
+        }
+    })
+}
+
 module.exports = {
     userSignUp, 
     checkEmail,
     example,
-    login
+    login,
+    profile
 }

@@ -9,10 +9,10 @@
             <div class="user-importantData">
                 <div>
                     <figure class="user-pic">
-                        <img src="../img/profile.jpg" alt="">
+                        <img src="../img/profile.jpg" alt="" id="user-pic">
                     </figure>
 
-                    <h2>Chris Amaya</h2>
+                    <h2 id='user-name'>Chris Amaya</h2>
 
                     <div class="stars">
                         <div class="backgroundStars">
@@ -46,17 +46,17 @@
 
                 <div class="user-summary-data">
                     <div>
-                        <h3>150</h3>
+                        <h3 id="user-hasSold" >150</h3>
                         <p>Productos Vendidos</p>
                     </div>
 
                     <div>
-                        <h3>10</h3>
+                        <h3 id="user-isSeling">10</h3>
                         <p>Productos en venta</p>
                     </div>
 
                     <div>
-                        <h3>20</h3>
+                        <h3 id="user-opinions">20</h3>
                         <p>Criticas</p>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
 
             <div class="about">
                 <h3 class="encabezado">Sobre Mí</h3>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Ad, exercitationem incidunt blanditiis facilis provident eaque quod magnam aliquid modi quaerat error animi corrupti labore sunt deserunt dicta numquam tenetur corporis excepturi voluptas, voluptate itaque nisi! Totam ratione quos eius natus perspiciatis! Quaerat, repellat! Quaerat sit vitae eos animi numquam soluta?</p>
+                <p id="user-about"></p>
             </div>
 
             <div class="user-otherData">
@@ -101,8 +101,15 @@
 
             <div class="user-products"> 
                 <h4 class="encabezado">Mis productos</h4>
-                <div class="container-products">
-                    <a href="/producto/producto-01">
+                <div class="container-products" id="container-products">
+                    {{!-- <a href="/producto/producto-01">
+                        <figure>
+                            <img src="../img/product-01.jpg" alt="">
+                            <p class="prize">$20</p>
+                        </figure>
+                    </a> --}}
+
+                    {{!-- <a href="/producto/producto-01">
                         <figure>
                             <img src="../img/product-01.jpg" alt="">
                             <p class="prize">$20</p>
@@ -149,18 +156,11 @@
                             <img src="../img/product-01.jpg" alt="">
                             <p class="prize">$20</p>
                         </figure>
-                    </a>
-
-                    <a href="/producto/producto-01">
-                        <figure>
-                            <img src="../img/product-01.jpg" alt="">
-                            <p class="prize">$20</p>
-                        </figure>
-                    </a>
+                    </a> --}}
                 </div>
             </div>
 
-            <div class="comments">
+            {{!-- <div class="comments">
                 <h3 class="encabezado">Comentarios</h3>
 
                 <div class="comment">
@@ -235,9 +235,12 @@
                         </div>
                     </form>
                 </div>
+            
+            </div> --}}
 
         </section>
-
+        </div>
+        {{> footer}}
 
 
 

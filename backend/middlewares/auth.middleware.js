@@ -16,6 +16,26 @@ function checkToken(req, res, next) {
     })
 }
 
+function onlyCheckToken(req, res) {
+    JWT.verify(req.get('token'), process.env.SEED, (err, decoded) => {
+        if(err) {
+            return res.status(401).json({
+                status: false,
+                err: {
+                    message: 'Token inválido'
+                }
+            });
+        } else {
+            res.json({
+                status: 'ok',
+                message: 'Token válido'
+            })
+        }
+        // console.log(decoded);
+        // req.user = decoded.user || decoded.userDB
+    })
+}
+
 function validateUser(req, res, next) {
     if(req.body.userStored.email != req.user.email) {
         return res.status(401).json({
@@ -87,6 +107,7 @@ module.exports = {
     checkToken,
     validateADMIN,
     refreshToken,
-    validateUser
+    validateUser,
+    onlyCheckToken
 }
 
