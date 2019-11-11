@@ -20,6 +20,22 @@ function saveIMGToDisk(file) {
     return relativePath + currentDate + extensionFile
 }
 
+
+function slugify(string) {
+    const a = 'àáâäæãåāăąçćčđďèéêëēėęěğǵḧîïíīįìłḿñńǹňôöòóœøōõőṕŕřßśšşșťțûüùúūǘůűųẃẍÿýžźż·/_,:;'
+    const b = 'aaaaaaaaaacccddeeeeeeeegghiiiiiilmnnnnoooooooooprrsssssttuuuuuuuuuwxyyzzz------'
+    const p = new RegExp(a.split('').join('|'), 'g')
+  
+    return string.toString().toLowerCase()
+      .replace(/\s+/g, '-') // Replace spaces with -
+      .replace(p, c => b.charAt(a.indexOf(c))) // Replace special characters
+      .replace(/&/g, '-and-') // Replace & with 'and'
+      .replace(/[^\w\-]+/g, '') // Remove all non-word characters
+      .replace(/\-\-+/g, '-') // Replace multiple - with single -
+      .replace(/^-+/, '') // Trim - from start of text
+      .replace(/-+$/, '') // Trim - from end of text
+  }
+
 function createProduct(req, res) {
     let newPicsPath = [];
     if(req.body.pics.length > 0) {
@@ -31,7 +47,7 @@ function createProduct(req, res) {
     let body = req.body;
     body.pics = newPicsPath;
     body.mainImg = body.pics[body.mainImg];
-
+    body.url = slugify(body.title)
     let product = new Product(body);
 
     product.save((err, productDB) => {
@@ -164,11 +180,24 @@ function deleteImgByID(req, res) {
     })
 }
 
+function getProductByURL(req, res) {
+    Product.findOne({url: req.params.url}, (err, productDB) => {
+        if(err) {
+            return res.status(501).json({
+                msg: 'Error al obtener el producto',
+                status: false
+            })
+        } else if(productDB) {
+            res.json(productDB)
+        }
+    })
+}
 
 module.exports = {
     createProduct,
     getProductByUser,
     getProductByID,
     deleteImgByID,
-    editProduct
+    editProduct,
+    getProductByURL
 } 

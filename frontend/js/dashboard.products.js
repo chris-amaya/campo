@@ -42,9 +42,9 @@ async function getProductsUser(e) {
                         <a class="edit" href='/dashboard/producto/editar/${productsRes[i]._id}'>
                             <i class="fas fa-pen"></i>
                         </a>
-                        <div class="see-more">
+                        <a class="see-more" href='/producto/${productsRes[i].url}'>
                             <i class="fas fa-eye"></i>
-                        </div>
+                        </a>
                         <div class="more-options">
                             <i class="fas fa-ellipsis-h highlight"></i>
                         </div>

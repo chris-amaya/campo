@@ -29,6 +29,10 @@ let productSchema = new Schema({
     mainImg: {
         type: String,
         required: [true, 'Falta de seleccionar la imagen principal']
+    },
+    url: {
+        type: String,
+        required: [true, 'Url faltante']
     }
     // author: {
     //     type: String,

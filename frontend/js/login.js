@@ -292,13 +292,15 @@ async function fetchRegisterUser(firstName, lastName, password, email, role) {
             localStorage.setItem('email',     response.user.email);
             localStorage.setItem('_id',       response.user._id);
             localStorage.setItem('role',      response.user.role)
+            localStorage.setItem('pic',       response.user.pic)
         } else {
-            sessionStorage.setItem('token', response.token)
+            sessionStorage.setItem('token',     response.token)
             sessionStorage.setItem('firstName', response.user.firstName)
-            sessionStorage.setItem('lastName', response.user.lastName)
-            sessionStorage.setItem('email', response.user.email)
-            sessionStorage.setItem('_id', response.user._id)
-            sessionStorage.setItem('role', response.user.role)
+            sessionStorage.setItem('lastName',  response.user.lastName)
+            sessionStorage.setItem('email',     response.user.email)
+            sessionStorage.setItem('_id',       response.user._id)
+            sessionStorage.setItem('role',      response.user.role)
+            sessionStorage.setItem('pic',       response.user.pic)
         }
 
         window.location.href = '/dashboard'

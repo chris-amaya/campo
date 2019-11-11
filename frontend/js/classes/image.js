@@ -9,7 +9,7 @@ export class ImageProduct {
     nextActive() {
         this.imgActive.classList.remove('active');
         this.putImagesToRight();
-        if(this.imgActive.nextElementSibling.tagName == 'IMG') {
+        if(this.imgActive.nextElementSibling && this.imgActive.nextElementSibling.tagName == 'IMG') {
             this.imgActive.nextElementSibling.classList.add('active');
             return this.imgActive.nextElementSibling;
         } else {
