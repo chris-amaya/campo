@@ -14,6 +14,21 @@ const messageErrorBox = document.getElementById('messageErrorBox');
 
 buttonUpload.addEventListener('click', (e) => uploadProduct(e), false);
 
+document.addEventListener('DOMContentLoaded', (e) => DOMContentLoaded(e), false);
+
+async function DOMContentLoaded(e) {
+    let categoriesReq = await fetch(`api/categories`);
+    let categoriesRes = await categoriesReq.json();
+    renderCategories(categoriesRes);
+}
+
+
+async function renderCategories(data) {
+    console.log(data.categoriesDB);
+    for(let i = 0; i < data.categoriesDB.length; i++) {
+        category.options[category.options.length] = new Option(data.categoriesDB[i].title, data.categoriesDB[i]._id)
+    }
+}
 
 async function uploadProduct(e) {
     e.preventDefault();
@@ -28,7 +43,10 @@ async function uploadProduct(e) {
             title: titleProduct.value,
             description: descProduct.value,
             prize: prizeProduct.value,
-            category: category.value,
+            category: {
+                id: category.value,
+                title: category.options[category.selectedIndex].text
+            },
             mainImg: null,
             userInfo: {
                 firstName: localStorage.getItem('firstName') || sessionStorage.getItem('firstName'),
@@ -43,6 +61,7 @@ async function uploadProduct(e) {
             // }
         };
 
+        console.log(body)
         let pics = document.querySelectorAll('[data-img]');
         if(pics.length > 0) {
             for(let i = 0; i < pics.length; i++) {

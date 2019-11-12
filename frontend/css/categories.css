@@ -7,10 +7,12 @@
 
 .category {
     position: relative;
+    display: flex;
 }
 
 .category figure {
     margin: 0;
+    display: flex
 }
 
 .category figure img {

@@ -213,7 +213,7 @@ function getUserByProductURL(req, res) {
 }
 
 function getLastProducts(req,res) {
-    console.log('asdfasdfsadf');
+    
     Product.find().sort({ _id: -1 }).limit(3).exec((err, lastProductsDB) => {
         if(err) {
             return res.status(501).json({

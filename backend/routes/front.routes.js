@@ -9,6 +9,14 @@ app.get('/categorias', (req, res) => {
     res.render('categories');
 });
 
+app.get('/categoria/:categoria', (req, res) => {
+    res.render('categoria');
+});
+
+app.get('/categoria/:categoria/:page', (req, res) => {
+    res.render('categoria');
+});
+
 app.get('/productos', (req, res) => {
     res.render('products');
 })
