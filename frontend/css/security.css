@@ -4,3 +4,25 @@ form.security {
 form.security div {
     width: 51%;
 }
+
+.formErrors {
+    list-style: none;
+    color: #fff;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    align-content: center;
+    text-align: center;
+    background: rebeccapurple;
+    padding: 20px 10px;
+    box-sizing: border-box;
+    display: none;
+}
+
+.formErrors > li {
+    width: 100%;
+    margin-bottom: 3px;
+}
+
+

@@ -223,6 +223,51 @@ function editUserInfo(req, res) {
     })
 }
 
+function updatePassword(req, res) {
+    if(req.body.newPassword == req.body.newPassword2) {
+        User.findById(req.body._id, (err, userDB) => {
+            
+            if(err) {
+                return res.status(501).json({
+                    status: false,
+                    msg: 'Error interno en el sistema, favor de intentar mas tarde'
+                })
+            }
+
+            if(bcrypt.compareSync(req.body.currentPassword, userDB.password)) {
+                req.body.newPassword = bcrypt.hashSync(req.body.newPassword, 10)
+                User.findByIdAndUpdate(req.body._id, {
+                    password: req.body.newPassword
+                }, {new: true}, (err, userDB) => {
+                    if(err) {
+                        return res.status(501).json({
+                            status: false
+                        })
+                    } else {
+                        res.json({
+                            status: 'ok',
+                            msg: 'contraseña cambiada correctamente'
+                        })
+                    }
+                })
+            } else {
+                res.json({
+                    status: false,
+                    msg:'la contraseña actual no coincide con la proporcionada'
+                })
+            }
+        })
+
+    } else {
+        return res.status(401).json({
+            status: false,
+            msg: 'las contraseñas nuevas proporcionadas no coinciden'
+        })
+    }
+
+
+}
+
 module.exports = {
     userSignUp, 
     checkEmail,
@@ -230,5 +275,6 @@ module.exports = {
     login,
     profile,
     getUserInfo,
-    editUserInfo
+    editUserInfo,
+    updatePassword
 }

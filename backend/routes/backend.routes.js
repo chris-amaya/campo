@@ -24,6 +24,10 @@ app.get('/dashboard/productos/', (req, res) => {
     res.render('dashboard.products.hbs')
 })
 
+app.get('/dashboard/productos/:page', (req, res) => {
+    res.render('dashboard.products.hbs')
+})
+
 app.get('/dashboard/crear-producto/', (req, res) => {
     res.render('dashboard.create-product.hbs')
 })

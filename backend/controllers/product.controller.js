@@ -100,17 +100,34 @@ function editProduct(req, res) {
 }
 
 
-function getProductByUser(req, res) {
-    Product.find({"userInfo.email": req.user.email}, (err, productsDB) => {
+async function getProductByUser(req, res) {
+    const limit = 5;
+    const page = Number(req.params.page) || 0;
+    const skip = page > 0 ? page * limit - limit : 0
+    const count = await Product.countDocuments({
+        "userInfo.email": req.user.email
+    })
+
+    Product.find({"userInfo.email": req.user.email})
+    .skip(skip)
+    .limit(limit)
+    .exec((err, productsDB) => {
         if(err) {
             return res.status(501).json({
                 msg: "Error al buscar los productos",
                 err
             })
         } else if(productsDB) {
-            res.json(productsDB)
+            res.json({
+                productsDB,
+                pages: Math.ceil(count / limit)
+            })
         }
-    });
+
+    })
+
+    // Product.find({"userInfo.email": req.user.email}, (err, productsDB) => {
+    // });
 }
 
 function getProductByID(req, res) {
