@@ -13,3 +13,12 @@ document.addEventListener('click', (e) => {
         animations.hideModalToRight(document.querySelector('.modal.active'));
     }
 })
+
+
+if(document.documentElement.offsetHeight < window.innerHeight) {
+    document.querySelector('footer').style = `
+        position: absolute;
+        width: 100%;
+        bottom: 0
+    `
+}
