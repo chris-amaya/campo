@@ -161,6 +161,7 @@ async function handlerLogin(event) {
                 localStorage.setItem('_id',       response.userDB._id);
                 localStorage.setItem('role',      response.userDB.role);
                 localStorage.setItem('pic',       response.userDB.pic)
+                localStorage.setItem('url',       response.userDB.url);
             } else {
                 sessionStorage.setItem('token', response.token)
                 sessionStorage.setItem('firstName', response.userDB.firstName)
@@ -169,6 +170,8 @@ async function handlerLogin(event) {
                 sessionStorage.setItem('_id', response.userDB._id)
                 sessionStorage.setItem('role', response.userDB.role)
                 sessionStorage.setItem('pic', response.userDB.pic)
+                sessionStorage.setItem('url', response.userDB.url)
+                
             }
             window.location.href = '/dashboard';
         } else {

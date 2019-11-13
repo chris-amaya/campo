@@ -49,7 +49,15 @@ let usuarioSchema = new Schema({
     url: {
         type: String,
         required: [true, 'la url del usuario es obligatoria']
-    }
+    },
+    address: {
+        type: Object,
+        required: false
+    },
+    // cp: {
+    //     type: Number,
+    //     required: false
+    // },
 });
 
 usuarioSchema.methods.toJSON = function() {

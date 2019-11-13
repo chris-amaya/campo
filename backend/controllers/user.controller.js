@@ -191,10 +191,44 @@ function profile(req, res) {
     })
 }
 
+function getUserInfo(req, res) {
+    User.findOne({url: req.params.url}, (err, userDB) => {
+        if(err) {
+            return res.json({
+                status: false,
+                msg: 'Error al buscar los productos'
+            })
+        } else if(userDB) {
+            res.json({
+                status: 'ok',
+                userDB,
+            })
+        }
+    })
+}
+
+function editUserInfo(req, res) {
+
+    User.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, userDB) => {
+        // console.log(userDB);
+        if(err) {
+            return res.status(501).json({
+                status: false
+            })
+        } else {
+            res.json({
+                status: 'ok'
+            })
+        }
+    })
+}
+
 module.exports = {
     userSignUp, 
     checkEmail,
     example,
     login,
-    profile
+    profile,
+    getUserInfo,
+    editUserInfo
 }
