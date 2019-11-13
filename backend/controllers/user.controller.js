@@ -157,34 +157,32 @@ function example(req, res) {
 }
 
 function profile(req, res) {
-    User.findOne({url: req.params.url}, (err, userDB) => {
+    User.findOne({url: req.params.url}, async (err, userDB) => {
         if(err) {
             return res.json({
                 status: false,
                 msg: 'Error al buscar el usuario'
             })
         } else if(userDB) {
-
-            Product.find({"userInfo.email": userDB.email}, (err, productsDB) => {
-
+            
+            
+            const count = await Product.countDocuments({
+                "userInfo.email": userDB.email
+            });
+            Product.find({"userInfo.email": userDB.email}).sort({ _id: -1 }).limit(6).exec((err, productsDB) => {
                 if(err) {
-                    return res.json({
+                    return res.status(501).json({
                         status: false,
-                        msg: 'Error al buscar los productos'
+                        message: 'error al buscar los productos'
                     })
                 } else if(productsDB) {
-                    res.json({
+                    return res.json({
                         status: 'ok',
+                        productsDB,
                         userDB,
-                        productsDB
-                    })
-                } else {
-                    res.json({
-                        status: 'ok',
-                        userDB
+                        count
                     })
                 }
-
             })
             
         }

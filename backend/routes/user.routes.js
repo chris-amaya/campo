@@ -6,6 +6,7 @@ const { checkToken, validateADMIN, validateUser } = require('../middlewares/auth
 const app = express.Router();
 
 app.post('/api/user/signUp/', userController.userSignUp);
+app.get('/api/user/check-token', tokenMiddleware.onlyCheckToken)
 app.get('/api/user/email/:email', userController.checkEmail);
 app.post('/api/login', userController.login);
 app.get('/api/user/profile/:url', userController.profile);
@@ -14,7 +15,6 @@ app.post('/api/user/update-password', [checkToken], userController.updatePasswor
 app.post('/api/user/edit/', userController.editUserInfo);
 app.get('/api/user/product/:url', [checkToken], productController.getUserByProductURL );
 app.post('/api/user/refresh-token/', tokenMiddleware.refreshToken)
-app.get('/api/user/check-token', tokenMiddleware.onlyCheckToken)
 
 
 

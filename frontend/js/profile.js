@@ -16,12 +16,13 @@ async function renderData(data) {
     console.log(data);
     document.getElementById('user-name').textContent = `${data.userDB.firstName} ${data.userDB.lastName}`
     document.getElementById('user-pic').src = data.userDB.pic
-    document.getElementById('number-counter-opinions').textContent = data.userDB.opinions || '0'
-    document.getElementById('user-opinions').textContent = data.userDB.opinions || '0'
-    document.getElementById('city').textContent = data.userDB.city || 'No especificado'
-    document.getElementById('state').textContent = data.userDB.state || 'No especificado'; 
-    document.getElementById('cp').textContent = data.userDB.cp || 'No especificado';
-
+    // document.getElementById('number-counter-opinions').textContent = data.userDB.opinions || '0'
+    // document.getElementById('user-opinions').textContent = data.userDB.opinions || '0'
+    document.getElementById('city').textContent = data.userDB.address.city || 'No especificado'
+    document.getElementById('state').textContent = data.userDB.address.state || 'No especificado'; 
+    document.getElementById('cp').textContent = data.userDB.address.cp || 'No especificado';
+    // document.getElementById('user-isSeling').textContent = data.count || 0;
+    
     // // TODO: Si el token de inicio de sesión es valido mostrar la siguiente información de lo contrario sólo ocultarlo
     if(sessionStorage.getItem('token') || localStorage.getItem('token')) {
         let tokenReq = await fetch('/api/user/check-token', {
@@ -33,16 +34,17 @@ async function renderData(data) {
         let tokenRes = await tokenReq.json();
         console.log(tokenRes);
         if(tokenRes.status == 'ok') {
-            document.getElementById('address').textContent = data.userDB.address || 'No especificado'
+            document.getElementById('address').textContent = data.userDB.address.address || 'No especificado'
             document.getElementById('email').textContent = data.userDB.email 
             document.getElementById('phone').textContent = data.userDB.phone || 'No especificado'
         }
+        // continue
     } else {
         document.getElementById('address').textContent = 'Inicia sesión o registrate para ver este dato'
         document.getElementById('email').textContent = 'Inicia sesión o registrate para ver este dato'
         document.getElementById('phone').textContent = 'Inicia sesión o registrate para ver este dato'
     }
-
+    
     if(data.productsDB) {
         let conteiner = document.getElementById('container-products');
         for(let i = 0; i < data.productsDB.length; i++) {
