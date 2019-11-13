@@ -25,7 +25,8 @@ async function upgradeProduct(e) {
             title: titleProduct.value,
             description: descProduct.value,
             prize: prizeProduct.value,
-            category: category.value,
+            category: category.options[category.selectedIndex].text,
+            // cities.options[cities.selectedIndex].text,
             mainImg: null,
             userInfo: {
                 firstName: localStorage.getItem('firstName') || sessionStorage.getItem('firstName'),
@@ -70,8 +71,6 @@ async function upgradeProduct(e) {
             }
         });
         let productRes = await productReq.json();
-        console.log(productRes);
-
         if(productRes.status == 'ok') {
             window.location.href = '/dashboard/productos'
         } else {
@@ -125,13 +124,26 @@ async function fetchFormData(e) {
             console.log('no hay fotos')
         }
     }
+    let categoriesReq = await fetch(`api/categories`);
+    let categoriesRes = await categoriesReq.json();
+    renderCategories(categoriesRes, resFormData);
+}
 
+async function renderCategories(data, productData) {
+    for(let i = 0; i < data.categoriesDB.length; i++) {
+        category.options[category.options.length] = new Option(data.categoriesDB[i].title, data.categoriesDB[i].title)
+    }
+
+    data.categoriesDB.forEach((el, index) => {
+        if(el.title == productData.productDB.category) {
+            category.selectedIndex = index + 1
+        }
+    })
 }
 
 document.addEventListener('click', (e) => documentMethod(e), false);
 async function documentMethod(e) {
     if(e.target.id == 'delete-img') {
-        // e.target.parentElement.remove();
         imgMainSelec = '';
         let id = e.target.parentElement.children[0].firstElementChild.dataset.img.split('/').slice(-1)[0];
         if(confirm('Seguro que desea borrar esta imagen')) {
@@ -176,21 +188,21 @@ async function deleteIMG(img) {
 
 
 function validateForm() {
-    // if(titleProduct.value == '' || titleProduct.value === undefined || titleProduct.value.length < 0) {
-    //     errors.push('favor de insertar un titulo')
-    // }
+    if(titleProduct.value == '' || titleProduct.value === undefined || titleProduct.value.length < 0) {
+        errors.push('favor de insertar un titulo')
+    }
 
-    // if(descProduct.value == '' || descProduct.value === undefined || descProduct.value.length < 0 || descProduct.value.length >= 1000) {
-    //     errors.push('favor de insertar una descripción, no mayor a 1000 caracteres');
-    // }
+    if(descProduct.value == '' || descProduct.value === undefined || descProduct.value.length < 0 || descProduct.value.length >= 1000) {
+        errors.push('favor de insertar una descripción, no mayor a 1000 caracteres');
+    }
 
-    // if(prizeProduct.value == '' || prizeProduct.value === undefined || prizeProduct.value.length < 0) {
-    //     errors.push('favor de insertar un precio')
-    // }
+    if(prizeProduct.value == '' || prizeProduct.value === undefined || prizeProduct.value.length < 0) {
+        errors.push('favor de insertar un precio')
+    }
 
-    // if(category.value == '' || category.value === undefined || category.value.length < 0) {
-    //     errors.push('favor de seleccionar una categoria')
-    // }
+    if(category.value == '' || category.value === undefined || category.value.length < 0) {
+        errors.push('favor de seleccionar una categoria')
+    }
 
     if(document.querySelectorAll('[data-img]').length == 1 ) {
         imgMainSelec = document.querySelector('[data-img]').src;
