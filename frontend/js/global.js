@@ -15,10 +15,16 @@ document.addEventListener('click', (e) => {
 })
 
 
-if(document.documentElement.offsetHeight < window.innerHeight) {
-    document.querySelector('footer').style = `
-        position: absolute;
-        width: 100%;
-        bottom: 0
-    `
-}
+window.addEventListener('load', (e )=> {
+
+    if(document.querySelector('footer')) {
+        if(document.documentElement.offsetHeight < window.innerHeight) {
+            document.querySelector('footer').style = `
+            position: absolute;
+            width: 100%;
+            bottom: 0
+            `
+        }
+    }
+    
+})
