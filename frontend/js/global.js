@@ -31,24 +31,25 @@ let searchProdcut = debounce( async (e) => {
 }, 500);
 
 function renderSearchProducts(data) {
+    console.log(data);
     resultProducts.innerHTML = '';
     if(data.productDB.length > 0) {
         data.productDB.forEach((product, index) => {
             resultProducts.innerHTML += `
-            <div class="list-product">
-            <figure>
-                <img src='${product.mainImg}' alt="">
-                <p class="prize">${product.prize}</p>
-            </figure>
-            <div class="info-product">
-                <h3 class="title-product">${product.title}</h3>
-                <p class="desc-product">${product.description}</p>
-                    <div class="detail-product">
-                        <p class="location-product">${product.userInfo.city || ''} ${product.userInfo.state || ''}</p>
-                        <p class="author-product">${product.userInfo.firstName} ${product.userInfo.lastName}</p>
+            <a href='/producto/${product.url}' class="list-product">
+                <figure>
+                    <img src='${product.mainImg}' alt="">
+                    <p class="prize">${product.prize}</p>
+                </figure>
+                <div class="info-product">
+                    <h3 class="title-product">${product.title}</h3>
+                    <p class="desc-product">${product.description}</p>
+                        <div class="detail-product">
+                            <p class="location-product">${product.userInfo.city || ''} ${product.userInfo.state || ''}</p>
+                            <p class="author-product">${product.userInfo.firstName} ${product.userInfo.lastName}</p>
+                        </div>
                     </div>
-                </div>
-            </div>
+            </a>
             `
         })
     }
