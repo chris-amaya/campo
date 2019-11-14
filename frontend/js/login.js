@@ -50,7 +50,7 @@ async function handlerSignUp(event) {
     
     if(result === true) {
        // TODO: hacer fetch hacía el servidor y pasar a la siguiente animación 
-        let emailReq = await fetch(`http://localhost:5000/api/user/email/${email.value}`)
+        let emailReq = await fetch(`/api/user/email/${email.value}`)
         let emailExists = await emailReq.json(); 
         if(emailExists.status === true) {
             // cambiar a la siguiente animación
