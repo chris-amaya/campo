@@ -246,6 +246,71 @@ function getLastProducts(req,res) {
     })
 }
 
+function liveSearch(req, res) {
+    let product = req.body.product;
+    // Product.find({
+    //     title: {
+    //         '$regex': product,
+    //         '$options': 'i'
+    //     }
+    //     // title: /`+product+`/i
+    // }, (err, productDB) => {
+    //     if(err) {
+    //         return res.status(501).json({
+    //             status: false,
+    //             message: 'error al buscar los productos'
+    //         })
+    //     } else if(productDB) {
+    //         return res.json({
+    //             status: 'ok',
+    //             productDB
+    //         })
+    //     }
+    // })
+
+    Product.find({
+        title: {
+            '$regex': product,
+            '$options': 'i'
+        }
+    })
+    .limit(3)
+    .exec((err, productDB) => {
+            if(err) {
+            return res.status(501).json({
+                status: false,
+                message: 'error al buscar los productos'
+            })
+        } else if(productDB) {
+            return res.json({
+                status: 'ok',
+                productDB
+            })
+        }
+    })
+
+
+
+    // Product.find({"userInfo.email": req.user.email})
+    // .skip(skip)
+    // .limit(limit)
+    // .exec((err, productsDB) => {
+    //     if(err) {
+    //         return res.status(501).json({
+    //             msg: "Error al buscar los productos",
+    //             err
+    //         })
+    //     } else if(productsDB) {
+    //         res.json({
+    //             productsDB,
+    //             pages: Math.ceil(count / limit)
+    //         })
+    //     }
+
+    // })
+
+}
+
 module.exports = {
     createProduct,
     getProductByUser,
@@ -254,5 +319,6 @@ module.exports = {
     editProduct,
     getProductByURL,
     getUserByProductURL,
-    getLastProducts
+    getLastProducts,
+    liveSearch
 } 
