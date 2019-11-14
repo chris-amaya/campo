@@ -34,8 +34,11 @@ let urlDB;
 if (process.env.NODE_ENV === 'dev') {
     urlDB = 'mongodb://localhost:27017/campo';
 } else {
-    urlDB = process.env.MONGO_URI;
+    // urlDB = process.env.MONGO_URI;
+    urlDB = 'mongodb://chris:BYjVrkD9idB6Y1k3@cluster0-tr0lj.mongodb.net/test?retryWrites=true&w=majority'
+    // mongodb+srv://chris:<password>@cluster0-tr0lj.mongodb.net/test?retryWrites=true&w=majority
 }
+
 process.env.URLDB = urlDB;
 
 // ============================
