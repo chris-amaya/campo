@@ -44,7 +44,7 @@ function renderSearchProducts(data) {
                 <h3 class="title-product">${product.title}</h3>
                 <p class="desc-product">${product.description}</p>
                     <div class="detail-product">
-                        <p class="location-product">${product.userInfo.city} ${product.userInfo.state}</p>
+                        <p class="location-product">${product.userInfo.city || ''} ${product.userInfo.state || ''}</p>
                         <p class="author-product">${product.userInfo.firstName} ${product.userInfo.lastName}</p>
                     </div>
                 </div>
