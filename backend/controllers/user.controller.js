@@ -42,7 +42,13 @@ function userSignUp(req, res) {
             password: bcrypt.hashSync(body.password, 10),
             email: body.email,
             role: body.role,
-            url: slugify(`${body.firstName} ${body.lastName}`) + `-${randNumber.substring(randNumber.length - 4)}`
+            url: slugify(`${body.firstName} ${body.lastName}`) + `-${randNumber.substring(randNumber.length - 4)}`,
+            address: {
+                state: null,
+                city: null,
+                cp: null,
+                address: null
+            }
         })
 
         user.save((err, user) => {
