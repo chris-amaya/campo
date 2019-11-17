@@ -5,6 +5,7 @@ const app = express.Router();
 
 app.get('/api/product/last-products', productController.getLastProducts)
 app.get('/api/product/:url', productController.getProductByURL)
+app.get('/api/products/custom-search/:product', [checkToken], productController.getProductsByUser)
 app.post('/api/product/live-search', productController.liveSearch);
 app.post('/api/product/create/', productController.createProduct);
 app.post('/api/products/:page', [checkToken, validateUser], productController.getProductByUser);

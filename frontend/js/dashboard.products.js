@@ -30,6 +30,8 @@ document.addEventListener('click', (e) => {
 
 document.addEventListener('DOMContentLoaded', (e) => getProductsUser(e), false);
 
+let products
+
 async function getProductsUser(e) {
     let productsReq = await fetch(`/api/products/${page}`, {
         method: 'POST',
@@ -47,8 +49,19 @@ async function getProductsUser(e) {
         }
     });
     let productsRes = await productsReq.json();
+    products = productsRes
     console.log(productsRes);
-    if(productsRes.productsDB.length > 0) {
+    renderProducts(products);
+    renderPagination(productsRes.pages > 0 ? productsRes.pages : 0, Number(page))
+    
+
+    
+
+}
+
+function renderProducts(data, type) {
+
+    if(data.productsDB.length > 0) {
         productsTable.innerHTML = `
         <div class="title">
             <h3>Titulo</h3>
@@ -57,29 +70,29 @@ async function getProductsUser(e) {
             <h3>Descripción</h3>
         </div>
         `
-        for(let i = 0; i < productsRes.productsDB.length; i++) {
+        for(let i = 0; i < data.productsDB.length; i++) {
             productsTable.innerHTML += `
             <div class="product">
-                <p class="title-product">${productsRes.productsDB[i].title}</p>
-                <p class="desc-product">${productsRes.productsDB[i].description}</p>
+                <p class="title-product">${data.productsDB[i].title}</p>
+                <p class="desc-product">${data.productsDB[i].description}</p>
                 <div class="controls">
-                    <a class="edit" href='/dashboard/producto/editar/${productsRes.productsDB[i]._id}'>
+                    <a class="edit" href='/dashboard/producto/editar/${data.productsDB[i]._id}'>
                         <i class="fas fa-pen"></i>
                     </a>
-                    <a class="see-more" href='/producto/${productsRes.productsDB[i].url}'>
+                    <a class="see-more" href='/producto/${data.productsDB[i].url}'>
                         <i class="fas fa-eye"></i>
                     </a>
                     <div class="more-options">
                         <i class="fas fa-ellipsis-h highlight"></i>
                     </div>
                     <div class="hide-options">
-                        <a href='/producto/${productsRes.productsDB[i].url}'>
+                        <a href='/producto/${data.productsDB[i].url}'>
                             <i class="fas fa-eye"></i>
                         </a>
-                        <a href='/dashboard/producto/editar/${productsRes.productsDB[i]._id}'>
+                        <a href='/dashboard/producto/editar/${data.productsDB[i]._id}'>
                             <i class="fas fa-pen"></i>
                         </a>
-                        <a data-productID='${productsRes.productsDB[i]._id}' id="delete-product"><i class="fas fa-trash"></i></a>
+                        <a data-productID='${data.productsDB[i]._id}' id="delete-product"><i class="fas fa-trash"></i></a>
                         <a href='${window.location.href}'><i class="fas fa-share"></i></a>
                         <i class="fas fa-times" id='close-options'></i>
                     </div>
@@ -87,22 +100,56 @@ async function getProductsUser(e) {
             </div>
             `
         }
-        renderPagination(productsRes.pages > 0 ? productsRes.pages : 0, Number(page))
+
+        // if(type == 'query')
+        
 
     } else {
         productsTable.innerHTML = `<p>Actualmente no ha creado ningún producto para su venta</p>`
     }
 
-    
-
 }
+
 
 const inputSearchProduct = document.getElementById('search-products');
 inputSearchProduct.addEventListener('input', (e) => searchProductByUser(e), false);
 
-async function searchProductByUser(e) {
-    let productsReq = await fetch('api/products')
-}
+let searchProductByUser = debounce(async (e) => {
+    let query = e.target.value.trim();
+    if(query !== '') {
+        let productsReq = await fetch(`/api/products/custom-search/${query}`, {
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token') || sessionStorage.getItem('token')
+            }
+        });
+        let productRes = await productsReq.json();
+        console.log(productRes)
+        renderProducts(productRes);
+    } else {
+        // se vuelve a renderizar la vista con los mismos datos de consulta al cargar la páginga
+        renderProducts(products)
+    }
+}, 1000)
+
+// function renderSearchProducts(data);
+
+
+
+function debounce(func, wait, immediate) {
+	var timeout;
+	return function() {
+		var context = this, args = arguments;
+		var later = function() {
+			timeout = null;
+			if (!immediate) func.apply(context, args);
+		};
+		var callNow = immediate && !timeout;
+		clearTimeout(timeout);
+		timeout = setTimeout(later, wait);
+		if (callNow) func.apply(context, args);
+	};
+};
 
 const paginationContainer = document.getElementById('pagination');
 

@@ -311,6 +311,30 @@ function liveSearch(req, res) {
 
 }
 
+function getProductsByUser(req, res) {
+    Product.find({
+        title: {
+            '$regex': req.params.product,
+            '$options': 'i'
+        },
+        "userInfo.email": req.user.email
+    })
+    .limit(5)
+    .exec((err, productsDB) => {
+        if(err) {
+            return res.status(501).json({
+                msg: "Error al buscar los productos",
+                err
+            })
+        } else if(productsDB) {
+            res.json({
+                productsDB,
+                // pages: Math.ceil(count / limit)
+            })
+        }
+    })
+}
+
 module.exports = {
     createProduct,
     getProductByUser,
@@ -320,5 +344,6 @@ module.exports = {
     getProductByURL,
     getUserByProductURL,
     getLastProducts,
-    liveSearch
+    liveSearch,
+    getProductsByUser
 } 
