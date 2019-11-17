@@ -25,4 +25,14 @@ form.security div {
     margin-bottom: 3px;
 }
 
+@media screen and (max-width: 720px) {  
+    .user-form > div {
+        width: 100% !important;
+    }
+
+    .updateButtonContainer input {
+        width: 100%;
+    }
+}
+
 

@@ -1,6 +1,6 @@
-import '../css/dashboard.css';
 import './dashboard'
 import '../css/user.css'
+import '../css/dashboard.css';
 
 const state = document.getElementById('state');
 const cities = document.getElementById('cities');

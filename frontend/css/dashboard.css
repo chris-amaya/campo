@@ -17,8 +17,9 @@ body, html {
 }
 
 .container {
-    width: 100%;
+    width: 90%;
     max-width: 1200px;
+    margin: 0 auto;
 }
 
 .left-panel {
@@ -45,6 +46,8 @@ body, html {
     color: #000;
     display: flex;
     text-decoration: none;
+    align-items: center;
+    font-size: 12px;
 }
 
 .section:hover {
@@ -72,7 +75,7 @@ body, html {
 .user {
     position: relative;
     display: flex;
-    justify-content: space-evenly;
+    justify-content: space-around;
     align-items: center;
     width: 30%;
     border-left: 3px solid #fff;
@@ -134,9 +137,152 @@ i.submenu {
 }
 
 .dropdownList a {
-    color: #000;
+    background: var(--grey-3rd);
+    color: var(--yellow-color);
     padding: 10px;
     box-sizing: border-box;
     width: 100%;
     
+}
+
+.dropdownList a:hover {
+}
+
+.dropdownList.active {
+    display: flex;
+}
+
+.only-phones {
+    display: none;
+}
+
+.hidden {
+    display: none;
+}
+
+.sections a.a-bars {
+    text-align: center;
+    display: block;
+    width: 100%;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.show-with-bars {
+    width: 100%;
+}
+
+.show-with-bars a {
+    justify-content: center;
+}
+
+.panel2 {
+    display: none;
+    justify-content: space-around;
+    top: 33px;
+    background: #F2F2F2;
+}
+
+.panel2 a {
+    color: #8C8C8C;
+    /* padding: 20px; */
+    box-sizing: border-box;
+    width: 100%;
+    text-align: center;
+    padding: 20px;
+    border-top: 5px solid transparent;
+}
+
+.panel2 a:hover {
+    color: var(--yellow-color);
+    /* background: #525252; */
+    background: #fff;
+    border-top: 5px solid var(--yellow-color);
+}
+
+.panel2 a i {
+    font-size: 20px;
+}
+
+@media screen and (max-width: 1024px) {
+
+    .left-panel.tablets {
+        display: none;
+    }
+
+    .left-panel.only-phones {
+        display: flex;
+        width: 8%;
+    }
+
+    .user-notification {
+        width: 50%;
+    }
+
+    .user {
+        width: 50%;
+    }
+
+    #submenu {
+        padding: 20px;
+    }
+
+    .top-panel, #dashSection{
+        width: 80%
+    }
+
+    
+}
+
+@media screen and (max-width: 720px) {
+
+    .left-panel {
+        display: none !important;
+    }
+
+    .user-notification {
+        width: 40%;
+    }
+
+    .user {
+        width: 60%;
+    }
+
+
+    .top-panel,
+    #dashSection {
+        width: 100%;
+        margin: 0 auto;
+        right: 0;
+        position: relative;
+    }
+
+    .panel2 {
+        display: flex;
+        position: relative;
+    }
+}
+
+@media screen and (max-width: 720px) {
+    .user-notification {
+        width: 30%;
+        text-align: unset;
+        display: flex;
+        justify-content: space-around;
+        padding: 0;
+    }
+
+    .user-notification i {
+        padding:  10px;
+        box-sizing: border-box;
+        font-size: 1.3em;
+    }
+
+    .user {
+        width: 70%;
+    }
+
+    .user .firstName {
+        font-size: .8em;
+    }
 }

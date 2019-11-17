@@ -15,10 +15,13 @@ form div input{
     outline: none;
     padding: 5px 0px;
     font-family: 'Open Sans';
+    color: var(--grey-2nd);
+    font-weight: 400;
+    font-size: 1em;
 }
 
 form div input::placeholder {
-    color: #E2E2E2;
+    color: var(--grey-2nd);
 }
 
 .updateButtonContainer {
@@ -53,7 +56,8 @@ form div input::placeholder {
     width: 100%;
     border: none;
     border-bottom: 2px solid var(--yellow-color);
-    font-size: 20px;
+    font-size: 1em;
+    color: var(--grey-2nd);
     -webkit-appearance: button;
     appearance: button;
       outline: none;
@@ -77,3 +81,13 @@ form div input::placeholder {
     padding: 10px 15px;
     color: #000;
 }
+
+@media screen and (max-width: 720px) {
+    .updateButtonContainer {
+        width: 100%;
+    }
+
+    .updateButtonContainer input {
+        width: 100%;
+    }
+} 

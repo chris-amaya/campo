@@ -8,6 +8,26 @@ const page = window.location.href.split('/').length == 6 ? window.location.href.
 
 const productsTable = document.getElementById('products-table')
 
+document.addEventListener('click', (e) => {
+    // console.log(e.target)
+    if(e.target.classList.contains('more-options')) {
+        e.target.nextElementSibling.classList.toggle('active');
+    } 
+
+    if(e.target.parentElement.classList.contains('more-options')) {
+        e.target.parentElement.nextElementSibling.classList.toggle('active');
+    }
+
+    if(e.target.id == 'close-options') {
+        e.target.parentElement.classList.toggle('active');
+    }
+
+    if(e.target.id == 'icon-search-product') {
+        // console.log('aodfjasoidf');
+        document.querySelector('.input-search').classList.toggle('active')
+    }
+})
+
 document.addEventListener('DOMContentLoaded', (e) => getProductsUser(e), false);
 
 async function getProductsUser(e) {
@@ -43,16 +63,27 @@ async function getProductsUser(e) {
                 <p class="title-product">${productsRes.productsDB[i].title}</p>
                 <p class="desc-product">${productsRes.productsDB[i].description}</p>
                 <div class="controls">
-                        <a class="edit" href='/dashboard/producto/editar/${productsRes.productsDB[i]._id}'>
-                            <i class="fas fa-pen"></i>
-                        </a>
-                        <a class="see-more" href='/producto/${productsRes.productsDB[i].url}'>
+                    <a class="edit" href='/dashboard/producto/editar/${productsRes.productsDB[i]._id}'>
+                        <i class="fas fa-pen"></i>
+                    </a>
+                    <a class="see-more" href='/producto/${productsRes.productsDB[i].url}'>
+                        <i class="fas fa-eye"></i>
+                    </a>
+                    <div class="more-options">
+                        <i class="fas fa-ellipsis-h highlight"></i>
+                    </div>
+                    <div class="hide-options">
+                        <a href='/producto/${productsRes.productsDB[i].url}'>
                             <i class="fas fa-eye"></i>
                         </a>
-                        <div class="more-options">
-                            <i class="fas fa-ellipsis-h highlight"></i>
-                        </div>
+                        <a href='/dashboard/producto/editar/${productsRes.productsDB[i]._id}'>
+                            <i class="fas fa-pen"></i>
+                        </a>
+                        <a data-productID='${productsRes.productsDB[i]._id}' id="delete-product"><i class="fas fa-trash"></i></a>
+                        <a href='${window.location.href}'><i class="fas fa-share"></i></a>
+                        <i class="fas fa-times" id='close-options'></i>
                     </div>
+                </div>
             </div>
             `
         }
@@ -66,6 +97,12 @@ async function getProductsUser(e) {
 
 }
 
+const inputSearchProduct = document.getElementById('search-products');
+inputSearchProduct.addEventListener('input', (e) => searchProductByUser(e), false);
+
+async function searchProductByUser(e) {
+    let productsReq = await fetch('api/products')
+}
 
 const paginationContainer = document.getElementById('pagination');
 

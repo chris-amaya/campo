@@ -1,16 +1,35 @@
 {{> head}}
 
 <div class="container">
-    <div class="left-panel" id="left-panel">
+    <div class="left-panel tablets" id="left-panel">
         <figure class="logo">
             <img src="../img/logo/L-Standard.png" alt="">
         </figure>
 
         <ul class="sections">
             {{!-- <li class="section"><i class="fas fa-info-circle"></i>PERFIL</li> --}}
+            
             <a href="/dashboard/productos" class="section"><i class="fas fa-box-open"></i>MIS PRODUCTOS</a>
             <a href="/dashboard/user" class="section"><i class="fas fa-user-cog"></i>AJUSTES</a>
             <a href="/dashboard/seguridad" class="section"><i class="fas fa-shield-alt"></i>SEGURIDAD</a>
+        </ul>
+    </div>
+
+    <div class="left-panel only-phones">
+        <ul class="sections hidden">
+            {{!-- <li class="section"><i class="fas fa-info-circle"></i>PERFIL</li> --}}
+            <a class="a-bars"><i class="fas fa-bars"></i></a>
+            <a href="/dashboard/productos" class="section"><i class="fas fa-box-open"></i>MIS PRODUCTOS</a>
+            <a href="/dashboard/user" class="section"><i class="fas fa-user-cog"></i>AJUSTES</a>
+            <a href="/dashboard/seguridad" class="section"><i class="fas fa-shield-alt"></i>SEGURIDAD</a>
+        </ul>
+        
+        <ul class="sections show-with-bars">
+            {{!-- <li class="section"><i class="fas fa-info-circle"></i>PERFIL</li> --}}
+            <a class="a-bars"><i class="fas fa-bars"></i></a>
+            <a href="/dashboard/productos" class="section"><i class="fas fa-box-open"></i></a>
+            <a href="/dashboard/user" class="section"><i class="fas fa-user-cog"></i></a>
+            <a href="/dashboard/seguridad" class="section"><i class="fas fa-shield-alt"></i></a>
         </ul>
     </div>
 
@@ -32,6 +51,13 @@
 
             </div>
         </div>
+    </div>
+
+    <div class="panel2">
+            {{!-- <a class="a-bars"><i class="fas fa-bars"></i></a> --}}
+            <a href="/dashboard/productos" class="section2"><i class="fas fa-box-open"></i></a>
+            <a href="/dashboard/user" class="section2"><i class="fas fa-user-cog"></i></a>
+            <a href="/dashboard/seguridad" class="section2"><i class="fas fa-shield-alt"></i></a>
     </div>
 
     <section id="dashSection" >
