@@ -128,7 +128,7 @@ async function updateUserData(e) {
     const body = {
         firstName: firstName.value,
         lastName: lastName.value,
-        email: email.value,
+        // email: email.value,
         phone: phone.value,
         // cp: cp.value,
         address: {
