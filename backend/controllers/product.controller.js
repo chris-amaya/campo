@@ -335,6 +335,24 @@ function getProductsByUser(req, res) {
     })
 }
 
+function deleteProduct(req, res) {
+    Product.findByIdAndRemove(req.params.product, (err, product) => {
+        if(err) {
+            return res.status(501).json({
+                msg: "Error al tratar de eliminar el producto",
+                status: false,
+                err
+            })
+        } else if(product) {
+            res.json({
+                product,
+                status: 'ok',
+                msg: 'producto eliminado correctamente'
+            })
+        }
+    })
+}
+
 module.exports = {
     createProduct,
     getProductByUser,
@@ -345,5 +363,6 @@ module.exports = {
     getUserByProductURL,
     getLastProducts,
     liveSearch,
-    getProductsByUser
+    getProductsByUser,
+    deleteProduct
 } 

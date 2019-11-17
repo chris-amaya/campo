@@ -26,7 +26,46 @@ document.addEventListener('click', (e) => {
         // console.log('aodfjasoidf');
         document.querySelector('.input-search').classList.toggle('active')
     }
+
+    if(e.target.id == 'delete-product') {
+    //    console.log( e.target.dataset.productid)
+        deleteProduct(e.target.dataset.productid);
+    }
+
+    if(e.target.parentElement.id == 'delete-product') {
+        // console.log(e.target.parentElement.dataset.productid)
+        deleteProduct(e.target.parentElement.dataset.productid)
+        
+    }
+
+//                         <a data-productID='${data.productsDB[i]._id}' id="delete-product"><i class="fas fa-trash"></i></a>
+
 })
+
+async function deleteProduct(id) {
+    console.log(id);
+    
+    if(confirm('¿está seguro de eliminar el producto?')) {
+        let deleteProductReq = await fetch(`/api/product/delete/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'token': localStorage.getItem('token') || sessionStorage.getItem('token')
+            }
+
+        });
+        let deleteProductRes = await deleteProductReq.json();
+        console.log(deleteProductRes)
+        if(deleteProductRes.status == 'ok') {
+            document.querySelector(`[data-productid='${id}']`).parentElement.parentElement.parentElement.remove();
+            alert(deleteProductRes.msg);
+        } else if(deleteProductRes.status == false) {
+            alert(deleteProductRes.msg)
+        }
+        
+    }
+
+}
 
 document.addEventListener('DOMContentLoaded', (e) => getProductsUser(e), false);
 
@@ -53,9 +92,6 @@ async function getProductsUser(e) {
     console.log(productsRes);
     renderProducts(products);
     renderPagination(productsRes.pages > 0 ? productsRes.pages : 0, Number(page))
-    
-
-    
 
 }
 
@@ -101,11 +137,14 @@ function renderProducts(data, type) {
             `
         }
 
-        // if(type == 'query')
         
-
+        
     } else {
-        productsTable.innerHTML = `<p>Actualmente no ha creado ningún producto para su venta</p>`
+            if(!type) {
+                productsTable.innerHTML = `<p>Actualmente no ha creado ningún producto para su venta</p>`
+            } else {
+                productsTable.innerHTML = `<p>Ningún resultado</p>`
+            }
     }
 
 }
@@ -125,7 +164,7 @@ let searchProductByUser = debounce(async (e) => {
         });
         let productRes = await productsReq.json();
         console.log(productRes)
-        renderProducts(productRes);
+        renderProducts(productRes, true);
     } else {
         // se vuelve a renderizar la vista con los mismos datos de consulta al cargar la páginga
         renderProducts(products)
