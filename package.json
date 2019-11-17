@@ -21,6 +21,7 @@
     "babel-loader": "^8.0.6",
     "css-loader": "^3.1.0",
     "file-loader": "^4.2.0",
+    "handlebars-form-helpers": "^0.1.4",
     "handlebars-loader": "^1.7.1",
     "handlebars-webpack-plugin": "^1.6.0",
     "html-loader": "^0.5.5",

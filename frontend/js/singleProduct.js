@@ -50,6 +50,8 @@ document.addEventListener('click', (e) => {
 document.addEventListener('DOMContentLoaded', (e) => fetchProduct(e), false)
 
 async function fetchProduct(e){
+
+    
     
 
     let productReq = await fetch(`api/product/${urlProduct}`);
@@ -58,6 +60,8 @@ async function fetchProduct(e){
     renderizarDatos(productRes);
 
     console.log(productRes);
+    // document.title = `${window.location.href.split('/').slice(-1)[0]} | productos`
+    document.title = productRes.title;
 
     // await ImageProduct.resizeFigure(document.querySelector('.product.container figure'), document.querySelector('section figure img.active'));
 }

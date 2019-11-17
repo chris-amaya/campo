@@ -130,10 +130,14 @@ module.exports = {
               test: /\.(handlebars|hbs)$/,
               loader: 'handlebars-loader',
               options: {
-                  // knownHelpersOnly: false,
+                  knownHelpersOnly: false,
                   // inlineRequires: /\(:?images|audio|video)/i,
-                  inlineRequires: /\.(png|jpg|jpeg)/i,
-                  partialDirs: __dirname + '/frontend/partials'
+                  // inlineRequires: /\.(png|jpg|jpeg)/i,
+                  partialDirs: __dirname + '/frontend/partials',
+                  // precompileOptions: {
+                  //   knownHelpersOnly: false,
+                  // },
+                  ignoreHelpers: false
               },
             },
             { 

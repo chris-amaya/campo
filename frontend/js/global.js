@@ -1,8 +1,11 @@
 import { animations } from './animations';
 
+
 const inputSearchProduct = document.getElementById('searchProduct');
 const resultProducts = document.getElementById('resultProducts');
 
+if(inputSearchProduct) {
+    
 inputSearchProduct.addEventListener('input', (e) => searchProdcut(e), false);
 
 let searchProdcut = debounce( async (e) => {
@@ -29,6 +32,8 @@ let searchProdcut = debounce( async (e) => {
     }
 
 }, 500);
+
+}
 
 function renderSearchProducts(data) {
     console.log(data);

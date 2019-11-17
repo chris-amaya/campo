@@ -14,6 +14,7 @@ async function DOMContentLoaded(e) {
 
 async function renderData(data) {
     console.log(data);
+    document.title = `${data.userDB.firstName} ${data.userDB.lastName} | perfil`
     document.getElementById('user-name').textContent = `${data.userDB.firstName} ${data.userDB.lastName}`
     document.getElementById('user-pic').src = data.userDB.pic
     // document.getElementById('number-counter-opinions').textContent = data.userDB.opinions || '0'

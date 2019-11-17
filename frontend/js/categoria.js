@@ -4,11 +4,12 @@ import '../css/list-products.css';
 
 const urlCategory = window.location.href.split('/').length == 5 ? window.location.href.split('/').slice(-1)[0] : window.location.href.split('/')[4];
 const page = window.location.href.split('/').length == 6 ? window.location.href.split('/').slice(-1)[0] : 1;
-
+// document.title = `${window.location.href.split('/').slice(-1)[0]}`
 const containerProducts = document.getElementById('container-products');
 document.addEventListener('DOMContentLoaded', (e) => DOMContentLoaded(e), false);
 
 async function DOMContentLoaded() {
+    document.title = `${window.location.href.split('/').slice(-1)[0]} | productos`
     let productsReq = await fetch(`/api/category/${urlCategory}/${page}`);
     let productsRes = await productsReq.json();
     console.log(productsRes)

@@ -2,19 +2,27 @@ const express = require("express");
 const app = express.Router();
 
 app.get('/', (req, res) => {
-    res.render('index')
+    res.render('index', {
+        title: 'Home'
+    })
 });
 
 app.get('/categorias', (req, res) => {
-    res.render('categories');
+    res.render('categories', {
+        title: 'Categorias'
+    });
 });
 
 app.get('/categoria/:categoria', (req, res) => {
-    res.render('categoria');
+    res.render('categoria', {
+        title: `${req.params.categoria}`
+    });
 });
 
 app.get('/categoria/:categoria/:page', (req, res) => {
-    res.render('categoria');
+    res.render('categoria',  {
+        title: `${req.params.categoria}`
+    });
 });
 
 app.get('/productos', (req, res) => {
@@ -22,7 +30,11 @@ app.get('/productos', (req, res) => {
 })
 
 app.get('/producto/:id', (req, res) => {
-    res.render('singleProduct');
+    console.log(req.params.id)
+    res.render('singleProduct', {
+        // title: req.params.id
+        title: 'asdfasfd'
+    });
 })
 
 app.get('/producto', (req, res) => {
@@ -34,7 +46,9 @@ app.get('/acceso', (req, res) => {
 })
 
 app.get('/perfil/:url', (req, res) => {
-    res.render('profile')
+    res.render('profile', {
+        title: `${req.params.url}`
+    })
 })
 
 
