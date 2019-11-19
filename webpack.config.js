@@ -22,7 +22,8 @@ module.exports = {
         categoria: './frontend/js/categoria.js',
         avisoPrivacidad: './frontend/js/legal/aviso-privacidad.js',
         cookies: './frontend/js/legal/cookies.js',
-        termsAndConditions: './frontend/js/legal/terms-and-conditions.js'
+        termsAndConditions: './frontend/js/legal/terms-and-conditions.js',
+        files: './frontend/js/common/files.common.js'
     },
     output: {
         filename: 'js/[name].bundle.js',
@@ -142,7 +143,10 @@ module.exports = {
               use: {
                 loader: 'html-loader',
                 options: {
-                    attrs: ['img:src', 'link:href']
+                    // attrs: ['img:src', 'link:href'],
+                    removeComments: false,
+                    collapseWhitespace: false,
+                    removeAttributeQuotes: true,
                   }
                 }
             },
