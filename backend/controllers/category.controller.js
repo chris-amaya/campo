@@ -1,5 +1,7 @@
 const Category = require('../models/categories.model');
 const Products = require('../models/product.model');
+const User = require('../models/user.model');
+
 
 function createCategory(req, res) {
     console.log(req.body)
@@ -29,6 +31,15 @@ function getCategories(req, res) {
     })
 }
 
+
+function getUserDataByEmail(email) {
+    return User.findOne({email}, (err, userDB) => {
+         if(userDB) {
+            return userDB
+        }
+    })
+}
+
 async function getProductsByCategory(req, res) {
     const limit = 5;
     const page = Number(req.params.page) || 0;
@@ -40,7 +51,18 @@ async function getProductsByCategory(req, res) {
     Products.find({"category.title": req.params.category})
     .skip(skip)
     .limit(limit)
-    .exec((err, productsDB) => {
+    .exec( async (err, productsDB) => {
+
+        let products = [];
+        for (let product of productsDB){
+            let user = await getUserDataByEmail(product.userInfo.email);
+            products.push({
+                product,
+                user
+            });
+            // console.log(product)
+        }
+
         if(err) {
             return res.status(501).json({
                 msg: 'Error al buscar los productos',
@@ -48,7 +70,7 @@ async function getProductsByCategory(req, res) {
             });
         } else if(productsDB) {
             res.json({
-                productsDB,
+                products,
                 pages: Math.ceil(count / limit),
                 status: 'ok'
             })

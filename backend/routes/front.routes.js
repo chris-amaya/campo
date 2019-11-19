@@ -51,6 +51,18 @@ app.get('/perfil/:url', (req, res) => {
     })
 })
 
+app.get('/aviso-de-privacidad', (req, res) => {
+    res.render('aviso-privacidad')
+})
+
+app.get('/cookies', (req, res) => {
+    res.render('cookies')
+})
+
+app.get('/terminos-y-condiciones', (req, res) => {
+    res.render('terms-and-conditions')
+})
+
 
 
 module.exports = app;

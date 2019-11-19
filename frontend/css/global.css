@@ -289,8 +289,16 @@ footer .container {
         width: 100%;
     }
 
+    
+    
+
 }
 
+@media screen and (max-width: 720px) {
+    .hambModal.modal a {
+        font-size: 32px;
+    }
+}
 @media screen and (min-width: 700px) {
     .only-phones {
         display: none;

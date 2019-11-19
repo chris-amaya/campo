@@ -198,15 +198,28 @@ function deleteImgByID(req, res) {
     })
 }
 
+function getUserDataByEmail(email) {
+    return User.findOne({email}, (err, userDB) => {
+         if(userDB) {
+            return userDB
+        }
+    })
+}
+
 function getProductByURL(req, res) {
-    Product.findOne({url: req.params.url}, (err, productDB) => {
+    Product.findOne({url: req.params.url}, async (err, productDB) => {
+        let userInfo = await getUserDataByEmail(productDB.userInfo.email)
+        console.log(userInfo)
         if(err) {
             return res.status(501).json({
                 msg: 'Error al obtener el producto',
                 status: false
             })
         } else if(productDB) {
-            res.json(productDB)
+            res.json({
+                productDB,
+                userInfo
+            })
         }
     })
 }
@@ -229,18 +242,29 @@ function getUserByProductURL(req, res) {
     })
 }
 
-function getLastProducts(req,res) {
+async function getLastProducts(req,res) {
     
-    Product.find().sort({ _id: -1 }).limit(3).exec((err, lastProductsDB) => {
+    Product.find().sort({ _id: -1 }).limit(3).exec( async (err, lastProductsDB) => {
+
+        let newProducts = [];
+        for (let product of lastProductsDB){
+            let user = await getUserDataByEmail(product.userInfo.email);
+            newProducts.push({
+                product,
+                user
+            });
+            // console.log(product)
+        }
+        
         if(err) {
             return res.status(501).json({
                 status: false,
                 message: 'error al buscar los productos'
             })
         } else if(lastProductsDB) {
-            return res.json({
+            res.json({
                 status: 'ok',
-                lastProductsDB
+                newProducts
             })
         }
     })
@@ -248,26 +272,6 @@ function getLastProducts(req,res) {
 
 function liveSearch(req, res) {
     let product = req.body.product;
-    // Product.find({
-    //     title: {
-    //         '$regex': product,
-    //         '$options': 'i'
-    //     }
-    //     // title: /`+product+`/i
-    // }, (err, productDB) => {
-    //     if(err) {
-    //         return res.status(501).json({
-    //             status: false,
-    //             message: 'error al buscar los productos'
-    //         })
-    //     } else if(productDB) {
-    //         return res.json({
-    //             status: 'ok',
-    //             productDB
-    //         })
-    //     }
-    // })
-
     Product.find({
         title: {
             '$regex': product,
@@ -275,7 +279,16 @@ function liveSearch(req, res) {
         }
     })
     .limit(3)
-    .exec((err, productDB) => {
+    .exec( async (err, products) => {
+        let productDB = [];
+        for (let product of products){
+            let user = await getUserDataByEmail(product.userInfo.email);
+            productDB.push({
+                product,
+                user
+            });
+            // console.log(product)
+        }
             if(err) {
             return res.status(501).json({
                 status: false,

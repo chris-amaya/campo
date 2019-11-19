@@ -59,25 +59,25 @@ function renderPagination(pages, currentPage) {
 async function renderProducts(data) {
 
 
-    if(data.productsDB) {
-        for(let i = 0; i < data.productsDB.length; i++) {
+    if(data.products) {
+        for(let i = 0; i < data.products.length; i++) {
+            let userInfo = data.products[i].user;
+            let product = data.products[i].product;
             containerProducts.innerHTML += `
-            <a class="list-product" href='/producto/${data.productsDB[i].url}'>
+            <a class="list-product" href='/producto/${product.url}'>
                 <figure>
-                    <img src='${data.productsDB[i].mainImg}' alt="">
-                    <p class="prize">${data.productsDB[i].prize}</p>
+                    <img src='${product.mainImg}' alt="">
+                    <p class="prize">${product.prize}</p>
                 </figure>
                 <div class="info-product">
-                    <h3 class="title-product">${data.productsDB[i].title}</h3>
-                    <p class="desc-product">${data.productsDB[i].description}</p>
+                    <h3 class="title-product">${product.title}</h3>
+                    <p class="desc-product">${product.description}</p>
                     <div class="detail-product">
-                        <p class="location-product">${data.productsDB[i].userInfo.location || 'Desconocido'}</p>
-                        <p class="author-product">${data.productsDB[i].userInfo.firstName} ${data.productsDB[i].userInfo.lastName}</p>
+                        <p class="location-product">${userInfo.address.city + ', ' + userInfo.address.state || 'Desconocido'}</p>
+                        <p class="author-product">${userInfo.firstName} ${userInfo.lastName}</p>
                     </div>
                 </div>
-            </a>
-            
-            `
+            </a>`
 
         }
     }

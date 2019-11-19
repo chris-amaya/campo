@@ -50,19 +50,11 @@ document.addEventListener('click', (e) => {
 document.addEventListener('DOMContentLoaded', (e) => fetchProduct(e), false)
 
 async function fetchProduct(e){
-
-    
-    
-
     let productReq = await fetch(`api/product/${urlProduct}`);
     let productRes = await productReq.json();
-
-    renderizarDatos(productRes);
-
-    console.log(productRes);
-    // document.title = `${window.location.href.split('/').slice(-1)[0]} | productos`
-    document.title = productRes.title;
-
+    renderizarDatos(productRes.productDB);
+    renderUserData(productRes.userInfo);
+    document.title = productRes.productDB.title;
     // await ImageProduct.resizeFigure(document.querySelector('.product.container figure'), document.querySelector('section figure img.active'));
 }
 
@@ -83,17 +75,15 @@ function renderizarDatos(product) {
         }
         document.getElementById('counter').innerHTML += `<i class='fas fa-circle' data-id=${i + 1}></i>`;
     }
-
-    document.getElementById('user-name').textContent = `${product.userInfo.firstName} ${product.userInfo.lastName}`
-    document.getElementById('user-location').textContent = product.userInfo.location || 'Ubicación no dada por el usuario'
-
-
     document.getElementById('title-prod').textContent = product.title;
     document.getElementById('desc-prod').textContent = product.description;
     // ImageProduct.resizeFigure(document.querySelector('.product.container figure'), document.querySelector('section figure img.active'))
 }
 
-
+function renderUserData(user) {
+    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`
+    document.getElementById('user-location').textContent = `${user.address.city}, ${user.address.state}` || 'Ubicación no dada por el usuario'
+}
 
 window.addEventListener('load', (e) => {
     ImageProduct.resizeFigure(document.querySelector('.product.container figure'), document.querySelector('section figure img.active'));

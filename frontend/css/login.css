@@ -292,6 +292,11 @@ form.register .conditions p {
     margin: 5px 0;
 }
 
+form.register .conditions p a {
+    text-decoration: none;
+    color: var(--grey-2nd);
+}
+
 .button-submit-options:hover {
     box-shadow: inset 0 0 100px 100px rgba(255, 255, 255, 0.3);
     /* propiedad para iluminar el botón cuando se este en estado :hover */
