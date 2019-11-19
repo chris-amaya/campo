@@ -6,9 +6,9 @@ import { ImageProduct } from './classes/image';
 import { animations } from './animations';
 
 const urlProduct = window.location.href.split('/').slice(-1)[0];
-const buyButton = document.getElementById('buy');
+// const buyButton = document.getElementById('buy');
 
-buyButton.addEventListener('click', (e) => getContactDataUser(e), false);
+// buyButton.addEventListener('click', (e) => getContactDataUser(e), false);
 
 async function getContactDataUser(e) {
     let userReq = await fetch(`api/user/product/${urlProduct}`, {
@@ -43,6 +43,15 @@ document.addEventListener('click', (e) => {
         imageProduct.getImageSelectedId(e.target.dataset.id).classList.add('active');
         imageProduct.getImageSelectedId(e.target.dataset.id).style.left = '0%';
 
+    }
+
+    if(e.target.id == 'buy' || e.target.parentElement.id == 'buy') {
+        
+        animations.bringFromTop(document.getElementById('buy-modal'))
+    }
+
+    if(e.target.id == 'close-buy-modal' || e.target.parentElement.id == 'close-buy-modal') {
+        animations.hideToTop(document.getElementById('buy-modal'))
     }
 })
 
@@ -81,7 +90,8 @@ function renderizarDatos(product) {
 }
 
 function renderUserData(user) {
-    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`
+    document.getElementById('user-name').textContent = `${user.firstName} ${user.lastName}`;
+    document.getElementById('user-name').href = `/perfil/${user.url}`
     document.getElementById('user-location').textContent = `${user.address.city}, ${user.address.state}` || 'Ubicación no dada por el usuario'
 }
 
