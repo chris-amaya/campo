@@ -27,7 +27,7 @@ function renderLastProducts(data) {
                 </figure>
                 <div class="info-product">
                     <h3 class="title-product">${product.title}</h3>
-                    <p class="desc-product">${product.description}</p>
+                    <p class="desc-product">${product.description.substring(0, 50) }</p>
                     <div class="detail-product">
                         <p class="location-product">${userInfo.address.city + ' ' + userInfo.address.state || 'locación desconocida'}</p>
                         <p class="author-product">${userInfo.firstName} ${userInfo.lastName}</p>

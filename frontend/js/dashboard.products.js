@@ -110,7 +110,7 @@ function renderProducts(data, type) {
             productsTable.innerHTML += `
             <div class="product">
                 <p class="title-product">${data.productsDB[i].title}</p>
-                <p class="desc-product">${data.productsDB[i].description}</p>
+                <p class="desc-product">${data.productsDB[i].description.substring(0, 50)}</p>
                 <div class="controls">
                     <a class="edit" href='/dashboard/producto/editar/${data.productsDB[i]._id}'>
                         <i class="fas fa-pen"></i>

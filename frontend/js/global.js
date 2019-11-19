@@ -49,7 +49,7 @@ function renderSearchProducts(data) {
                 </figure>
                 <div class="info-product">
                     <h3 class="title-product">${productInfo.title}</h3>
-                    <p class="desc-product">${productInfo.description}</p>
+                    <p class="desc-product">${productInfo.description.substring(0, 50)}</p>
                         <div class="detail-product">
                             <p class="location-product">${user.address.city || ''} ${user.address.state || ''}</p>
                             <p class="author-product">${user.firstName} ${user.lastName}</p>
