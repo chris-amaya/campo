@@ -29,11 +29,11 @@ const email = document.getElementById('email');
 function renderUserData(user) {
     console.log(user);
     firstName.value = user.userDB.firstName;
-    lastName.value = user.userDB.lastName;
+    lastName.value = user.userDB.lastName || '';
+    email.value = user.userDB.email;
+    phone.value = user.userDB.phone || '';
     address.value = user.userDB.address.address || '';
     cp.value = user.userDB.address.cp || '';
-    phone.value = user.userDB.phone || '';
-    email.value = user.userDB.email;
 
     Object.entries(data).forEach(
         ([key, value], index) => {
@@ -119,7 +119,6 @@ let data = {
 }
 
 const buttonUpdate = document.getElementById('buttonUpdate');
-console.log(buttonUpdate)
 buttonUpdate.addEventListener('click', (e) => updateUserData(e), false);
 
 async function updateUserData(e) {

@@ -35,7 +35,7 @@ const pub_dir = `${__dirname}/dist`;
 const pub_img = `${__dirname}/uploads`;
 
 app.set('views', __dirname + '/dist');
-hbs.registerPartials(__dirname + '5000/5000/5000/5000//frontend/partials');
+hbs.registerPartials(__dirname + '/frontend/partials');
 app.set('view engine', 'hbs');
 app.use(express.static(pub_dir));
 

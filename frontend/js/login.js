@@ -4,7 +4,60 @@ import '../css/login.css'
 import { animations } from './animations';
 import anime from 'animejs/lib/anime.es.js';
 
+async function onSignIn(googleUser) {
+    var profile = googleUser.getBasicProfile();
+
+    const token = googleUser.getAuthResponse().id_token;
+
+    let googleReq = await fetch(`/google-verify`, {
+        method: 'POST',
+        body: JSON.stringify({
+            token
+        }),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    })
+
+    let googleRes = await googleReq.json();
+    console.log(googleRes)
+
+
+    if(googleRes.userDB != undefined) {
+        // setear sessiones
+        sessionStorage.setItem('googleUser', JSON.stringify(googleRes.userDB));
+        sessionStorage.setItem('token', JSON.stringify(googleRes.token));
+
+        sessionStorage.setItem('googleToken', JSON.stringify(token));
+        sessionStorage.setItem('token',     googleRes.token)
+        sessionStorage.setItem('firstName', googleRes.userDB.name)
+        sessionStorage.setItem('lastName',  '')
+        sessionStorage.setItem('email',     googleRes.userDB.email)
+        sessionStorage.setItem('_id',       googleRes.userDB._id)
+        sessionStorage.setItem('role',      googleRes.userDB.role)
+        sessionStorage.setItem('pic',       googleRes.userDB.pic)
+        sessionStorage.setItem('url',       googleRes.userDB.url)
+
+        window.location.href = '/dashboard/user';
+    } else {
+        // usuario aún no se ha registrado
+        if(googleRes.ok == true || googleRes.ok == 'ok') {
+            // setear sessiones
+            sessionStorage.setItem('googleUser', JSON.stringify(googleRes.userDB))
+            changeForm('account-options', 'register');
+            changeForm('account-options', 'login');
+        }
+    }
+    
+
+
+}
+
+
+
+
 import { User } from './classes/user';
+import { model } from 'mongoose';
 
 const loginContainer = document.getElementById('loginContainer')
 const welcome        = document.getElementById('welcome');
@@ -95,7 +148,16 @@ async function handlerButtonAccountOption1(e) {
     } else {
         // hacer fetch registrando al usuario como comprador
         messageErrorBox.style.display = 'none';
-        fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+
+        let googleUser = sessionStorage.getItem('googleUser');
+        if(googleUser) {
+            googleUser = JSON.parse(googleUser);
+            googleSignUp(googleUser);
+            // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
+        } else {
+            fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+        }
+
     }
 }
 
@@ -108,8 +170,18 @@ async function handlerButtonAccountOption2(e) {
     } else if(role == 'SELLER_TEAM_ROLE' || role == 'SELLER_ALONE_ROLE') {
         messageErrorBox.style.display = 'none';
 
+
+        let googleUser = sessionStorage.getItem('googleUser');
+        if(googleUser) {
+            googleUser = JSON.parse(googleUser);
+            googleSignUp(googleUser);
+            // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
+        } else {
+            fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+        }
+        // if(googleUser)
         // hacer fetch de registro usuario como vendedor y redireccionar hacía el dashboard
-        fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role);
+        // fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role);
     }
 
 }
@@ -122,8 +194,6 @@ const loginButton   = document.getElementById('submitLogin');
 const emailLogin    = document.getElementById('emailLogin');
 const passwordLogin = document.getElementById('passwordLogin');
 const remember      = document.getElementById('checkboxRemember')
-
-console.log(loginButton);
 
 loginButton.addEventListener('click', (event) => handlerLogin(event), false);
 
@@ -268,6 +338,63 @@ function handlerOptionSelected(selector, numberOption) {
     }
 }
 
+async function googleSignUp(user) {
+    const params = {
+        firstName: user.name,
+        lastName: null,
+        password: null,
+        email: user.email,
+        role,
+        token: JSON.parse(sessionStorage.getItem('googleToken'))
+    }
+
+    const reqRegisterUser = await fetch(`/google`, {
+        method: 'POST',
+        body: JSON.stringify(params),
+        headers: {
+            'Content-Type': 'application/json'
+        }
+    });
+    const response = await reqRegisterUser.json();
+    console.log(response);
+    if(response.status == 'ok' || response.ok == true) {
+        // TODO: inicializar parametros localstorage y redirigir al dashboard
+        if(remember.value === true) {
+            localStorage.setItem('token',     response.token);
+            localStorage.setItem('firstName', response.user.name);
+            localStorage.setItem('lastName',  '');
+            localStorage.setItem('email',     response.user.email);
+            localStorage.setItem('_id',       response.user._id);
+            localStorage.setItem('role',      response.user.role)
+            localStorage.setItem('pic',       response.user.pic);
+            localStorage.setItem('url',       response.user.url);
+        } else {
+            sessionStorage.setItem('token',     response.token)
+            sessionStorage.setItem('firstName', response.user.name)
+            sessionStorage.setItem('lastName',  '')
+            sessionStorage.setItem('email',     response.user.email)
+            sessionStorage.setItem('_id',       response.user._id)
+            sessionStorage.setItem('role',      response.user.role)
+            sessionStorage.setItem('pic',       response.user.pic)
+            sessionStorage.setItem('url',       response.user.url)
+        }
+        if(response.user.role == 'BUYER_ROLE') {
+            window.location.href = '/'
+        } else {
+            window.location.href = '/dashboard/user'
+        }
+
+
+    } else if(response.status == false) {
+        // TODO: mostrar errores en pantalla
+        // @param response.message - mensaje que contiene el error que ha ocurrido
+        messageErrorBox.style.display = 'flex';
+        messageErrorBox.innerHTML = `<li>${response.message}</li>`
+    }
+
+
+}
+
 async function fetchRegisterUser(firstName, lastName, password, email, role) {
     const params = {
         firstName,
@@ -356,3 +483,4 @@ function changeForm(bringForm, hideForm) {
       });
 }
 
+window.onSignIn = onSignIn;

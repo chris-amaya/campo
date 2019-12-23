@@ -15,7 +15,7 @@ form div input{
     outline: none;
     padding: 5px 0px;
     font-family: 'Open Sans';
-    color: var(--grey-2nd);
+    color: #000;
     font-weight: 400;
     font-size: 1em;
 }

@@ -1,6 +1,9 @@
 const User = require('../models/user.model');
 const Product = require('../models/product.model');
 const JWT  = require('jsonwebtoken');
+const {OAuth2Client} = require('google-auth-library');
+const client = new OAuth2Client(process.env.CLIENT_ID)
+
 const bcrypt = require('bcrypt');
 const errors = [];
 
@@ -272,6 +275,159 @@ function updatePassword(req, res) {
 
 }
 
+// CONFIGURACIONES DE GOOGLE
+
+async function verify(token) {
+    const ticket = await client.verifyIdToken({
+        idToken: token,
+        audience: process.env.CLIENT_ID,  // Specify the CLIENT_ID of the app that accesses the backend
+        // Or, if multiple clients access the backend:
+        //[CLIENT_ID_1, CLIENT_ID_2, CLIENT_ID_3]
+    });
+    const payload = ticket.getPayload();
+
+    return {
+        nombre: payload.name,
+        email: payload.email,
+        pic: payload.picture,
+        google: true
+    }
+
+    // console.log(payload)
+  }
+
+async function googleVerify(req, res) {
+    let idToken = req.body.token;
+    let googleUser = await verify(idToken)
+    .catch((err) => {
+        res.status(403).json({
+            ok: false,
+            err
+        })
+    })
+
+
+    User.findOne({ email: googleUser.email }, (err, userDB) => {
+        if(err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        } 
+    if(userDB) {
+        if(userDB.google === false) {
+            return res.status(500).json({
+                ok: false,
+                err: {
+                    message: 'debe de usar su autenticación normal'
+                }
+            })
+        } else {
+            let token = JWT.sign({
+                userDB
+            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+            res.json({
+                ok: true,
+                userDB: userDB,
+                token,
+                googleUser
+            })
+        }
+        
+        }
+    })
+
+
+
+    // res.json({
+    //     ok: true,
+    //     googleUser
+    // })
+
+
+    // if(googleUser) 
+}
+
+async function google(req, res) {
+    let idtoken = req.body.token;
+    // verify(idtoken);
+    let googleUser = await verify(idtoken)
+    .catch((err) => {
+        res.status(403).json({
+            ok: false,
+            err
+        })
+    });
+
+    // verificar que usuario no exista
+
+    User.findOne({ email: googleUser.email }, (err, userDB) => {
+        if(err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        } 
+    if(userDB) {
+        if(userDB.google === false) {
+            return res.status(500).json({
+                ok: false,
+                err: {
+                    message: 'debe de usar su autenticación normal'
+                }
+            })
+        } else {
+            let token = JWT.sign({
+                userDB
+            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+            res.json({
+                ok: true,
+                user: userDB,
+                token
+            })
+        }
+        
+    } else {
+    
+        let randNumber = Date.now().toString();
+        // Sí el usuario no existe en la BD es un nuevo usuario por lo tanto hay que crearlo
+        let user = new User();
+        user.firstName = googleUser.nombre;
+        user.email = googleUser.email;
+        user.pic = googleUser.pic;
+        user.password = ':)';
+        user.url = slugify(`${user.firstName}-${randNumber.substring(randNumber.length - 4)}`)
+        user.role = req.body.role
+
+        user.save((err, userDB) => {
+
+            if(err) {   
+                return res.status(500).json({
+                    ok: false,
+                    err: {
+                        message: 'error interno al guardar en la BD',
+                        err
+                    }
+                })
+            } 
+
+            let token = JWT.sign({
+                userDB
+            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+
+            res.json({
+                ok: true,
+                user: userDB,
+                token
+            })
+
+        })
+
+        }
+    })
+
+}
+
 module.exports = {
     userSignUp, 
     checkEmail,
@@ -280,5 +436,7 @@ module.exports = {
     profile,
     getUserInfo,
     editUserInfo,
-    updatePassword
+    updatePassword,
+    google,
+    googleVerify
 }

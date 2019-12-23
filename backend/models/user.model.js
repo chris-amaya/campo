@@ -14,7 +14,7 @@ let usuarioSchema = new Schema({
     },
     lastName: {
         type: String,
-        required: [true, 'El apellido es necesario']
+        required: [false, 'El apellido es necesario']
     },
     email: {
         type: String,
@@ -28,7 +28,7 @@ let usuarioSchema = new Schema({
     role: {
         type: String,
         enum: rolesValidos,
-        required: [true, 'el rol es obligatorio']
+        required: [true, 'el rol es obligatorio'],
     },
     estado: {
         type: Boolean,
@@ -38,6 +38,17 @@ let usuarioSchema = new Schema({
         type: String,
         default: '/uploads/default-user.png'
     },
+
+    facebook: {
+        required:false,
+        type: Boolean
+    },
+
+    google: {
+        required: false,
+        type: Boolean
+    },
+
     phone: {
         type: String,
         required: false
