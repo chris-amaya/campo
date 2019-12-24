@@ -8,7 +8,8 @@ const logout = document.getElementById('logout');
 logout.addEventListener('click', async (e) => {
     e.preventDefault();
     
-    if(sessionStorage.getItem('googleUser')) {
+    if(sessionStorage.getItem('token')) {
+        console.log('deslogeooo')
         signOut();
     }
     sessionStorage.clear();

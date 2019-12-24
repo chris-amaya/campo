@@ -4,8 +4,12 @@ import '../css/login.css'
 import { animations } from './animations';
 import anime from 'animejs/lib/anime.es.js';
 
+
+
+
 async function onSignIn(googleUser) {
     var profile = googleUser.getBasicProfile();
+    console.log(profile);
 
     const token = googleUser.getAuthResponse().id_token;
 
@@ -22,35 +26,30 @@ async function onSignIn(googleUser) {
     let googleRes = await googleReq.json();
     console.log(googleRes)
 
+    if(googleRes.signUp) {
+        // guardar session storage de los datos del usuario
+        // continuar con el registro
+        sessionStorage.setItem('googleUserData', JSON.stringify({
+            name: profile.getName(),
+            pic: profile.getImageUrl(),
+            email: profile.getEmail()
+        }));
 
-    if(googleRes.userDB != undefined) {
-        // setear sessiones
-        sessionStorage.setItem('googleUser', JSON.stringify(googleRes.userDB));
-        sessionStorage.setItem('token', JSON.stringify(googleRes.token));
+        changeForm('account-options', 'register');
+        changeForm('account-options', 'login');
 
-        sessionStorage.setItem('googleToken', JSON.stringify(token));
-        sessionStorage.setItem('token',     googleRes.token)
-        sessionStorage.setItem('firstName', googleRes.userDB.name)
-        sessionStorage.setItem('lastName',  '')
-        sessionStorage.setItem('email',     googleRes.userDB.email)
-        sessionStorage.setItem('_id',       googleRes.userDB._id)
-        sessionStorage.setItem('role',      googleRes.userDB.role)
-        sessionStorage.setItem('pic',       googleRes.userDB.pic)
-        sessionStorage.setItem('url',       googleRes.userDB.url)
-
-        window.location.href = '/dashboard/user';
     } else {
-        // usuario aún no se ha registrado
-        if(googleRes.ok == true || googleRes.ok == 'ok') {
-            // setear sessiones
-            sessionStorage.setItem('googleUser', JSON.stringify(googleRes.userDB))
-            changeForm('account-options', 'register');
-            changeForm('account-options', 'login');
-        }
+        // guardar información del usuario en session storage y redirigir a donde corresponda
+        sessionStorage.setItem('token', googleRes.token);
+        sessionStorage.setItem('firstName', googleRes.userDB.firstName);
+        sessionStorage.setItem('lastName', '');
+        sessionStorage.setItem('email', googleRes.userDB.email);
+        sessionStorage.setItem('_id', googleRes.userDB._id);
+        sessionStorage.setItem('role', googleRes.userDB.role);
+        sessionStorage.setItem('pic', googleRes.userDB.pic);
+        sessionStorage.setItem('url', googleRes.userDB.url);
+        window.location.href = '/dashboard/user';
     }
-    
-
-
 }
 
 
@@ -149,13 +148,30 @@ async function handlerButtonAccountOption1(e) {
         // hacer fetch registrando al usuario como comprador
         messageErrorBox.style.display = 'none';
 
-        let googleUser = sessionStorage.getItem('googleUser');
+        let googleUser = sessionStorage.getItem('googleUserData');
         if(googleUser) {
             googleUser = JSON.parse(googleUser);
-            googleSignUp(googleUser);
+            // googleSignUp(googleUser);
+            fetchRegisterUser({
+                firstName: googleUser.name,
+                lastName: null,
+                password: null,
+                method: 'google',
+                email: googleUser.email,
+                pic: googleUser.pic,
+            })
             // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
         } else {
-            fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+
+            fetchRegisterUser({
+                firstName: firstName.value,
+                lastName: lastName.value,
+                password: password.value,
+                email: email.value,
+                method: 'normal'
+            })
+
+            // fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
         }
 
     }
@@ -171,13 +187,28 @@ async function handlerButtonAccountOption2(e) {
         messageErrorBox.style.display = 'none';
 
 
-        let googleUser = sessionStorage.getItem('googleUser');
+        let googleUser = sessionStorage.getItem('googleUserData');
         if(googleUser) {
             googleUser = JSON.parse(googleUser);
-            googleSignUp(googleUser);
+            // googleSignUp(googleUser);
+            fetchRegisterUser({
+                firstName: googleUser.name,
+                lastName: null,
+                password: null,
+                method: 'google',
+                email: googleUser.email,
+                pic: googleUser.pic,
+            })
             // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
         } else {
-            fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
+            fetchRegisterUser({
+                firstName: firstName.value,
+                lastName: lastName.value,
+                password: password.value,
+                email: email.value,
+                method: 'normal'
+            })
+            // fetchRegisterUser(firstName.value, lastName.value, password.value, email.value, role)
         }
         // if(googleUser)
         // hacer fetch de registro usuario como vendedor y redireccionar hacía el dashboard
@@ -338,69 +369,74 @@ function handlerOptionSelected(selector, numberOption) {
     }
 }
 
-async function googleSignUp(user) {
+// async function googleSignUp(user) {
+//     const params = {
+//         firstName: user.name,
+//         lastName: null,
+//         password: null,
+//         email: user.email,
+//         role,
+//         token: JSON.parse(sessionStorage.getItem('googleToken'))
+//     }
+
+//     const reqRegisterUser = await fetch(`/google`, {
+//         method: 'POST',
+//         body: JSON.stringify(params),
+//         headers: {
+//             'Content-Type': 'application/json'
+//         }
+//     });
+//     const response = await reqRegisterUser.json();
+//     console.log(response);
+//     if(response.status == 'ok' || response.ok == true) {
+//         // TODO: inicializar parametros localstorage y redirigir al dashboard
+//         if(remember.value === true) {
+//             localStorage.setItem('token',     response.token);
+//             localStorage.setItem('firstName', response.user.name);
+//             localStorage.setItem('lastName',  '');
+//             localStorage.setItem('email',     response.user.email);
+//             localStorage.setItem('_id',       response.user._id);
+//             localStorage.setItem('role',      response.user.role)
+//             localStorage.setItem('pic',       response.user.pic);
+//             localStorage.setItem('url',       response.user.url);
+//         } else {
+//             sessionStorage.setItem('token',     response.token)
+//             sessionStorage.setItem('firstName', response.user.name)
+//             sessionStorage.setItem('lastName',  '')
+//             sessionStorage.setItem('email',     response.user.email)
+//             sessionStorage.setItem('_id',       response.user._id)
+//             sessionStorage.setItem('role',      response.user.role)
+//             sessionStorage.setItem('pic',       response.user.pic)
+//             sessionStorage.setItem('url',       response.user.url)
+//         }
+//         if(response.user.role == 'BUYER_ROLE') {
+//             window.location.href = '/'
+//         } else {
+//             window.location.href = '/dashboard/user'
+//         }
+
+
+//     } else if(response.status == false) {
+//         // TODO: mostrar errores en pantalla
+//         // @param response.message - mensaje que contiene el error que ha ocurrido
+//         messageErrorBox.style.display = 'flex';
+//         messageErrorBox.innerHTML = `<li>${response.message}</li>`
+//     }
+
+
+// }
+// async function asdfasf(userInfo) {
+   
+// }
+
+async function fetchRegisterUser(userInfo) {
     const params = {
-        firstName: user.name,
-        lastName: null,
-        password: null,
-        email: user.email,
-        role,
-        token: JSON.parse(sessionStorage.getItem('googleToken'))
-    }
-
-    const reqRegisterUser = await fetch(`/google`, {
-        method: 'POST',
-        body: JSON.stringify(params),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    });
-    const response = await reqRegisterUser.json();
-    console.log(response);
-    if(response.status == 'ok' || response.ok == true) {
-        // TODO: inicializar parametros localstorage y redirigir al dashboard
-        if(remember.value === true) {
-            localStorage.setItem('token',     response.token);
-            localStorage.setItem('firstName', response.user.name);
-            localStorage.setItem('lastName',  '');
-            localStorage.setItem('email',     response.user.email);
-            localStorage.setItem('_id',       response.user._id);
-            localStorage.setItem('role',      response.user.role)
-            localStorage.setItem('pic',       response.user.pic);
-            localStorage.setItem('url',       response.user.url);
-        } else {
-            sessionStorage.setItem('token',     response.token)
-            sessionStorage.setItem('firstName', response.user.name)
-            sessionStorage.setItem('lastName',  '')
-            sessionStorage.setItem('email',     response.user.email)
-            sessionStorage.setItem('_id',       response.user._id)
-            sessionStorage.setItem('role',      response.user.role)
-            sessionStorage.setItem('pic',       response.user.pic)
-            sessionStorage.setItem('url',       response.user.url)
-        }
-        if(response.user.role == 'BUYER_ROLE') {
-            window.location.href = '/'
-        } else {
-            window.location.href = '/dashboard/user'
-        }
-
-
-    } else if(response.status == false) {
-        // TODO: mostrar errores en pantalla
-        // @param response.message - mensaje que contiene el error que ha ocurrido
-        messageErrorBox.style.display = 'flex';
-        messageErrorBox.innerHTML = `<li>${response.message}</li>`
-    }
-
-
-}
-
-async function fetchRegisterUser(firstName, lastName, password, email, role) {
-    const params = {
-        firstName,
-        lastName,
-        password,
-        email,
+        firstName: userInfo.firstName,
+        lastName: userInfo.lastName,
+        password: userInfo.password,
+        email: userInfo.email,
+        pic: userInfo.pic,
+        method: userInfo.method,
         role
     }
     const registerUser = await fetch('api/user/signUp/', {

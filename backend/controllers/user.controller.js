@@ -25,12 +25,14 @@ function slugify(string) {
 
 function userSignUp(req, res) {
     const body = req.body;
-    // console.log(body);
+    console.log(body);
 
     validateEmail(body.email);
 
     if(errors.length > 0) {
         // responder false y / error
+        console.log(body)
+        console.log(errors)
         res.status(401).json({
             msg: 'error en los datos enviados',
             status: false,
@@ -39,12 +41,20 @@ function userSignUp(req, res) {
     } else {
         let randNumber = Date.now().toString();
 
+        // if(body.method != 'normal') {
+        //     body.password = ':X'
+        // }
+        body.method != 'normal' ? body.password = ':x' : body.password;
+        
+        // if(body.method)
+
         let user = new User({
             firstName: body.firstName,
             lastName: body.lastName,
             password: bcrypt.hashSync(body.password, 10),
             email: body.email,
             role: body.role,
+            pic: body.pic,
             url: slugify(`${body.firstName} ${body.lastName}`) + `-${randNumber.substring(randNumber.length - 4)}`,
             address: {
                 state: null,
@@ -129,6 +139,17 @@ function checkEmail(req, res) {
         if(err) {
             console.error(err);
         } else if(user) {
+            // if(req.body.google) {
+            //     if(user.email === false) {
+            //         return res.state(403).json({
+            //             ok: false,
+            //             err: {
+            //                 message: 'debe de usar sus credenciales normales (usuario y contraseña)'
+            //             }
+            //         })
+            //     }
+            // } 
+
             res.status(403).json({
                 msg: 'correo existente',
                 status: false
@@ -305,128 +326,131 @@ async function googleVerify(req, res) {
             err
         })
     })
-
-
-    User.findOne({ email: googleUser.email }, (err, userDB) => {
-        if(err) {
-            return res.status(500).json({
-                ok: false,
-                err
-            })
-        } 
-    if(userDB) {
-        if(userDB.google === false) {
-            return res.status(500).json({
-                ok: false,
-                err: {
-                    message: 'debe de usar su autenticación normal'
-                }
-            })
-        } else {
-            let token = JWT.sign({
-                userDB
-            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
-            res.json({
-                ok: true,
-                userDB: userDB,
-                token,
-                googleUser
-            })
-        }
-        
-        }
-    })
-
-
-
-    // res.json({
-    //     ok: true,
-    //     googleUser
-    // })
-
-
-    // if(googleUser) 
-}
-
-async function google(req, res) {
-    let idtoken = req.body.token;
-    // verify(idtoken);
-    let googleUser = await verify(idtoken)
-    .catch((err) => {
-        res.status(403).json({
-            ok: false,
-            err
-        })
-    });
-
-    // verificar que usuario no exista
-
-    User.findOne({ email: googleUser.email }, (err, userDB) => {
-        if(err) {
-            return res.status(500).json({
-                ok: false,
-                err
-            })
-        } 
-    if(userDB) {
-        if(userDB.google === false) {
-            return res.status(500).json({
-                ok: false,
-                err: {
-                    message: 'debe de usar su autenticación normal'
-                }
-            })
-        } else {
-            let token = JWT.sign({
-                userDB
-            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
-            res.json({
-                ok: true,
-                user: userDB,
-                token
-            })
-        }
-        
-    } else {
     
-        let randNumber = Date.now().toString();
-        // Sí el usuario no existe en la BD es un nuevo usuario por lo tanto hay que crearlo
-        let user = new User();
-        user.firstName = googleUser.nombre;
-        user.email = googleUser.email;
-        user.pic = googleUser.pic;
-        user.password = ':)';
-        user.url = slugify(`${user.firstName}-${randNumber.substring(randNumber.length - 4)}`)
-        user.role = req.body.role
-
-        user.save((err, userDB) => {
-
-            if(err) {   
+    User.findOne({ email: googleUser.email }, (err, userDB) => {
+        
+        console.log({
+            err, userDB
+        })
+        if(err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        } 
+        if(userDB) {
+            if(userDB.google === false) {
                 return res.status(500).json({
                     ok: false,
                     err: {
-                        message: 'error interno al guardar en la BD',
-                        err
+                        message: 'debe de usar su autenticación normal'
                     }
                 })
-            } 
+            } else {
+                let token = JWT.sign({
+                    userDB
+                }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+                res.json({
+                    ok: true,
+                    userDB: userDB,
+                    token,
+                })
+            }
+            
+            } else {
 
-            let token = JWT.sign({
-                userDB
-            }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+                // el usuario se puede registrar
+                res.json({
+                    ok: true,
+                    signUp: true
+                    // userDB
 
-            res.json({
-                ok: true,
-                user: userDB,
-                token
-            })
-
+                })
+            }
         })
-
-        }
-    })
-
 }
+
+// async function google(req, res) {
+//     let idtoken = req.body.token;
+//     // verify(idtoken);
+//     let googleUser = await verify(idtoken)
+//     .catch((err) => {
+//         res.status(403).json({
+//             ok: false,
+//             err
+//         })
+//     });
+
+//     // verificar que usuario no exista
+
+//     User.findOne({ email: googleUser.email }, (err, userDB) => {
+//         if(err) {
+//             return res.status(500).json({
+//                 ok: false,
+//                 err
+//             })
+//         } 
+//     if(userDB) {
+//         if(userDB.google === false) {
+//             return res.status(500).json({
+//                 ok: false,
+//                 err: {
+//                     message: 'debe de usar su autenticación normal'
+//                 }
+//             })
+//         } else {
+//             let token = JWT.sign({
+//                 userDB
+//             }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+//             res.json({
+//                 ok: true,
+//                 user: userDB,
+//                 token
+//             })
+//         }
+        
+//     } else {
+
+//         // userSignUp()
+    
+//         let randNumber = Date.now().toString();
+//         // Sí el usuario no existe en la BD es un nuevo usuario por lo tanto hay que crearlo
+//         let user = new User();
+//         user.firstName = googleUser.nombre;
+//         user.email = googleUser.email;
+//         user.pic = googleUser.pic;
+//         user.password = ':)';
+//         user.url = slugify(`${user.firstName}-${randNumber.substring(randNumber.length - 4)}`)
+//         user.role = req.body.role
+
+//         user.save((err, userDB) => {
+
+//             if(err) {   
+//                 return res.status(500).json({
+//                     ok: false,
+//                     err: {
+//                         message: 'error interno al guardar en la BD',
+//                         err
+//                     }
+//                 })
+//             } 
+
+//             let token = JWT.sign({
+//                 userDB
+//             }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+
+//             res.json({
+//                 ok: true,
+//                 user: userDB,
+//                 token
+//             })
+
+//         })
+
+//         }
+//     })
+
+// }
 
 module.exports = {
     userSignUp, 
@@ -437,6 +461,6 @@ module.exports = {
     getUserInfo,
     editUserInfo,
     updatePassword,
-    google,
+    // google,
     googleVerify
 }

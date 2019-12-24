@@ -9,7 +9,7 @@ app.post('/api/user/signUp/', userController.userSignUp);
 app.get('/api/user/check-token', tokenMiddleware.onlyCheckToken)
 app.get('/api/user/email/:email', userController.checkEmail);
 app.post('/api/login', userController.login);
-app.post('/google', userController.google);
+// app.post('/google', userController.google);
 app.post('/google-verify', userController.googleVerify);
 app.get('/api/user/profile/:url', userController.profile);
 app.get('/api/user/:url', userController.getUserInfo);
