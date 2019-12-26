@@ -104,7 +104,9 @@
                 <hr>
                 <div class="login-altern">
                     <div class="facebook">
-                        <i class="fab fa-facebook-f"></i>
+                        {{!-- <i class="fab fa-facebook-f"></i> --}}
+                            <fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+                            </fb:login-button>
                     </div>
 
                     <div class="google">

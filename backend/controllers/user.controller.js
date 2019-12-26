@@ -55,6 +55,8 @@ function userSignUp(req, res) {
             email: body.email,
             role: body.role,
             pic: body.pic,
+            google: body.method == 'google' ? true : false,
+            facebook: body.method == 'facebook' ? true : false,
             url: slugify(`${body.firstName} ${body.lastName}`) + `-${randNumber.substring(randNumber.length - 4)}`,
             address: {
                 state: null,
@@ -317,6 +319,49 @@ async function verify(token) {
     // console.log(payload)
   }
 
+async function facebook(req, res) {
+    let id = req.body.id;
+    let user   = req.body;
+
+    User.findOne({email: user.email }, (err, userDB) => {
+        if(err) {
+            return res.status(500).json({
+                ok: false,
+                err
+            })
+        }
+        if(userDB) {
+            if(userDB.facebook === false) {
+                return res.status(500).json({
+                    ok: false,
+                    err: {
+                        message: 'debe de usar su autenticación normal'
+                    }
+                })
+            } else {
+                let token = JWT.sign({
+                    userDB
+                }, process.env.SEED, {expiresIn: process.env.TOKEN_EXPIRATION})
+                res.json({
+                    ok: true,
+                    userDB: userDB,
+                    token,
+                })
+            }
+            
+            } else {
+
+                // el usuario se puede registrar
+                res.json({
+                    ok: true,
+                    signUp: true
+                    // userDB
+
+                })
+            }
+        })
+}
+
 async function googleVerify(req, res) {
     let idToken = req.body.token;
     let googleUser = await verify(idToken)
@@ -462,5 +507,6 @@ module.exports = {
     editUserInfo,
     updatePassword,
     // google,
-    googleVerify
+    googleVerify,
+    facebook
 }

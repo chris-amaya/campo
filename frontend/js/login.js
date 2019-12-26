@@ -52,6 +52,96 @@ async function onSignIn(googleUser) {
     }
 }
 
+// FACEBOOK LOGIN
+
+function statusChangeCallback(response) {  // Called with the results from FB.getLoginStatus().
+    console.log('statusChangeCallback');
+    console.log(response);                   // The current login status of the person.
+    if (response.status === 'connected') {   // Logged into your webpage and Facebook.
+        // save in localstorage token, id
+        sessionStorage.setItem('fb_authResponse', JSON.stringify(response.authResponse))
+        // testAPI();  
+        FB.api('/me', {fields: 'first_name,last_name,name,id,address,email'}, async (user) => {
+            // check if user has already signed up
+            let fbReq = await fetch(`/api/facebook`, {
+                method: 'POST',
+                body: JSON.stringify(user),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            });
+            let fbRes = await fbReq.json();
+            console.log(fbRes)
+            // user hasnt signed up
+            if(fbRes.signUp == true) {
+                sessionStorage.setItem('facebookUserData', JSON.stringify(user));
+                changeForm('account-options', 'register');
+                changeForm('account-options', 'login');
+            } else if(fbRes.userDB) {
+                sessionStorage.setItem('token', fbRes.token);
+                sessionStorage.setItem('firstName', fbRes.userDB.firstName);
+                sessionStorage.setItem('lastName', '');
+                sessionStorage.setItem('email', fbRes.userDB.email);
+                sessionStorage.setItem('_id', fbRes.userDB._id);
+                sessionStorage.setItem('role', fbRes.userDB.role);
+                sessionStorage.setItem('pic', fbRes.userDB.pic);
+                sessionStorage.setItem('url', fbRes.userDB.url);
+                window.location.href = '/dashboard/user';
+            }
+
+
+        })
+    }
+  }
+
+  
+
+  function checkLoginState() {               // Called when a person is finished with the Login Button.
+    FB.getLoginStatus(function(response) {   // See the onlogin handler
+      statusChangeCallback(response);
+    });
+  }
+
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1020316268300928',
+      cookie     : true,                     // Enable cookies to allow the server to access the session.
+      xfbml      : true,                     // Parse social plugins on this webpage.
+      version    : 'v5.0'           // Use this Graph API version for this call.
+    });
+
+
+    FB.getLoginStatus(function(response) {   // Called after the JS SDK has been initialized.
+      statusChangeCallback(response);        // Returns the login status.
+    });
+  };
+
+  
+  (function(d, s, id) {                      // Load the SDK asynchronously
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+ 
+//   function testAPI() {                      // Testing Graph API after login.  See statusChangeCallback() for when this call is made.
+//     console.log('Welcome!  Fetching your information.... ');
+//     FB.api('/me', { fields: 'first_name,last_name,name,id,address,email' }, function(response) {
+//         console.log(response)
+//         FB.api(`/${response.id}/`, (user) => {
+//             console.log(user)
+//         })
+//       console.log('Successful login for: ' + response.name);
+//       document.getElementById('status').innerHTML =
+//         'Thanks for logging in, ' + response.name + '!';
+//     });
+//   }
+
+  window.checkLoginState = checkLoginState
+
 
 
 
@@ -149,6 +239,7 @@ async function handlerButtonAccountOption1(e) {
         messageErrorBox.style.display = 'none';
 
         let googleUser = sessionStorage.getItem('googleUserData');
+        let facebookUser = sessionStorage.getItem('facebookUserData');
         if(googleUser) {
             googleUser = JSON.parse(googleUser);
             // googleSignUp(googleUser);
@@ -161,6 +252,17 @@ async function handlerButtonAccountOption1(e) {
                 pic: googleUser.pic,
             })
             // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
+        }
+        else if(facebookUser) {
+            facebookUser = JSON.parse(facebookUser);
+            fetchRegisterUser({
+                firstName: facebookUser.first_name,
+                lastName: facebookUser.last_name,
+                password: null,
+                method: 'facebook',
+                email: facebookUser.email,
+                pic: `https://graph.facebook.com/${facebookUser.id}/picture?type=square`
+            })
         } else {
 
             fetchRegisterUser({
@@ -188,6 +290,7 @@ async function handlerButtonAccountOption2(e) {
 
 
         let googleUser = sessionStorage.getItem('googleUserData');
+        let facebookUser = sessionStorage.getItem('facebookUserData');
         if(googleUser) {
             googleUser = JSON.parse(googleUser);
             // googleSignUp(googleUser);
@@ -200,6 +303,16 @@ async function handlerButtonAccountOption2(e) {
                 pic: googleUser.pic,
             })
             // fetchRegisterUser(googleUser.name, null, null, googleUser.email, role);
+        } else if(facebookUser) {
+            facebookUser = JSON.params(facebookUser);
+            fetchRegisterUser({
+                firstName: facebookUser.first_name,
+                lastName: facebookUser.last_name,
+                password: null,
+                method: 'facebook',
+                email: facebookUser.email,
+                pic: `http://graph.faceboook.com/${facebookUser.id}/picture?type=square`
+            })
         } else {
             fetchRegisterUser({
                 firstName: firstName.value,
@@ -368,66 +481,6 @@ function handlerOptionSelected(selector, numberOption) {
         options[0].classList.remove('option-selected');
     }
 }
-
-// async function googleSignUp(user) {
-//     const params = {
-//         firstName: user.name,
-//         lastName: null,
-//         password: null,
-//         email: user.email,
-//         role,
-//         token: JSON.parse(sessionStorage.getItem('googleToken'))
-//     }
-
-//     const reqRegisterUser = await fetch(`/google`, {
-//         method: 'POST',
-//         body: JSON.stringify(params),
-//         headers: {
-//             'Content-Type': 'application/json'
-//         }
-//     });
-//     const response = await reqRegisterUser.json();
-//     console.log(response);
-//     if(response.status == 'ok' || response.ok == true) {
-//         // TODO: inicializar parametros localstorage y redirigir al dashboard
-//         if(remember.value === true) {
-//             localStorage.setItem('token',     response.token);
-//             localStorage.setItem('firstName', response.user.name);
-//             localStorage.setItem('lastName',  '');
-//             localStorage.setItem('email',     response.user.email);
-//             localStorage.setItem('_id',       response.user._id);
-//             localStorage.setItem('role',      response.user.role)
-//             localStorage.setItem('pic',       response.user.pic);
-//             localStorage.setItem('url',       response.user.url);
-//         } else {
-//             sessionStorage.setItem('token',     response.token)
-//             sessionStorage.setItem('firstName', response.user.name)
-//             sessionStorage.setItem('lastName',  '')
-//             sessionStorage.setItem('email',     response.user.email)
-//             sessionStorage.setItem('_id',       response.user._id)
-//             sessionStorage.setItem('role',      response.user.role)
-//             sessionStorage.setItem('pic',       response.user.pic)
-//             sessionStorage.setItem('url',       response.user.url)
-//         }
-//         if(response.user.role == 'BUYER_ROLE') {
-//             window.location.href = '/'
-//         } else {
-//             window.location.href = '/dashboard/user'
-//         }
-
-
-//     } else if(response.status == false) {
-//         // TODO: mostrar errores en pantalla
-//         // @param response.message - mensaje que contiene el error que ha ocurrido
-//         messageErrorBox.style.display = 'flex';
-//         messageErrorBox.innerHTML = `<li>${response.message}</li>`
-//     }
-
-
-// }
-// async function asdfasf(userInfo) {
-   
-// }
 
 async function fetchRegisterUser(userInfo) {
     const params = {
