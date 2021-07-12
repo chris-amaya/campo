@@ -40,7 +40,7 @@ if (process.env.NODE_ENV === 'MODE_DEV') {
     // mongodb+srv://chris:<password>@cluster0-tr0lj.mongodb.net/test?retryWrites=true&w=majority
 }
 
-process.env.URLDB = urlDB;
+process.env.URLDB = 'mongodb+srv://chris:BYjVrkD9idB6Y1k3@cluster0-tr0lj.mongodb.net/test?retryWrites=true&w=majority';
 
 // ============================
 //  Google Client ID

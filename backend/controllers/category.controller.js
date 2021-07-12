@@ -8,6 +8,7 @@ function createCategory(req, res) {
     let category = new Category(req.body);
     category.save((err, categoryDB) => {
         if(err) {
+            console.log(err);
             return res.status(401).json({
                 msg: 'Error al crear la categoria',
                 status: false

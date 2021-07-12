@@ -13,9 +13,7 @@ function saveIMGToDisk(file) {
     // let pathFile = path.resolve(process.env.PWD + '/uploads/' + Date.now() + getExtensionFile(req.body.pics[i]));
     fs.writeFile(pathFile, base64Data, 'base64', (err) => {
         if(err) {
-            return res.status(501).json({
-                msg: 'error interno al guardar las imágenes'
-            })
+            throw new Error('Error interno al guardar la img');
         }
     });
     return relativePath + currentDate + extensionFile

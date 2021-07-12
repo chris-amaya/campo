@@ -18,7 +18,7 @@ module.exports = {
       dashboardProducts: './frontend/js/dashboard.products.js',
       createProduct: './frontend/js/dashboard.create-product.js',
       editProduct: './frontend/js/dashboard.edit-product.js',
-      categoria: './frontend/js/categoria.js',
+      _categoria: './frontend/js/categoria.js',
       avisoPrivacidad: './frontend/js/legal/aviso-privacidad.js',
       cookies: './frontend/js/legal/cookies.js',
       termsAndConditions: './frontend/js/legal/terms-and-conditions.js',
@@ -110,7 +110,7 @@ module.exports = {
       title: 'categoria',
       template: './frontend/categoria.hbs',
       filename: 'categoria.hbs',
-      chunks: ['categoria']
+      chunks: ['_categoria']
     }),
     new HtmlWebpackPlugin({
       title: 'aviso de privacidad',

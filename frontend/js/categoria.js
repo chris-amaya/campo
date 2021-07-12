@@ -4,8 +4,10 @@ import '../css/list-products.css';
 
 const urlCategory = window.location.href.split('/').length == 5 ? window.location.href.split('/').slice(-1)[0] : window.location.href.split('/')[4];
 const page = window.location.href.split('/').length == 6 ? window.location.href.split('/').slice(-1)[0] : 1;
-// document.title = `${window.location.href.split('/').slice(-1)[0]}`
 const containerProducts = document.getElementById('container-products');
+const paginationContainer = document.getElementById('pagination');
+// document.title = `${window.location.href.split('/').slice(-1)[0]}`
+
 document.addEventListener('DOMContentLoaded', (e) => DOMContentLoaded(e), false);
 
 async function DOMContentLoaded() {
@@ -17,11 +19,8 @@ async function DOMContentLoaded() {
     renderPagination(productsRes.pages > 0 ? productsRes.pages : 0, Number(page));
 }
 
-const paginationContainer = document.getElementById('pagination');
 
 function renderPagination(pages, currentPage) {
-    console.log(pages);
-    console.log(currentPage);
     if(pages == 1) {
         paginationContainer.style.display = 'none';
     } else {
@@ -51,14 +50,11 @@ function renderPagination(pages, currentPage) {
                 <i class="fas fa-chevron-right"></i>
             </a>
             `
-
         }
     }
 }
 
 async function renderProducts(data) {
-
-
     if(data.products) {
         for(let i = 0; i < data.products.length; i++) {
             let userInfo = data.products[i].user;
@@ -78,9 +74,7 @@ async function renderProducts(data) {
                     </div>
                 </div>
             </a>`
-
         }
     }
-
 }
 
