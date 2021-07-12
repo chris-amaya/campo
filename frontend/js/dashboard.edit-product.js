@@ -46,9 +46,8 @@ async function upgradeProduct(e) {
         // limpiar array de valores duplicados
         body.pics = [...new Set(body.pics)];
         // registrar la foto que el usuario quiere como principal
-        body.mainImg = body.pics.findIndex((pic) => {
-            return pic == imgMainSelec
-        })
+        const mainImg = body.pics.findIndex((pic) => pic == imgMainSelec);
+        body.mainImg = mainImg < 0 ? 0 : mainImg;
         console.log(body);
 
         let productReq = await fetch(`api/product/edit-product/${id}`, {

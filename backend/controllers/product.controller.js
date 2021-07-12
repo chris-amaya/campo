@@ -82,12 +82,9 @@ function editProduct(req, res) {
     body.mainImg = body.pics[body.mainImg];
 
     let product = new Product(body);
-    // product.updateOne({_id: req.params.id})
     Product.findByIdAndUpdate(req.params.id, body, {new: true, runValidators: true}, (err, productDB) => {
         if(err) return console.log(err)
         else if(productDB) {
-            // console.log(productDB)
-            // res.json(productDB);
             res.json({
                 status: 'ok',
                 productDB

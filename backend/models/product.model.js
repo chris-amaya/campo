@@ -34,15 +34,6 @@ let productSchema = new Schema({
         type: String,
         required: [true, 'Url faltante']
     }
-    // author: {
-    //     type: String,
-    //     required: [true, 'Falta el autor']
-    // },
-    // _idAuthor: {
-    //     required: [true, 'falta el id del autor']
-    // },
-    
-
 });
 
 module.exports = mongoose.model('Product', productSchema);

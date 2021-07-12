@@ -9,7 +9,6 @@ const page = window.location.href.split('/').length == 6 ? window.location.href.
 const productsTable = document.getElementById('products-table')
 
 document.addEventListener('click', (e) => {
-    // console.log(e.target)
     if(e.target.classList.contains('more-options')) {
         e.target.nextElementSibling.classList.toggle('active');
     } 
@@ -23,23 +22,16 @@ document.addEventListener('click', (e) => {
     }
 
     if(e.target.id == 'icon-search-product') {
-        // console.log('aodfjasoidf');
         document.querySelector('.input-search').classList.toggle('active')
     }
 
     if(e.target.id == 'delete-product') {
-    //    console.log( e.target.dataset.productid)
         deleteProduct(e.target.dataset.productid);
     }
 
     if(e.target.parentElement.id == 'delete-product') {
-        // console.log(e.target.parentElement.dataset.productid)
-        deleteProduct(e.target.parentElement.dataset.productid)
-        
+        deleteProduct(e.target.parentElement.dataset.productid)   
     }
-
-//                         <a data-productID='${data.productsDB[i]._id}' id="delete-product"><i class="fas fa-trash"></i></a>
-
 })
 
 async function deleteProduct(id) {
@@ -78,9 +70,6 @@ async function getProductsUser(e) {
             userStored: {
                 email: localStorage.getItem('email') || sessionStorage.getItem('email')
             }
-            // userLocalStorate: {
-            //     email: localStorage.getItem('email') || sessionStorage.getItem('email')
-            // }
         }),
         headers: {
             'Content-Type': 'application/json',
@@ -136,19 +125,14 @@ function renderProducts(data, type) {
             </div>
             `
         }
-
-        
-        
     } else {
-            if(!type) {
-                productsTable.innerHTML = `<p>Actualmente no ha creado ningún producto para su venta</p>`
-            } else {
-                productsTable.innerHTML = `<p>Ningún resultado</p>`
-            }
+        if(!type) {
+            productsTable.innerHTML = `<p>Actualmente no ha creado ningún producto para su venta</p>`
+        } else {
+            productsTable.innerHTML = `<p>Ningún resultado</p>`
+        }
     }
-
 }
-
 
 const inputSearchProduct = document.getElementById('search-products');
 inputSearchProduct.addEventListener('input', (e) => searchProductByUser(e), false);
@@ -170,10 +154,6 @@ let searchProductByUser = debounce(async (e) => {
         renderProducts(products)
     }
 }, 1000)
-
-// function renderSearchProducts(data);
-
-
 
 function debounce(func, wait, immediate) {
 	var timeout;
@@ -224,7 +204,6 @@ function renderPagination(pages, currentPage) {
                 <i class="fas fa-chevron-right"></i>
             </a>
             `
-
         }
     }
 }

@@ -41,19 +41,28 @@ function getUserDataByEmail(email) {
     })
 }
 
+const firstCharToUpperCase = (str) => {
+    str = str.split('');
+    str[0] = str[0].toUpperCase();
+    str = str.join('');
+
+    return str;
+}
+
 async function getProductsByCategory(req, res) {
+    let category = firstCharToUpperCase(req.params.category);
+
     const limit = 5;
     const page = Number(req.params.page) || 0;
     const skip = page > 0 ? page * limit - limit : 0
     const count = await Products.countDocuments({
-        "category.title": req.params.category
+        "category": category
     })
 
-    Products.find({"category.title": req.params.category})
+    Products.find({"category": category})
     .skip(skip)
     .limit(limit)
     .exec( async (err, productsDB) => {
-
         let products = [];
         for (let product of productsDB){
             let user = await getUserDataByEmail(product.userInfo.email);
@@ -61,7 +70,6 @@ async function getProductsByCategory(req, res) {
                 product,
                 user
             });
-            // console.log(product)
         }
 
         if(err) {
